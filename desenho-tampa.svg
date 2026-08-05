@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="319.3mm" height="378.5mm" viewBox="0 0 319.3 378.5">
+<rect width="319.3" height="378.5" fill="#fff"/>
+<rect x="48.000" y="52.000" width="209.300" height="108.500" fill="none" stroke="#111" stroke-width="0.45"/>
+<circle cx="56.000" cy="60.000" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<circle cx="56.000" cy="60.000" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="2,1"/>
+<line x1="49.750" y1="60.000" x2="62.250" y2="60.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="56.000" y1="53.750" x2="56.000" y2="66.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="152.650" cy="60.000" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<circle cx="152.650" cy="60.000" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="2,1"/>
+<line x1="146.400" y1="60.000" x2="158.900" y2="60.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="152.650" y1="53.750" x2="152.650" y2="66.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="249.300" cy="60.000" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<circle cx="249.300" cy="60.000" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="2,1"/>
+<line x1="243.050" y1="60.000" x2="255.550" y2="60.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="249.300" y1="53.750" x2="249.300" y2="66.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="56.000" cy="152.500" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<circle cx="56.000" cy="152.500" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="2,1"/>
+<line x1="49.750" y1="152.500" x2="62.250" y2="152.500" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="56.000" y1="146.250" x2="56.000" y2="158.750" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="152.650" cy="152.500" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<circle cx="152.650" cy="152.500" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="2,1"/>
+<line x1="146.400" y1="152.500" x2="158.900" y2="152.500" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="152.650" y1="146.250" x2="152.650" y2="158.750" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="249.300" cy="152.500" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<circle cx="249.300" cy="152.500" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="2,1"/>
+<line x1="243.050" y1="152.500" x2="255.550" y2="152.500" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="249.300" y1="146.250" x2="249.300" y2="158.750" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="102.250" cy="106.250" r="49.250" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="5,2"/>
+<circle cx="102.250" cy="106.250" r="12.350" fill="none" stroke="#111" stroke-width="0.45"/>
+<line x1="86.900" y1="106.250" x2="117.600" y2="106.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="102.250" y1="90.900" x2="102.250" y2="121.600" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<text x="102.250" y="147.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="middle">VERMELHO</text>
+<text x="102.250" y="151.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="middle">&#216;98,5 capa (ref,)</text>
+<circle cx="221.900" cy="106.250" r="30.400" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="5,2"/>
+<circle cx="221.900" cy="106.250" r="12.350" fill="none" stroke="#111" stroke-width="0.45"/>
+<line x1="206.550" y1="106.250" x2="237.250" y2="106.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="221.900" y1="90.900" x2="221.900" y2="121.600" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<text x="221.900" y="128.650" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="middle">VERDE</text>
+<text x="221.900" y="132.650" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="middle">&#216;60,8 capa (ref,)</text>
+<line x1="102.250" y1="106.250" x2="102.250" y2="38.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="221.900" y1="106.250" x2="221.900" y2="38.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="102.250" y1="40.000" x2="221.900" y2="40.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="102.250,40.000 104.650,39.550 104.650,40.450" fill="#111"/>
+<polygon points="221.900,40.000 219.500,40.450 219.500,39.550" fill="#111"/>
+<text x="162.075" y="38.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">119,65  entre centros</text>
+<line x1="151.500" y1="98.250" x2="151.500" y2="26.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="191.500" y1="98.250" x2="191.500" y2="26.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="151.500" y1="28.000" x2="191.500" y2="28.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="151.500,28.000 153.900,27.550 153.900,28.450" fill="#111"/>
+<polygon points="191.500,28.000 189.100,28.450 189.100,27.550" fill="#111"/>
+<text x="171.500" y="26.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">40,00  folga livre</text>
+<line x1="48.000" y1="160.500" x2="48.000" y2="196.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="257.300" y1="160.500" x2="257.300" y2="196.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="48.000" y1="194.500" x2="257.300" y2="194.500" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="48.000,194.500 50.400,194.050 50.400,194.950" fill="#111"/>
+<polygon points="257.300,194.500 254.900,194.950 254.900,194.050" fill="#111"/>
+<text x="152.650" y="193.100" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">209,30</text>
+<line x1="48.000" y1="160.500" x2="48.000" y2="184.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="102.250" y1="160.500" x2="102.250" y2="184.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="48.000" y1="182.500" x2="102.250" y2="182.500" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="48.000,182.500 50.400,182.050 50.400,182.950" fill="#111"/>
+<polygon points="102.250,182.500 99.850,182.950 99.850,182.050" fill="#111"/>
+<text x="75.125" y="181.100" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">54,25</text>
+<line x1="48.000" y1="160.500" x2="48.000" y2="174.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="221.900" y1="160.500" x2="221.900" y2="174.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="48.000" y1="172.500" x2="221.900" y2="172.500" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="48.000,172.500 50.400,172.050 50.400,172.950" fill="#111"/>
+<polygon points="221.900,172.500 219.500,172.950 219.500,172.050" fill="#111"/>
+<text x="134.950" y="171.100" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">173,90</text>
+<line x1="48.000" y1="52.000" x2="34.000" y2="52.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="48.000" y1="106.250" x2="34.000" y2="106.250" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="36.000" y1="52.000" x2="36.000" y2="106.250" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="36.000,52.000 36.450,54.400 35.550,54.400" fill="#111"/>
+<polygon points="36.000,106.250 35.550,103.850 36.450,103.850" fill="#111"/>
+<text x="34.400" y="79.125" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 34.400 79.125)">54,25</text>
+<line x1="48.000" y1="52.000" x2="22.000" y2="52.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="48.000" y1="160.500" x2="22.000" y2="160.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="24.000" y1="52.000" x2="24.000" y2="160.500" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="24.000,52.000 24.450,54.400 23.550,54.400" fill="#111"/>
+<polygon points="24.000,160.500 23.550,158.100 24.450,158.100" fill="#111"/>
+<text x="22.400" y="106.250" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 22.400 106.250)">108,50</text>
+<line x1="48.000" y1="52.000" x2="48.000" y2="38.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="56.000" y1="52.000" x2="56.000" y2="38.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="48.000" y1="40.000" x2="56.000" y2="40.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="48.000,40.000 50.400,40.450 50.400,39.550" fill="#111"/>
+<polygon points="56.000,40.000 53.600,39.550 53.600,40.450" fill="#111"/>
+<text x="52.000" y="38.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">8,00</text>
+<line x1="48.000" y1="52.000" x2="48.000" y2="14.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="152.650" y1="52.000" x2="152.650" y2="14.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="48.000" y1="16.000" x2="152.650" y2="16.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="48.000,16.000 50.400,15.550 50.400,16.450" fill="#111"/>
+<polygon points="152.650,16.000 150.250,16.450 150.250,15.550" fill="#111"/>
+<text x="100.325" y="14.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">104,65</text>
+<line x1="48.000" y1="52.000" x2="10.000" y2="52.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="48.000" y1="60.000" x2="10.000" y2="60.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="12.000" y1="52.000" x2="12.000" y2="60.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="12.000,52.000 12.450,54.400 11.550,54.400" fill="#111"/>
+<polygon points="12.000,60.000 11.550,57.600 12.450,57.600" fill="#111"/>
+<text x="10.400" y="56.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 10.400 56.000)">8,00</text>
+<line x1="232.017" y1="113.334" x2="256.591" y2="130.541" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="256.591" y1="130.541" x2="263.591" y2="130.541" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="232.017,113.334 234.241,114.342 233.724,115.079" fill="#111"/>
+<text x="264.591" y="129.341" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="start">2x &#216;24,70  (furo de passagem M24)</text>
+<line x1="251.962" y1="58.136" x2="269.984" y2="45.517" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="269.984" y1="45.517" x2="276.984" y2="45.517" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="251.962,58.136 253.670,56.391 254.186,57.128" fill="#111"/>
+<text x="277.984" y="44.317" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="start">6x &#216;3,40 + rebaixo &#216;6,50 x 2,00</text>
+<defs><pattern id="h105" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><rect x="48.000" y="212.500" width="209.300" height="16.000" fill="url(#h105)" stroke="#111" stroke-width="0.45"/>
+<rect x="89.900" y="212.500" width="24.700" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="209.550" y="212.500" width="24.700" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<line x1="48.000" y1="212.500" x2="34.000" y2="212.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="48.000" y1="228.500" x2="34.000" y2="228.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="36.000" y1="212.500" x2="36.000" y2="228.500" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="36.000,212.500 36.450,214.900 35.550,214.900" fill="#111"/>
+<polygon points="36.000,228.500 35.550,226.100 36.450,226.100" fill="#111"/>
+<text x="34.400" y="220.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 34.400 220.500)">4,00</text>
+<text x="152.650" y="236.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="middle">CORTE A-A pelos eixos dos botoes   (escala vertical 4:1)</text>
+<defs><pattern id="hp115" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="97.650,272.500 140.150,272.500 140.150,284.500 149.450,284.500 149.450,296.500 97.650,296.500" fill="url(#hp115)" stroke="#111" stroke-width="0.45"/>
+<defs><pattern id="hp116" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="221.650,272.500 179.150,272.500 179.150,284.500 169.850,284.500 169.850,296.500 221.650,296.500" fill="url(#hp116)" stroke="#111" stroke-width="0.45"/>
+<path d="M 142.55 282.40 Q 159.65 262.60 176.75 282.40 Z" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<line x1="150.650" y1="282.400" x2="150.650" y2="304.500" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<line x1="168.650" y1="282.400" x2="168.650" y2="304.500" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<text x="187.150" y="270.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="start">M3 x 10 ISO 7380 (ref.)</text>
+<line x1="186.150" y1="269.500" x2="169.910" y2="276.955" stroke="#7f8c8d" stroke-width="0.16"/>
+<line x1="140.150" y1="272.500" x2="140.150" y2="261.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="179.150" y1="272.500" x2="179.150" y2="261.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="140.150" y1="263.500" x2="179.150" y2="263.500" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="140.150,263.500 142.550,263.050 142.550,263.950" fill="#111"/>
+<polygon points="179.150,263.500 176.750,263.950 176.750,263.050" fill="#111"/>
+<text x="159.650" y="262.100" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;6,50</text>
+<line x1="149.450" y1="296.500" x2="149.450" y2="311.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="169.850" y1="296.500" x2="169.850" y2="311.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="149.450" y1="309.500" x2="169.850" y2="309.500" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="149.450,309.500 151.850,309.050 151.850,309.950" fill="#111"/>
+<polygon points="169.850,309.500 167.450,309.950 167.450,309.050" fill="#111"/>
+<text x="159.650" y="308.100" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;3,40</text>
+<line x1="97.650" y1="272.500" x2="86.650" y2="272.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="97.650" y1="284.500" x2="86.650" y2="284.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="88.650" y1="272.500" x2="88.650" y2="284.500" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="88.650,272.500 89.100,274.900 88.200,274.900" fill="#111"/>
+<polygon points="88.650,284.500 88.200,282.100 89.100,282.100" fill="#111"/>
+<text x="87.050" y="278.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 87.050 278.500)">2,00</text>
+<line x1="97.650" y1="284.500" x2="86.650" y2="284.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="97.650" y1="296.500" x2="86.650" y2="296.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="88.650" y1="284.500" x2="88.650" y2="296.500" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="88.650,284.500 89.100,286.900 88.200,286.900" fill="#111"/>
+<polygon points="88.650,296.500 88.200,294.100 89.100,294.100" fill="#111"/>
+<text x="87.050" y="290.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 87.050 290.500)">2,00</text>
+<line x1="97.650" y1="272.500" x2="71.650" y2="272.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="97.650" y1="296.500" x2="71.650" y2="296.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="73.650" y1="272.500" x2="73.650" y2="296.500" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="73.650,272.500 74.100,274.900 73.200,274.900" fill="#111"/>
+<polygon points="73.650,296.500 73.200,294.100 74.100,294.100" fill="#111"/>
+<text x="72.050" y="284.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 72.050 284.500)">4,00</text>
+<text x="225.650" y="291.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#c0392b" text-anchor="start">2,00 sob a cabeca - secao mais fina da tampa</text>
+<line x1="174.850" y1="290.500" x2="224.650" y2="290.500" stroke="#c0392b" stroke-width="0.16"/>
+<polygon points="174.850,290.500 176.850,290.100 176.850,290.900" fill="#111"/>
+<text x="159.650" y="320.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="middle">DETALHE B - furo de fixacao (6x)   ampliacao 6:1</text>
+<text x="48.000" y="328.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">Centro-a-centro dos botoes = 98,5/2 + 60,8/2 + 40,00 = 119,65 mm</text>
+<text x="48.000" y="332.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">Furo &#216;24,70 = M24 nominal + 0,70 de compensacao PETG (validar no gabarito)</text>
+<text x="48.000" y="335.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">Botao preso por porca; a tampa nao e roscada.</text>
+<text x="48.000" y="339.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start"></text>
+<text x="48.000" y="342.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">FIXACAO - 6x M3 x 10 ISO 7380 em inserto de latao M3 (&#216;ext 4,6 x 5,0):</text>
+<text x="48.000" y="346.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">  centros (x ; y):  (8,00 ; 8,00)   (104,65 ; 8,00)   (201,30 ; 8,00)</text>
+<text x="48.000" y="349.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">                    (8,00 ; 100,50) (104,65 ; 100,50) (201,30 ; 100,50)</text>
+<text x="48.000" y="353.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">  furo do inserto na caixa: &#216;4,20 x 9,00 de profundidade, pilar &#216;ext 10,00</text>
+<text x="48.000" y="356.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">  9,00 = L_parafuso 10,00 &#8722; (esp 4,00 &#8722; rebaixo 2,00) + 1,00 de folga no fundo</text>
+<line x1="8.000" y1="365.500" x2="311.300" y2="365.500" stroke="#111" stroke-width="0.3"/>
+<text x="8.000" y="371.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="4.2" font-weight="bold" fill="#111" text-anchor="start">TAMPA COM ENCAIXE PARA BOTOES DE ARCADE</text>
+<text x="8.000" y="376.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">Vista superior, corte e detalhe | PETG | espessura 4 mm</text>
+<text x="311.300" y="371.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.4" font-weight="normal" fill="#555" text-anchor="end">PIBIC-CEUB</text>
+<text x="311.300" y="376.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="end">cotas em mm</text>
+</svg>
