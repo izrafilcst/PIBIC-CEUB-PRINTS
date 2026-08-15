@@ -1,7 +1,13 @@
 # Lista de materiais — PIBIC-CEUB
 
-Levantada a partir da geometria real dos `.3mf` do repositório (215 × 120 mm,
-6 pontos de fixação M3, 2 furos Ø26, 9 furos Ø10) e da documentação da caixa.
+> **Revisão A1 mini + botões embutidos.** Levantada a partir da geometria real
+> dos `.3mf` gerados por `gerar_modelo_3mf.py` — **178 × 130 mm**, 6 colunas de
+> fixação com inserto nas **duas** pontas, 2 furos Ø26, 9 furos Ø10, 2 rebaixos
+> de assento de capa. Substitui o levantamento de 215 × 120 feito para a
+> Creality K1C.
+>
+> O que mudou para a compra: **12 insertos** em vez de 6, e **dois**
+> comprimentos de parafuso em vez de um.
 
 Legenda da coluna **Status**:
 
@@ -17,32 +23,63 @@ Legenda da coluna **Status**:
 
 | Qtd | Item | Status | Observação |
 |---|---|---|---|
-| 1 | Adafruit **Massive Arcade Button 100 mm** — #1185 verm. / #1187 branco / #1188 verde | ✅ | vai no furo Ø26 em (65 ; 60) |
-| 1 | Adafruit **Large Arcade Button 60 mm** — #1190 verm. / #1192 branco / #1193 verde | ✅ | vai no furo Ø26 em (170 ; 60) |
+| 1 | Adafruit **Massive Arcade Button 100 mm** — #1185 verm. / #1187 branco / #1188 verde | ✅ | furo Ø26 em (56 ; 65), rebaixo Ø99,30 × 8,00 |
+| 1 | Adafruit **Large Arcade Button 60 mm** — #1190 verm. / #1192 branco / #1193 verde | ✅ | furo Ø26 em (140 ; 65), rebaixo Ø61,60 × 5,00 |
 | 2 | Microswitch de arcade NO, sobressalente | ✅ | é a peça que morre primeiro num controle de impacto |
 
 > **Não compre porca M24.** Ela vem com o botão, junto com o microswitch e o
 > LED interno com resistor embutido. Comprar avulso é desperdício — e porca
 > M24 avulsa é cara e difícil de achar no diâmetro/passo certo.
 
+**Os botões agora entram meio embutidos.** O flange assenta no fundo de um
+rebaixo, e o conjunto inteiro desce por essa profundidade:
+
+| Botão | Capa | Rebaixo | Fica para fora | Painel apertado pela porca |
+|---|---|---|---|---|
+| 100 mm | Ø98,5 × 17,5 | 8,00 | 9,50 | 8,00 |
+| 60 mm | Ø60,8 × 10,0 | 5,00 | 5,00 | 11,00 |
+
+O trecho apertado pela porca é a espessura do painel **menos** o rebaixo — os
+dois ficam dentro dos 12,70 mm máximos que o botão admite. Foi por isso que o
+painel passou de 10 para 16 mm.
+
+> **Antes de imprimir o painel inteiro, imprima um corpo de prova** com os dois
+> rebaixos (Ø99,30 e Ø61,60) e teste a capa. A folga de 0,80 diametral é
+> estimada; é ajuste aparente, e um painel de 16 mm errado custa ~6 h de
+> impressão.
+
+> **Anti-rotação:** o pino do flange não está cotado na documentação do
+> fabricante, então o rebaixo é liso. Meça no botão físico se quiser abrir o
+> rasgo, ou mantenha a cola quente.
+
 ---
 
-## 2. Fixação da tampa (6 pontos)
+## 2. Fixação — 6 colunas, inserto nas duas pontas
 
-**Decidido: M3 × 6, mantendo o modelo como está.**
+As 6 colunas do corpo são **passantes** e levam furo Ø4,20 × 5,00 em cada
+ponta: em cima prendem o painel, embaixo a tampa. No modelo do Fusion só a
+tampa tinha fixação e o painel não tinha como prender — as três peças não
+fechavam uma caixa.
 
 | Qtd | Item | Status | Observação |
 |---|---|---|---|
-| 6 | Parafuso **M3 × 6 ISO 7380**, cabeça abaulada, sextavado interno 2,0 mm | ✅ | |
-| 6 | **Inserto roscado de latão M3**, Ø externo 4,6 × **4,0** mm | ✅ | 4,0 e não 5,0 — ver abaixo |
-| — | *alternativa sem inserto:* 6 × porca M3 DIN 934 em bolso sextavado | ❓ | 5,5 mm entre faces × 2,4 de espessura; exige redesenhar o pilar |
+| 6 | Parafuso **M3 × 16 ISO 7380**, cabeça abaulada, sextavado interno 2,0 mm | ✅ | **painel**, que tem 16 mm |
+| 6 | Parafuso **M3 × 6 ISO 7380**, cabeça abaulada, sextavado interno 2,0 mm | ✅ | **tampa**, que tem 4 mm |
+| **12** | **Inserto roscado de latão M3**, Ø externo 4,6 × **4,0** mm | ✅ | 4,0 e não 5,0 — ver abaixo. **Dobrou:** 2 por coluna |
+| — | *alternativa sem inserto:* 12 × porca M3 DIN 934 em bolso sextavado | ❓ | 5,5 mm entre faces × 2,4 de espessura; exige redesenhar a coluna |
 
-Confere com o furo de **5,00 mm** já modelado (z 60 a 65):
+As duas contas fecham no mesmo furo de 5,00 mm e no mesmo inserto de 4,0:
 
 ```
-penetração = 6,00 − (4,00 − 2,00) = 4,00 mm
-folga no fundo = 5,00 − 4,00      = 1,00 mm   ✔
+painel   penetração     = 16,00 − (16,00 − 4,00) = 4,00 mm
+         folga no fundo = 5,00 − 4,00            = 1,00 mm   ✔
+tampa    penetração     =  6,00 − ( 4,00 − 2,00) = 4,00 mm
+         folga no fundo = 5,00 − 4,00            = 1,00 mm   ✔
 ```
+
+O rebaixo do painel tem 4,00 mm de profundidade (o da tampa, 2,00) justamente
+para o parafuso cair num comprimento de catálogo. Com rebaixo de 2,00 o painel
+pediria um M3 × 18, que quase não se acha.
 
 > **Peça o inserto de 4,0 mm, não o de 5,0.** Um inserto de 5,0 num furo de
 > 5,00 não deixa vazio nenhum embaixo, e o PETG derretido na instalação não
@@ -114,19 +151,36 @@ existe no modelo atual** — o corpo é fechado nos 4 lados).
 | 1 | Bastão de cola escolar | ✅ agente de **soltura** no PEI, não de adesão |
 | 1 | Álcool isopropílico | ✅ |
 
-**Estimativa de filamento**, dos volumes reais das malhas:
+**Estimativa de filamento**, dos volumes reais das malhas (`validar_modelo.py`):
 
 ```
-painel (Body1)   214,37 cm3
-corpo  (Body2)   309,04 cm3
-tampa  (Body3)    92,22 cm3
+caixa-painel     233,93 cm3     era 214,37 - engordou de 10 para 16 mm
+caixa-corpo      130,26 cm3     era 309,04 - parede de 10 para 4 mm
+caixa-tampa       81,64 cm3     era  92,22 - silhueta menor
                  ──────────
-sólido           615,63 cm3
+sólido           445,83 cm3     era 615,63
 ```
 
 A 4 perímetros e 30 % de preenchimento giroide, a densidade efetiva fica em
-torno de 50 % → **≈ 308 cm³ ≈ 391 g**. Some refugo e uma peça refeita:
-**compre 1 kg**.
+torno de 50 % → **≈ 223 cm³ ≈ 283 g**. Some refugo, o corpo de prova dos
+rebaixos e uma peça refeita: **compre 1 kg**.
+
+A caixa saiu **mais leve** que a versão de 215 × 120, apesar do painel mais
+grosso: a parede de 4 mm economiza mais do que os 6 mm de painel custam.
+
+### Impressão na A1 mini
+
+As três peças têm 178 × 130 mm numa mesa de 180 × 180 — sobra **1,0 mm de cada
+lado em X**. Isso tem consequência prática:
+
+- **Centralize na mesa** e confira antes de fatiar. Não é margem para
+  improvisar posição.
+- **Não use brim.** Não cabe. O projeto já trata o PETG no PEI como problema de
+  *soltura*, não de aderência, então o brim não faz falta — mas conte com isso
+  na hora de fatiar, e não descubra depois.
+- Nenhuma das três peças pede suporte, desde que impressas na orientação
+  modelada: painel com a face interna na mesa (os rebaixos abrem para cima),
+  corpo em pé, tampa com o rebaixo para cima.
 
 ---
 
@@ -149,6 +203,16 @@ torno de 50 % → **≈ 308 cm³ ≈ 391 g**. Some refugo e uma peça refeita:
 2. **Função dos 9 furos Ø10** — define se entram LEDs, suportes e resistores.
 3. **Microcontrolador** — define cabo, conector e recorte de saída na caixa.
 
-~~Profundidade do furo do inserto~~ — **resolvido: M3 × 6**, modelo mantido.
+~~Profundidade do furo do inserto~~ — **resolvido: M3 × 6 na tampa e M3 × 16 no
+painel**, os dois no mesmo inserto de 4,0 mm.
+
+~~Fixação do painel~~ — **resolvido:** as colunas viraram passantes e recebem
+inserto nas duas pontas.
 
 Os itens ✅ podem ser comprados hoje sem risco de sobrar.
+
+## Ainda por confirmar na bancada (não trava compra)
+
+- **Folga do rebaixo da capa (0,80 diametral).** Estimada. Corpo de prova antes
+  do painel.
+- **Posição do pino anti-rotação do flange.** Não cotada pelo fabricante.

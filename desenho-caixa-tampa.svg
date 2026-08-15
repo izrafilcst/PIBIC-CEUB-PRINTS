@@ -1,211 +1,214 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="594.0mm" height="420.0mm" viewBox="0 0 594.0 420.0">
 <rect width="594.0" height="420.0" fill="#fff"/>
-<polygon points="193.750,190.000 115.000,190.000 111.917,189.885 110.890,189.846 107.824,189.501 106.803,189.386 103.772,188.812 102.761,188.621 99.782,187.823 98.788,187.556 95.877,186.538 94.906,186.198 92.079,184.964 91.136,184.553 88.409,183.112 87.500,182.631 84.888,180.990 84.017,180.443 81.535,178.611 80.708,178.001 78.370,175.989 77.590,175.318 75.409,173.137 74.682,172.410 72.670,170.071 71.999,169.292 70.167,166.810 69.557,165.983 67.916,163.371 67.369,162.500 65.927,159.773 65.447,158.864 64.213,156.036 63.802,155.094 62.783,152.182 62.443,151.212 61.645,148.232 61.379,147.239 60.805,144.208 60.614,143.197 60.269,140.132 60.154,139.110 60.038,136.028 60.000,135.000 60.000,132.500 60.000,125.000 60.115,121.917 60.154,120.890 60.499,117.824 60.614,116.803 61.188,113.772 61.379,112.761 62.177,109.782 62.443,108.788 63.462,105.877 63.802,104.906 65.036,102.079 65.447,101.136 66.888,98.409 67.369,97.500 69.010,94.888 69.557,94.017 71.389,91.535 71.999,90.708 74.011,88.370 74.682,87.591 76.863,85.409 77.590,84.682 79.929,82.670 80.708,81.999 83.190,80.167 84.017,79.557 86.629,77.916 87.500,77.369 90.227,75.927 91.136,75.447 93.964,74.213 94.906,73.802 97.818,72.783 98.788,72.444 101.768,71.645 102.761,71.379 105.792,70.805 106.803,70.614 109.868,70.269 110.890,70.154 113.972,70.038 115.000,70.000 141.250,70.000 220.000,70.000 223.083,70.115 224.110,70.154 227.176,70.499 228.197,70.614 231.228,71.188 232.239,71.379 235.218,72.177 236.212,72.444 239.123,73.462 240.094,73.802 242.921,75.036 243.864,75.447 246.591,76.888 247.500,77.369 250.112,79.010 250.983,79.557 253.465,81.389 254.292,81.999 256.630,84.011 257.409,84.682 259.591,86.863 260.318,87.591 262.330,89.929 263.001,90.708 264.833,93.190 265.443,94.017 267.084,96.629 267.631,97.500 269.073,100.227 269.553,101.136 270.787,103.964 271.198,104.906 272.217,107.818 272.557,108.788 273.355,111.768 273.621,112.761 274.195,115.792 274.386,116.803 274.731,119.868 274.846,120.890 274.962,123.972 275.000,125.000 275.000,127.500 275.000,135.000 274.885,138.083 274.846,139.110 274.501,142.176 274.386,143.197 273.812,146.228 273.621,147.239 272.823,150.218 272.557,151.212 271.538,154.123 271.198,155.094 269.964,157.921 269.553,158.864 268.112,161.591 267.631,162.500 265.990,165.112 265.443,165.983 263.611,168.465 263.001,169.292 260.989,171.630 260.318,172.410 258.137,174.591 257.409,175.318 255.071,177.330 254.292,178.001 251.810,179.833 250.983,180.443 248.371,182.084 247.500,182.631 244.773,184.073 243.864,184.553 241.036,185.787 240.094,186.198 237.182,187.217 236.212,187.556 233.232,188.355 232.239,188.621 229.208,189.195 228.197,189.386 225.132,189.731 224.110,189.846 221.028,189.962 220.000,190.000" fill="none" stroke="#111" stroke-width="0.45"/>
-<circle cx="115.000" cy="185.000" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
-<line x1="108.750" y1="185.000" x2="121.250" y2="185.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<line x1="115.000" y1="178.750" x2="115.000" y2="191.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<circle cx="220.000" cy="185.000" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
-<line x1="213.750" y1="185.000" x2="226.250" y2="185.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<line x1="220.000" y1="178.750" x2="220.000" y2="191.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<circle cx="65.000" cy="130.000" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
-<line x1="58.750" y1="130.000" x2="71.250" y2="130.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<line x1="65.000" y1="123.750" x2="65.000" y2="136.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<circle cx="270.000" cy="130.000" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
-<line x1="263.750" y1="130.000" x2="276.250" y2="130.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<line x1="270.000" y1="123.750" x2="270.000" y2="136.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<circle cx="115.000" cy="75.000" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
-<line x1="108.750" y1="75.000" x2="121.250" y2="75.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<line x1="115.000" y1="68.750" x2="115.000" y2="81.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<circle cx="220.000" cy="75.000" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
-<line x1="213.750" y1="75.000" x2="226.250" y2="75.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<line x1="220.000" y1="68.750" x2="220.000" y2="81.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<circle cx="115.000" cy="185.000" r="2.100" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
-<circle cx="220.000" cy="185.000" r="2.100" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
-<circle cx="65.000" cy="130.000" r="2.100" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
-<circle cx="270.000" cy="130.000" r="2.100" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
-<circle cx="115.000" cy="75.000" r="2.100" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
-<circle cx="220.000" cy="75.000" r="2.100" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<polygon points="237.941,113.201 237.985,114.550 238.000,115.000 238.000,117.143 238.000,117.857 238.000,120.000 238.000,120.714 238.000,122.857 238.000,123.571 238.000,125.714 238.000,126.429 238.000,128.571 238.000,129.286 238.000,131.429 238.000,132.143 238.000,134.286 238.000,135.000 237.956,136.349 237.941,136.799 237.897,138.148 237.882,138.597 237.750,139.940 237.706,140.388 237.574,141.731 237.529,142.179 237.310,143.511 237.236,143.954 237.016,145.286 236.943,145.730 236.637,147.044 236.535,147.483 236.228,148.797 236.126,149.235 235.734,150.527 235.604,150.957 235.212,152.249 235.081,152.679 234.606,153.942 234.447,154.363 233.972,155.627 233.813,156.048 233.256,157.277 233.071,157.687 232.514,158.916 232.328,159.326 231.692,160.516 231.480,160.913 230.843,162.103 230.631,162.500 229.919,163.646 229.681,164.028 228.968,165.174 228.731,165.556 227.945,166.653 227.683,167.019 226.896,168.116 226.634,168.482 225.778,169.525 225.493,169.873 224.637,170.916 224.351,171.264 223.429,172.249 223.121,172.577 222.198,173.563 221.891,173.891 220.906,174.813 220.577,175.121 219.592,176.044 219.264,176.351 218.221,177.207 217.873,177.493 216.830,178.349 216.482,178.634 215.385,179.421 215.019,179.683 213.922,180.469 213.556,180.731 212.410,181.444 212.028,181.681 210.882,182.394 210.500,182.631 209.310,183.268 208.913,183.480 207.723,184.116 207.326,184.328 206.097,184.885 205.687,185.071 204.457,185.628 204.048,185.813 202.784,186.289 202.363,186.447 201.100,186.923 200.679,187.081 199.388,187.473 198.957,187.604 197.666,187.995 197.235,188.126 195.921,188.432 195.483,188.535 194.168,188.841 193.730,188.943 192.398,189.163 191.954,189.236 190.623,189.456 190.179,189.529 188.836,189.662 188.388,189.706 187.045,189.838 186.597,189.882 185.248,189.926 184.799,189.941 183.450,189.985 183.000,190.000 180.783,190.000 180.043,190.000 177.826,190.000 177.087,190.000 174.870,190.000 174.130,190.000 171.913,190.000 171.174,190.000 168.957,190.000 168.217,190.000 166.000,190.000 165.261,190.000 163.043,190.000 162.304,190.000 160.087,190.000 159.348,190.000 157.130,190.000 156.391,190.000 154.174,190.000 153.435,190.000 151.217,190.000 150.478,190.000 148.261,190.000 147.522,190.000 145.304,190.000 144.565,190.000 142.348,190.000 141.609,190.000 139.391,190.000 138.652,190.000 136.435,190.000 135.696,190.000 133.478,190.000 132.739,190.000 130.522,190.000 129.783,190.000 127.565,190.000 126.826,190.000 124.609,190.000 123.870,190.000 121.652,190.000 120.913,190.000 118.696,190.000 117.957,190.000 115.739,190.000 115.000,190.000 113.651,189.956 113.201,189.941 111.852,189.897 111.403,189.882 110.060,189.750 109.612,189.706 108.269,189.574 107.821,189.529 106.489,189.310 106.046,189.236 104.714,189.016 104.270,188.943 102.956,188.637 102.517,188.535 101.203,188.228 100.765,188.126 99.473,187.734 99.043,187.604 97.751,187.212 97.321,187.081 96.058,186.606 95.637,186.447 94.373,185.972 93.952,185.813 92.723,185.256 92.313,185.071 91.084,184.514 90.674,184.328 89.484,183.692 89.087,183.480 87.897,182.843 87.500,182.631 86.354,181.919 85.972,181.681 84.826,180.968 84.444,180.731 83.347,179.945 82.981,179.683 81.884,178.896 81.518,178.634 80.475,177.778 80.127,177.493 79.084,176.637 78.736,176.351 77.751,175.429 77.423,175.121 76.437,174.198 76.109,173.891 75.187,172.906 74.879,172.577 73.956,171.592 73.649,171.264 72.793,170.221 72.507,169.873 71.651,168.830 71.366,168.482 70.579,167.385 70.317,167.019 69.531,165.922 69.269,165.556 68.556,164.410 68.319,164.028 67.606,162.882 67.369,162.500 66.732,161.310 66.520,160.913 65.884,159.723 65.672,159.326 65.115,158.097 64.929,157.687 64.372,156.457 64.187,156.048 63.711,154.784 63.553,154.363 63.077,153.100 62.919,152.679 62.527,151.388 62.396,150.957 62.005,149.666 61.874,149.235 61.568,147.921 61.465,147.483 61.159,146.168 61.057,145.730 60.837,144.398 60.764,143.954 60.544,142.623 60.471,142.179 60.338,140.836 60.294,140.388 60.162,139.045 60.118,138.597 60.074,137.248 60.059,136.799 60.015,135.450 60.000,135.000 60.000,132.857 60.000,132.143 60.000,130.000 60.000,129.286 60.000,127.143 60.000,126.429 60.000,124.286 60.000,123.571 60.000,121.429 60.000,120.714 60.000,118.571 60.000,117.857 60.000,115.714 60.000,115.000 60.044,113.651 60.059,113.201 60.103,111.852 60.118,111.403 60.250,110.060 60.294,109.612 60.426,108.269 60.471,107.821 60.690,106.489 60.764,106.046 60.984,104.714 61.057,104.270 61.363,102.956 61.465,102.517 61.772,101.203 61.874,100.765 62.266,99.473 62.396,99.043 62.788,97.751 62.919,97.321 63.394,96.058 63.553,95.637 64.028,94.373 64.187,93.952 64.744,92.723 64.929,92.313 65.486,91.084 65.672,90.674 66.308,89.484 66.520,89.087 67.157,87.897 67.369,87.500 68.081,86.354 68.319,85.972 69.032,84.826 69.269,84.444 70.055,83.347 70.317,82.981 71.104,81.884 71.366,81.518 72.222,80.475 72.507,80.127 73.363,79.084 73.649,78.736 74.571,77.751 74.879,77.423 75.802,76.437 76.109,76.109 77.094,75.187 77.423,74.879 78.408,73.956 78.736,73.649 79.779,72.793 80.127,72.507 81.170,71.651 81.518,71.366 82.615,70.579 82.981,70.317 84.078,69.531 84.444,69.269 85.590,68.556 85.972,68.319 87.118,67.606 87.500,67.369 88.690,66.732 89.087,66.520 90.277,65.884 90.674,65.672 91.903,65.115 92.313,64.929 93.543,64.372 93.952,64.187 95.216,63.711 95.637,63.553 96.900,63.077 97.321,62.919 98.612,62.527 99.043,62.396 100.334,62.005 100.765,61.874 102.079,61.568 102.517,61.465 103.832,61.159 104.270,61.057 105.602,60.837 106.046,60.764 107.377,60.544 107.821,60.471 109.164,60.338 109.612,60.294 110.955,60.162 111.403,60.118 112.752,60.074 113.201,60.059 114.550,60.015 115.000,60.000 117.217,60.000 117.957,60.000 120.174,60.000 120.913,60.000 123.130,60.000 123.870,60.000 126.087,60.000 126.826,60.000 129.043,60.000 129.783,60.000 132.000,60.000 132.739,60.000 134.957,60.000 135.696,60.000 137.913,60.000 138.652,60.000 140.870,60.000 141.609,60.000 143.826,60.000 144.565,60.000 146.783,60.000 147.522,60.000 149.739,60.000 150.478,60.000 152.696,60.000 153.435,60.000 155.652,60.000 156.391,60.000 158.609,60.000 159.348,60.000 161.565,60.000 162.304,60.000 164.522,60.000 165.261,60.000 167.478,60.000 168.217,60.000 170.435,60.000 171.174,60.000 173.391,60.000 174.130,60.000 176.348,60.000 177.087,60.000 179.304,60.000 180.043,60.000 182.261,60.000 183.000,60.000 184.349,60.044 184.799,60.059 186.148,60.103 186.597,60.118 187.940,60.250 188.388,60.294 189.731,60.426 190.179,60.471 191.511,60.690 191.954,60.764 193.286,60.984 193.730,61.057 195.044,61.363 195.483,61.465 196.797,61.772 197.235,61.874 198.527,62.266 198.957,62.396 200.249,62.788 200.679,62.919 201.942,63.394 202.363,63.553 203.627,64.028 204.048,64.187 205.277,64.744 205.687,64.929 206.916,65.486 207.326,65.672 208.516,66.308 208.913,66.520 210.103,67.157 210.500,67.369 211.646,68.081 212.028,68.319 213.174,69.032 213.556,69.269 214.653,70.055 215.019,70.317 216.116,71.104 216.482,71.366 217.525,72.222 217.873,72.507 218.916,73.363 219.264,73.649 220.249,74.571 220.577,74.879 221.563,75.802 221.891,76.109 222.813,77.094 223.121,77.423 224.044,78.408 224.351,78.736 225.207,79.779 225.493,80.127 226.349,81.170 226.634,81.518 227.421,82.615 227.683,82.981 228.469,84.078 228.731,84.444 229.444,85.590 229.681,85.972 230.394,87.118 230.631,87.500 231.268,88.690 231.480,89.087 232.116,90.277 232.328,90.674 232.885,91.903 233.071,92.313 233.628,93.543 233.813,93.952 234.289,95.216 234.447,95.637 234.923,96.900 235.081,97.321 235.473,98.612 235.604,99.043 235.995,100.334 236.126,100.765 236.432,102.079 236.535,102.517 236.841,103.832 236.943,104.270 237.163,105.602 237.236,106.046 237.456,107.377 237.529,107.821 237.662,109.164 237.706,109.612 237.838,110.955 237.882,111.403 237.926,112.752" fill="none" stroke="#111" stroke-width="0.45"/>
+<circle cx="149.000" cy="184.000" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<line x1="142.750" y1="184.000" x2="155.250" y2="184.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="149.000" y1="177.750" x2="149.000" y2="190.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="80.352" cy="169.648" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<line x1="74.102" y1="169.648" x2="86.602" y2="169.648" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="80.352" y1="163.398" x2="80.352" y2="175.898" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="217.648" cy="169.648" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<line x1="211.398" y1="169.648" x2="223.898" y2="169.648" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="217.648" y1="163.398" x2="217.648" y2="175.898" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="80.352" cy="80.352" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<line x1="74.102" y1="80.352" x2="86.602" y2="80.352" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="80.352" y1="74.102" x2="80.352" y2="86.602" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="217.648" cy="80.352" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<line x1="211.398" y1="80.352" x2="223.898" y2="80.352" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="217.648" y1="74.102" x2="217.648" y2="86.602" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="149.000" cy="66.000" r="3.250" fill="none" stroke="#111" stroke-width="0.45"/>
+<line x1="142.750" y1="66.000" x2="155.250" y2="66.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="149.000" y1="59.750" x2="149.000" y2="72.250" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<circle cx="149.000" cy="184.000" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<circle cx="80.352" cy="169.648" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<circle cx="217.648" cy="169.648" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<circle cx="80.352" cy="80.352" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<circle cx="217.648" cy="80.352" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<circle cx="149.000" cy="66.000" r="1.700" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
 <line x1="60.000" y1="190.000" x2="60.000" y2="206.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="115.000" y1="190.000" x2="115.000" y2="206.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="60.000" y1="204.000" x2="115.000" y2="204.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="80.352" y1="190.000" x2="80.352" y2="206.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="60.000" y1="204.000" x2="80.352" y2="204.000" stroke="#1a5276" stroke-width="0.16"/>
 <polygon points="60.000,204.000 62.400,203.550 62.400,204.450" fill="#111"/>
-<polygon points="115.000,204.000 112.600,204.450 112.600,203.550" fill="#111"/>
-<text x="87.500" y="202.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">55,00</text>
+<polygon points="80.352,204.000 77.952,204.450 77.952,203.550" fill="#111"/>
+<text x="70.176" y="202.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">20,35</text>
 <line x1="60.000" y1="190.000" x2="60.000" y2="218.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="220.000" y1="190.000" x2="220.000" y2="218.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="60.000" y1="216.000" x2="220.000" y2="216.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="149.000" y1="190.000" x2="149.000" y2="218.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="60.000" y1="216.000" x2="149.000" y2="216.000" stroke="#1a5276" stroke-width="0.16"/>
 <polygon points="60.000,216.000 62.400,215.550 62.400,216.450" fill="#111"/>
-<polygon points="220.000,216.000 217.600,216.450 217.600,215.550" fill="#111"/>
-<text x="140.000" y="214.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">160,00</text>
+<polygon points="149.000,216.000 146.600,216.450 146.600,215.550" fill="#111"/>
+<text x="104.500" y="214.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">89,00</text>
 <line x1="60.000" y1="190.000" x2="60.000" y2="230.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="275.000" y1="190.000" x2="275.000" y2="230.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="60.000" y1="228.000" x2="275.000" y2="228.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="238.000" y1="190.000" x2="238.000" y2="230.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="60.000" y1="228.000" x2="238.000" y2="228.000" stroke="#1a5276" stroke-width="0.16"/>
 <polygon points="60.000,228.000 62.400,227.550 62.400,228.450" fill="#111"/>
-<polygon points="275.000,228.000 272.600,228.450 272.600,227.550" fill="#111"/>
-<text x="167.500" y="226.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">215,00</text>
-<line x1="60.000" y1="70.000" x2="44.000" y2="70.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="238.000,228.000 235.600,228.450 235.600,227.550" fill="#111"/>
+<text x="149.000" y="226.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle">178,00</text>
+<line x1="60.000" y1="60.000" x2="44.000" y2="60.000" stroke="#1a5276" stroke-width="0.16"/>
 <line x1="60.000" y1="190.000" x2="44.000" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="46.000" y1="70.000" x2="46.000" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="46.000,70.000 46.450,72.400 45.550,72.400" fill="#111"/>
+<line x1="46.000" y1="60.000" x2="46.000" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="46.000,60.000 46.450,62.400 45.550,62.400" fill="#111"/>
 <polygon points="46.000,190.000 45.550,187.600 46.450,187.600" fill="#111"/>
-<text x="44.400" y="130.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 44.400 130.000)">120,00</text>
-<line x1="275.000" y1="185.000" x2="291.000" y2="185.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="275.000" y1="190.000" x2="291.000" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="289.000" y1="185.000" x2="289.000" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="289.000,185.000 289.450,187.400 288.550,187.400" fill="#111"/>
-<polygon points="289.000,190.000 288.550,187.600 289.450,187.600" fill="#111"/>
-<text x="287.400" y="187.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 287.400 187.500)">5,00</text>
-<line x1="275.000" y1="130.000" x2="305.000" y2="130.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="275.000" y1="190.000" x2="305.000" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="303.000" y1="130.000" x2="303.000" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="303.000,130.000 303.450,132.400 302.550,132.400" fill="#111"/>
-<polygon points="303.000,190.000 302.550,187.600 303.450,187.600" fill="#111"/>
-<text x="301.400" y="160.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 301.400 160.000)">60,00</text>
-<line x1="220.000" y1="71.750" x2="232.728" y2="59.022" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="220.000,71.750 221.379,69.735 222.015,70.371" fill="#111"/>
-<circle cx="232.728" cy="59.022" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="232.728" y="59.922" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">1</text>
-<line x1="258.885" y1="86.115" x2="274.473" y2="77.115" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="258.885,86.115 260.738,84.525 261.188,85.305" fill="#111"/>
-<circle cx="274.473" cy="77.115" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="274.473" y="78.015" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">2</text>
-<text x="167.500" y="240.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">VISTA SUPERIOR    escala 1:1</text>
-<line x1="140.900" y1="241.500" x2="194.100" y2="241.500" stroke="#333" stroke-width="0.25"/>
-<defs><pattern id="h71" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><rect x="60.000" y="262.000" width="215.000" height="16.000" fill="url(#h71)" stroke="#111" stroke-width="0.45"/>
-<rect x="112.900" y="262.000" width="4.200" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
-<rect x="111.750" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
-<rect x="217.900" y="262.000" width="4.200" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
-<rect x="216.750" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
-<rect x="62.900" y="262.000" width="4.200" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
-<rect x="61.750" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
-<rect x="267.900" y="262.000" width="4.200" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
-<rect x="266.750" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
-<rect x="112.900" y="262.000" width="4.200" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
-<rect x="111.750" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
-<rect x="217.900" y="262.000" width="4.200" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
-<rect x="216.750" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<text x="44.400" y="125.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 44.400 125.000)">130,00</text>
+<line x1="238.000" y1="184.000" x2="254.000" y2="184.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="238.000" y1="190.000" x2="254.000" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="252.000" y1="184.000" x2="252.000" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="252.000,184.000 252.450,186.400 251.550,186.400" fill="#111"/>
+<polygon points="252.000,190.000 251.550,187.600 252.450,187.600" fill="#111"/>
+<text x="250.400" y="187.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 250.400 187.000)">6,00</text>
+<line x1="238.000" y1="169.648" x2="268.000" y2="169.648" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="238.000" y1="190.000" x2="268.000" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="266.000" y1="169.648" x2="266.000" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="266.000,169.648 266.450,172.048 265.550,172.048" fill="#111"/>
+<polygon points="266.000,190.000 265.550,187.600 266.450,187.600" fill="#111"/>
+<text x="264.400" y="179.824" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 264.400 179.824)">20,35</text>
+<line x1="217.648" y1="77.102" x2="230.376" y2="64.374" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="217.648,77.102 219.027,75.087 219.663,75.723" fill="#111"/>
+<circle cx="230.376" cy="64.374" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="230.376" y="65.274" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">1</text>
+<line x1="221.885" y1="76.115" x2="237.473" y2="67.115" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="221.885,76.115 223.738,74.525 224.188,75.305" fill="#111"/>
+<circle cx="237.473" cy="67.115" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="237.473" y="68.015" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">2</text>
+<text x="149.000" y="240.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">VISTA SUPERIOR    escala 1:1</text>
+<line x1="122.400" y1="241.500" x2="175.600" y2="241.500" stroke="#333" stroke-width="0.25"/>
+<defs><pattern id="h71" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><rect x="60.000" y="262.000" width="178.000" height="16.000" fill="url(#h71)" stroke="#111" stroke-width="0.45"/>
+<rect x="147.300" y="262.000" width="3.400" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="145.750" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="78.652" y="262.000" width="3.400" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="77.102" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="215.948" y="262.000" width="3.400" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="214.398" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="78.652" y="262.000" width="3.400" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="77.102" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="215.948" y="262.000" width="3.400" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="214.398" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="147.300" y="262.000" width="3.400" height="16.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
+<rect x="145.750" y="262.000" width="6.500" height="8.000" fill="#fff" stroke="#111" stroke-width="0.45"/>
 <line x1="60.000" y1="262.000" x2="44.000" y2="262.000" stroke="#1a5276" stroke-width="0.16"/>
 <line x1="60.000" y1="278.000" x2="44.000" y2="278.000" stroke="#1a5276" stroke-width="0.16"/>
 <line x1="46.000" y1="262.000" x2="46.000" y2="278.000" stroke="#1a5276" stroke-width="0.16"/>
 <polygon points="46.000,262.000 46.450,264.400 45.550,264.400" fill="#111"/>
 <polygon points="46.000,278.000 45.550,275.600 46.450,275.600" fill="#111"/>
 <text x="44.400" y="270.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 44.400 270.000)">4,00</text>
-<text x="167.500" y="288.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">CORTE - furos de fixação projetados    escala vertical 4:1</text>
-<line x1="112.400" y1="289.500" x2="222.600" y2="289.500" stroke="#333" stroke-width="0.25"/>
-<defs><pattern id="hp92" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="420.000,100.000 444.000,100.000 444.000,116.000 453.200,116.000 453.200,132.000 420.000,132.000" fill="url(#hp92)" stroke="#111" stroke-width="0.45"/>
-<defs><pattern id="hp93" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="520.000,100.000 496.000,100.000 496.000,116.000 486.800,116.000 486.800,132.000 520.000,132.000" fill="url(#hp93)" stroke="#111" stroke-width="0.45"/>
-<path d="M 447.20 113.20 Q 470.00 86.80 492.80 113.20 Z" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="3,1.5"/>
-<line x1="458.000" y1="113.200" x2="458.000" y2="140.000" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="3,1.5"/>
-<line x1="482.000" y1="113.200" x2="482.000" y2="140.000" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="3,1.5"/>
-<text x="504.000" y="98.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="start">M3 x 6 ISO 7380 (ref.)</text>
-<line x1="503.000" y1="97.000" x2="483.680" y2="105.940" stroke="#7f8c8d" stroke-width="0.16"/>
-<line x1="444.000" y1="100.000" x2="444.000" y2="89.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="496.000" y1="100.000" x2="496.000" y2="89.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="444.000" y1="91.000" x2="496.000" y2="91.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="444.000,91.000 446.400,90.550 446.400,91.450" fill="#111"/>
-<polygon points="496.000,91.000 493.600,91.450 493.600,90.550" fill="#111"/>
-<text x="470.000" y="89.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;6,50</text>
-<line x1="453.200" y1="132.000" x2="453.200" y2="147.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="486.800" y1="132.000" x2="486.800" y2="147.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="453.200" y1="145.000" x2="486.800" y2="145.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="453.200,145.000 455.600,144.550 455.600,145.450" fill="#111"/>
-<polygon points="486.800,145.000 484.400,145.450 484.400,144.550" fill="#111"/>
-<text x="470.000" y="143.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;4,20</text>
-<line x1="420.000" y1="100.000" x2="409.000" y2="100.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="420.000" y1="116.000" x2="409.000" y2="116.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="411.000" y1="100.000" x2="411.000" y2="116.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="411.000,100.000 411.450,102.400 410.550,102.400" fill="#111"/>
-<polygon points="411.000,116.000 410.550,113.600 411.450,113.600" fill="#111"/>
-<text x="409.400" y="108.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 409.400 108.000)">2,00</text>
-<line x1="420.000" y1="116.000" x2="409.000" y2="116.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="420.000" y1="132.000" x2="409.000" y2="132.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="411.000" y1="116.000" x2="411.000" y2="132.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="411.000,116.000 411.450,118.400 410.550,118.400" fill="#111"/>
-<polygon points="411.000,132.000 410.550,129.600 411.450,129.600" fill="#111"/>
-<text x="409.400" y="124.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 409.400 124.000)">2,00</text>
-<line x1="420.000" y1="100.000" x2="394.000" y2="100.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="420.000" y1="132.000" x2="394.000" y2="132.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="396.000" y1="100.000" x2="396.000" y2="132.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="396.000,100.000 396.450,102.400 395.550,102.400" fill="#111"/>
-<polygon points="396.000,132.000 395.550,129.600 396.450,129.600" fill="#111"/>
-<text x="394.400" y="116.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 394.400 116.000)">4,00</text>
-<line x1="488.800" y1="124.000" x2="522.000" y2="124.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="488.800,124.000 491.200,123.550 491.200,124.450" fill="#111"/>
-<circle cx="522.000" cy="124.000" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="522.000" y="124.900" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">3</text>
-<text x="470.000" y="158.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">DETALHE - furo de fixação (6x)    escala 8:1</text>
-<line x1="428.200" y1="159.500" x2="511.800" y2="159.500" stroke="#333" stroke-width="0.25"/>
-<text x="330.000" y="172.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="bold" fill="#333" text-anchor="start">NOTAS DE FABRICAÇÃO</text>
-<line x1="330.000" y1="173.500" x2="570.000" y2="173.500" stroke="#333" stroke-width="0.25"/>
-<circle cx="332.400" cy="178.100" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="332.400" y="179.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">1</text>
-<text x="337.200" y="179.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">6x &#216;4,20 passante com rebaixo &#216;6,50 x 2,00 para a cabeça do parafuso M3 ISO 7380.</text>
-<circle cx="332.400" cy="182.700" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="332.400" y="183.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">2</text>
-<text x="337.200" y="183.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Silhueta idêntica à do corpo: 215,00 x 120,00, cantos R55,00.</text>
-<circle cx="332.400" cy="187.300" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="332.400" y="188.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">3</text>
-<text x="337.200" y="188.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Espessura 4,00; sob a cabeça do parafuso restam 2,00 mm - é a seção mais fina da peça.</text>
-<circle cx="332.400" cy="191.900" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="332.400" y="192.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">4</text>
-<text x="337.200" y="192.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Fixação com 6x M3 x 6 ISO 7380 em inserto de latão M3 no corpo (ver desenho PIBIC-CX-02).</text>
-<text x="330.000" y="209.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="bold" fill="#333" text-anchor="start">COORDENADAS DOS FUROS - origem no canto inferior esquerdo</text>
-<rect x="330.000" y="211.400" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="341.000" y="215.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">FURO</text>
-<rect x="352.000" y="211.400" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="364.000" y="215.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">X [mm]</text>
-<rect x="376.000" y="211.400" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="388.000" y="215.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">Y [mm]</text>
-<rect x="400.000" y="211.400" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="411.000" y="215.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">&#216;</text>
-<rect x="330.000" y="217.000" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="341.000" y="220.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FURO 1</text>
-<rect x="352.000" y="217.000" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="364.000" y="220.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">55,00</text>
-<rect x="376.000" y="217.000" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="388.000" y="220.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">5,00</text>
-<rect x="400.000" y="217.000" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="411.000" y="220.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
-<rect x="330.000" y="222.600" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="341.000" y="226.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FURO 2</text>
-<rect x="352.000" y="222.600" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="364.000" y="226.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">160,00</text>
-<rect x="376.000" y="222.600" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="388.000" y="226.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">5,00</text>
-<rect x="400.000" y="222.600" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="411.000" y="226.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
-<rect x="330.000" y="228.200" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="341.000" y="232.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FURO 3</text>
-<rect x="352.000" y="228.200" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="364.000" y="232.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">5,00</text>
-<rect x="376.000" y="228.200" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="388.000" y="232.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">60,00</text>
-<rect x="400.000" y="228.200" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="411.000" y="232.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
-<rect x="330.000" y="233.800" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="341.000" y="237.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FURO 4</text>
-<rect x="352.000" y="233.800" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="364.000" y="237.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">210,00</text>
-<rect x="376.000" y="233.800" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="388.000" y="237.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">60,00</text>
-<rect x="400.000" y="233.800" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="411.000" y="237.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
-<rect x="330.000" y="239.400" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="341.000" y="243.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FURO 5</text>
-<rect x="352.000" y="239.400" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="364.000" y="243.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">55,00</text>
-<rect x="376.000" y="239.400" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="388.000" y="243.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">115,00</text>
-<rect x="400.000" y="239.400" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="411.000" y="243.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
-<rect x="330.000" y="245.000" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="341.000" y="248.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FURO 6</text>
-<rect x="352.000" y="245.000" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="364.000" y="248.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">160,00</text>
-<rect x="376.000" y="245.000" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="388.000" y="248.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">115,00</text>
-<rect x="400.000" y="245.000" width="22.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="411.000" y="248.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
+<text x="149.000" y="288.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">CORTE - furos de fixação projetados    escala vertical 4:1</text>
+<line x1="93.900" y1="289.500" x2="204.100" y2="289.500" stroke="#333" stroke-width="0.25"/>
+<defs><pattern id="hp92" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="420.000,200.000 444.000,200.000 444.000,216.000 456.400,216.000 456.400,232.000 420.000,232.000" fill="url(#hp92)" stroke="#111" stroke-width="0.45"/>
+<defs><pattern id="hp93" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="520.000,200.000 496.000,200.000 496.000,216.000 483.600,216.000 483.600,232.000 520.000,232.000" fill="url(#hp93)" stroke="#111" stroke-width="0.45"/>
+<path d="M 447.20 213.20 Q 470.00 186.80 492.80 213.20 Z" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<line x1="458.000" y1="213.200" x2="458.000" y2="240.000" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<line x1="482.000" y1="213.200" x2="482.000" y2="240.000" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<text x="504.000" y="198.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="start">M3 x 6 ISO 7380 (ref.)</text>
+<line x1="503.000" y1="197.000" x2="483.680" y2="205.940" stroke="#7f8c8d" stroke-width="0.16"/>
+<line x1="444.000" y1="200.000" x2="444.000" y2="189.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="496.000" y1="200.000" x2="496.000" y2="189.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="444.000" y1="191.000" x2="496.000" y2="191.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="444.000,191.000 446.400,190.550 446.400,191.450" fill="#111"/>
+<polygon points="496.000,191.000 493.600,191.450 493.600,190.550" fill="#111"/>
+<text x="470.000" y="189.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;6,50</text>
+<line x1="456.400" y1="232.000" x2="456.400" y2="247.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="483.600" y1="232.000" x2="483.600" y2="247.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="456.400" y1="245.000" x2="483.600" y2="245.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="456.400,245.000 458.800,244.550 458.800,245.450" fill="#111"/>
+<polygon points="483.600,245.000 481.200,245.450 481.200,244.550" fill="#111"/>
+<text x="470.000" y="243.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;3,40</text>
+<line x1="420.000" y1="200.000" x2="409.000" y2="200.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="420.000" y1="216.000" x2="409.000" y2="216.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="411.000" y1="200.000" x2="411.000" y2="216.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="411.000,200.000 411.450,202.400 410.550,202.400" fill="#111"/>
+<polygon points="411.000,216.000 410.550,213.600 411.450,213.600" fill="#111"/>
+<text x="409.400" y="208.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 409.400 208.000)">2,00</text>
+<line x1="420.000" y1="216.000" x2="409.000" y2="216.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="420.000" y1="232.000" x2="409.000" y2="232.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="411.000" y1="216.000" x2="411.000" y2="232.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="411.000,216.000 411.450,218.400 410.550,218.400" fill="#111"/>
+<polygon points="411.000,232.000 410.550,229.600 411.450,229.600" fill="#111"/>
+<text x="409.400" y="224.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 409.400 224.000)">2,00</text>
+<line x1="420.000" y1="200.000" x2="394.000" y2="200.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="420.000" y1="232.000" x2="394.000" y2="232.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="396.000" y1="200.000" x2="396.000" y2="232.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="396.000,200.000 396.450,202.400 395.550,202.400" fill="#111"/>
+<polygon points="396.000,232.000 395.550,229.600 396.450,229.600" fill="#111"/>
+<text x="394.400" y="216.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 394.400 216.000)">4,00</text>
+<line x1="485.600" y1="224.000" x2="522.000" y2="224.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="485.600,224.000 488.000,223.550 488.000,224.450" fill="#111"/>
+<circle cx="522.000" cy="224.000" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="522.000" y="224.900" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">3</text>
+<text x="470.000" y="258.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">DETALHE - furo de fixação (6x)    escala 8:1</text>
+<line x1="428.200" y1="259.500" x2="511.800" y2="259.500" stroke="#333" stroke-width="0.25"/>
+<text x="330.000" y="40.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="bold" fill="#333" text-anchor="start">NOTAS DE FABRICAÇÃO</text>
+<line x1="330.000" y1="41.500" x2="580.000" y2="41.500" stroke="#333" stroke-width="0.25"/>
+<circle cx="332.400" cy="46.100" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="332.400" y="47.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">1</text>
+<text x="337.200" y="47.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">6x &#216;3,40 passante com rebaixo &#216;6,50 x 2,00 para a cabeça do parafuso M3 ISO 7380.</text>
+<circle cx="332.400" cy="50.700" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="332.400" y="51.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">2</text>
+<text x="337.200" y="51.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Silhueta idêntica à do corpo e à do painel: 178,00 x 130,00, cantos R55,00.</text>
+<circle cx="332.400" cy="55.300" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="332.400" y="56.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">3</text>
+<text x="337.200" y="56.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Espessura 4,00; sob a cabeça do parafuso restam 2,00 mm - é a seção mais fina da peça.</text>
+<circle cx="332.400" cy="59.900" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="332.400" y="60.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">4</text>
+<text x="337.200" y="60.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Fixação com 6x M3 x 6 ISO 7380 em inserto de latão M3 na base das colunas do corpo (ver PIBIC-CX-02).</text>
+<circle cx="332.400" cy="64.500" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="332.400" y="65.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">5</text>
+<text x="337.200" y="65.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Peça de serviço: fica na face de BAIXO da caixa montada. O rebaixo abre para fora, então imprimir com ele para cima.</text>
+<text x="330.000" y="81.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="bold" fill="#333" text-anchor="start">COORDENADAS DOS FUROS - origem no canto inferior esquerdo</text>
+<rect x="330.000" y="84.000" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="343.000" y="87.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">FURO</text>
+<rect x="356.000" y="84.000" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="369.000" y="87.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">X [mm]</text>
+<rect x="382.000" y="84.000" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="395.000" y="87.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">Y [mm]</text>
+<rect x="408.000" y="84.000" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="420.000" y="87.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">&#216;</text>
+<rect x="330.000" y="89.600" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="343.000" y="93.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FIX 1</text>
+<rect x="356.000" y="89.600" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="369.000" y="93.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">89,00</text>
+<rect x="382.000" y="89.600" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="395.000" y="93.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">6,00</text>
+<rect x="408.000" y="89.600" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="420.000" y="93.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
+<rect x="330.000" y="95.200" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="343.000" y="99.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FIX 2</text>
+<rect x="356.000" y="95.200" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="369.000" y="99.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">20,35</text>
+<rect x="382.000" y="95.200" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="395.000" y="99.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">20,35</text>
+<rect x="408.000" y="95.200" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="420.000" y="99.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
+<rect x="330.000" y="100.800" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="343.000" y="104.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FIX 3</text>
+<rect x="356.000" y="100.800" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="369.000" y="104.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">157,65</text>
+<rect x="382.000" y="100.800" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="395.000" y="104.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">20,35</text>
+<rect x="408.000" y="100.800" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="420.000" y="104.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
+<rect x="330.000" y="106.400" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="343.000" y="110.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FIX 4</text>
+<rect x="356.000" y="106.400" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="369.000" y="110.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">20,35</text>
+<rect x="382.000" y="106.400" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="395.000" y="110.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">109,65</text>
+<rect x="408.000" y="106.400" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="420.000" y="110.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
+<rect x="330.000" y="112.000" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="343.000" y="115.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FIX 5</text>
+<rect x="356.000" y="112.000" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="369.000" y="115.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">157,65</text>
+<rect x="382.000" y="112.000" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="395.000" y="115.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">109,65</text>
+<rect x="408.000" y="112.000" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="420.000" y="115.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
+<rect x="330.000" y="117.600" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="343.000" y="121.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FIX 6</text>
+<rect x="356.000" y="117.600" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="369.000" y="121.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">89,00</text>
+<rect x="382.000" y="117.600" width="26.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="395.000" y="121.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">124,00</text>
+<rect x="408.000" y="117.600" width="24.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="420.000" y="121.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;6,50</text>
 <rect x="8.000" y="8.000" width="578.000" height="404.000" fill="none" stroke="#111" stroke-width="0.35"/>
 <rect x="8.000" y="384.000" width="578.000" height="28.000" fill="none" stroke="#111" stroke-width="0.35"/>
 <rect x="8.000" y="384.000" width="254.320" height="17.000" fill="none" stroke="#888" stroke-width="0.16"/>
@@ -229,7 +232,7 @@
 <text x="264.120" y="400.267" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">Rafael Alves de Sousa Costa</text>
 <rect x="262.320" y="402.667" width="173.400" height="9.333" fill="none" stroke="#888" stroke-width="0.16"/>
 <text x="264.120" y="405.867" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">DATA</text>
-<text x="264.120" y="409.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">05/08/2026</text>
+<text x="264.120" y="409.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">15/08/2026</text>
 <rect x="435.720" y="384.000" width="150.280" height="10.000" fill="none" stroke="#888" stroke-width="0.16"/>
 <text x="437.520" y="387.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">DESENHO Nº</text>
 <text x="437.520" y="391.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="bold" fill="#111" text-anchor="start">PIBIC-CX-03</text>

@@ -1,28 +1,87 @@
-# Tampa com encaixe para botões de arcade — PIBIC-CEUB
+# Caixa com botões de arcade meio embutidos — PIBIC-CEUB
 
-Modelagem de uma tampa em PETG com encaixe para dois botões de arcade,
-derivada dos desenhos esquemáticos `botao-verde-desenho-esquematico.jpg` e
+Caixa em PETG de três peças para dois botões de arcade M24, derivada dos
+desenhos esquemáticos `botao-verde-desenho-esquematico.jpg` e
 `botao-vermelho-desenho-esquematico.jpg`.
+
+---
+
+## ⚠ Revisão atual: A1 mini + botões meio embutidos
+
+A caixa foi refeita para a **Bambu Lab A1 mini** (mesa 180 × 180) e os botões
+passaram a entrar **meio embutidos** num rebaixo. `gerar_modelo_3mf.py` é agora
+a fonte única da geometria das três peças — os `.3mf` e os desenhos saem dele.
+
+| | Antes (K1C) | Agora (A1 mini) |
+|---|---|---|
+| Silhueta | 215 × 120 | **178 × 130** |
+| Painel | 10 mm, botão todo para fora | **16 mm**, rebaixo de 8,00 / 5,00 |
+| Parede do corpo | 10 mm | **4 mm** + 6 colunas Ø10 |
+| Fixação | 6 insertos, só a tampa | **12 insertos**, painel e tampa |
+| Altura montada | 69 mm | **75 mm** |
+| Folga entre as capas | 25,35 mm | **4,35 mm** |
+
+Para reproduzir tudo do zero:
+
+```
+python gerar_modelo_3mf.py     # parametros -> caixa-*.3mf e caixa-*.stl
+python validar_modelo.py       # confere os .3mf gravados
+python gerar_desenhos_3mf.py   # .3mf -> desenho-caixa-*.svg
+```
+
+### Placa avulsa de 209,30 × 108,50 — REMOVIDA
+
+`desenho-tampa.svg`, `tampa-botoes.scad` e `tampa-botoes.stl` eram a versão
+anterior, de antes de a caixa existir: uma chapa de 4 mm com os 2 furos M24 e
+os 6 furos de fixação. Foram **apagados**, junto com o código que só servia a
+eles (`tampa()` em `gerar_stl.py`, `desenho_tampa()` em `gerar_desenhos.py`,
+`checar_tampa()` em `validar_stl.py` e a classe `FuroRebaixado`, que ficou sem
+nenhum uso).
+
+O `caixa-painel` faz o que ela fazia e mais: rebaixo de assento das capas,
+espessura compatível com a porca M24 e fixação real no corpo. Mantê-la seria
+guardar duas placas parecidas e incompatíveis — espaçamento de botões de 119,65
+contra 84,00 entre centros — que é o tipo de coisa que se imprime errado.
+
+Está tudo no histórico do git, caso precise.
+
+Os gabaritos (`gabarito-passante`, `gabarito-roscado`) **continuam válidos**:
+medem tolerância de furo, não dependem de peça nenhuma e têm 160 × 40 mm.
+
+**O que ficou superado neste README.** As seções abaixo descrevendo a caixa de
+**215 × 120**, a parede de 10 mm, os 6 insertos e os parâmetros de impressão da
+**Creality K1C** são da revisão anterior. Valem ainda: as cotas dos botões
+lidas dos esquemáticos, a memória de cálculo da rosca M24 × 2 e os gabaritos de
+tolerância, que independem de impressora. Em caso de conflito, **o modelo
+paramétrico manda** — ele se recusa a gerar geometria inconsistente, e
+`gerar_desenhos_3mf.py` se recusa a emitir prancha que discorde dele.
+
+---
 
 ## Arquivos
 
 | Arquivo | O que é |
 |---|---|
-| `desenho-tampa.svg` | Desenho técnico da tampa: distâncias entre botões, Ø dos furos, corte e **DETALHE B** do furo de fixação |
 | `desenho-gabarito-passante.svg` | Desenho do gabarito de furo liso |
 | `desenho-gabarito-roscado.svg` | Desenho do gabarito de rosca interna |
 | `desenho-perfil-rosca.svg` | Perfil ISO 68-1 da M24 × 2 ampliado 18:1, com a memória de cálculo |
 | `gabarito-passante.stl` | **Imprima primeiro.** 160 × 40 × 8 mm, 5 furos lisos |
 | `gabarito-roscado.stl` | **Imprima junto.** 160 × 40 × 8 mm, 5 roscas M24 × 2 reais |
-| `tampa-botoes.stl` / `.scad` | Tampa final, 209,30 × 108,50 × 4 mm, com os 2 furos M24 e os 6 furos de fixação rebaixados |
 | `LISTA-DE-MATERIAIS.md` | **BOM completa** — botões, ferragens, fiação, solda, filamento, ferramentas |
-| `desenho-caixa-painel.svg` | Painel dos botões do `.3mf` (Body1): 2 × Ø26, 9 × Ø10, círculos de furação |
-| `desenho-caixa-corpo.svg` | Corpo do `.3mf` (Body2): parede, altura, 6 furos de inserto e o detalhe da interferência |
-| `desenho-caixa-tampa.svg` | Tampa do `.3mf`: 6 furos rebaixados e detalhe 8:1 |
-| `gerar_desenhos_3mf.py` | Gera os três acima **lendo a malha dos `.3mf`** — toda cota é medida, nenhuma digitada |
-| `gerar_stl.py` | Gera os `.stl` (Python puro, sem dependências) |
-| `gerar_desenhos.py` | Gera os `.svg` a partir das **mesmas** constantes de `gerar_stl.py` |
-| `validar_stl.py` | Verifica estanqueidade, orientação, volume e perfil da rosca |
+| `gerar_modelo_3mf.py` | **Fonte única da caixa.** Parâmetros + geometria das 3 peças; grava os `.3mf` e `.stl` |
+| `malha.py` | Núcleo de malha: contornos, triangulação com furos, sólido estanque, saída 3MF/STL |
+| `validar_modelo.py` | Relê os `.3mf` gravados e confere estanqueidade, mesa, furos e parede |
+| `caixa-painel.3mf` / `.stl` | Painel, 178 × 130 × 16, com os 2 rebaixos de assento das capas |
+| `caixa-corpo.3mf` / `.stl` | Corpo, 178 × 130 × 55, parede 4 mm, 6 colunas passantes |
+| `caixa-tampa.3mf` / `.stl` | Tampa de serviço, 178 × 130 × 4 |
+| `desenho-caixa-painel.svg` | PIBIC-CX-01: vista, corte A-A e **detalhe do botão meio embutido** |
+| `desenho-caixa-corpo.svg` | PIBIC-CX-02: vistas, corte da parede e detalhe da coluna de inserto |
+| `desenho-caixa-tampa.svg` | PIBIC-CX-03: 6 furos rebaixados e detalhe 8:1 |
+| `gerar_desenhos_3mf.py` | Gera os três acima **lendo a malha dos `.3mf`** — toda cota é medida, nenhuma digitada, e o resultado é conferido contra `gerar_modelo_3mf.py` |
+| `gerar_stl.py` | Gera os `.stl` dos gabaritos de tolerância (Python puro) |
+| `gerar_desenhos.py` | Gera os `.svg` dos gabaritos a partir das **mesmas** constantes de `gerar_stl.py` |
+| `validar_stl.py` | Verifica estanqueidade, orientação, volume e perfil da rosca dos gabaritos |
+| `Projeto PIBIC-caixa.3mf`, `tampa.3mf` | **Superados.** Exportação do Fusion da caixa de 215 × 120 |
 
 Os SVG abrem em qualquer navegador e estão em escala 1:1 em milímetros
 (1 unidade SVG = 1 mm), então podem ser impressos em papel e medidos com régua.
@@ -458,28 +517,23 @@ a profundidade do furo do inserto (`10 − (6 − 2) + 1 = 7,0 mm`).
 
 Todos os números abaixo estão nos SVG; esta seção é só o roteiro.
 
-### Tampa (`desenho-tampa.svg`)
+### Painel, corpo e tampa — não precisam mais de Fusion
 
-1. Esboço no plano XY: retângulo `209,30 × 108,50` com o canto em (0, 0).
-2. Dois círculos de **Ø24,70** (ajuste depois do gabarito) em
-   `(54,25 ; 54,25)` e `(173,90 ; 54,25)`.
-3. **Extrude 4 mm**, operação *New Body*. Os círculos como *Cut* ou já
-   deixados como ilhas no perfil.
-4. Opcional: `Chamfer 0,4 mm` na boca superior dos furos — ajuda o barril a
-   entrar e disfarça o "elephant's foot" da primeira camada.
+Esta seção descrevia como modelar à mão a placa avulsa de 209,30 × 108,50, que
+foi removida. As três peças da caixa agora saem prontas de
+`gerar_modelo_3mf.py`, com `.3mf` e `.stl` para abrir direto no slicer — e o
+desenho é medido delas, não digitado.
 
-5. **Fixação, 6 pontos.** Use `Create ▸ Hole` com tipo *Counterbore*, em vez de
-   dois esboços — o Fusion mantém as duas medidas ligadas:
-   - Ø do furo `3,4 mm`, passante (*Through All*)
-   - Ø do rebaixo `6,5 mm`, profundidade `2,0 mm`
-   - posições `(8 ; 8)`, `(104,65 ; 8)`, `(201,30 ; 8)`, `(8 ; 100,5)`,
-     `(104,65 ; 100,5)`, `(201,30 ; 100,5)`
+Se quiser mexer na geometria, mexa nos parâmetros no topo daquele arquivo e
+rode a pipeline de três comandos da seção inicial. `conferir_projeto()` valida
+antes de gerar qualquer malha: folga entre capas, distância dos rebaixos à
+borda e aos parafusos, espessura apertada pela porca contra o máximo do botão,
+comprimento de parafuso de catálogo e coluna de inserto contra a parede. Cada
+uma dessas regras é uma coisa que, se estiver errada, só apareceria depois de
+seis horas de impressão.
 
-   O rebaixo vai na face **de cima** (a que fica à mão). Confira que restaram
-   2,0 mm de material sob cada rebaixo antes de extrudar.
-
-Não modele rosca na tampa: com 4 mm você teria 2 filetes, insuficiente. O
-botão é preso pela porca dele, com a tampa apenas como painel.
+Continua valendo: **não modele rosca no painel.** Com 8 mm apertados você teria
+4 filetes, e o botão é preso pela porca dele.
 
 ### Pilares de inserto na caixa
 
@@ -556,12 +610,14 @@ Fusion só a tampa final. Os STL já estão validados.
    é necessário se você quiser depois uma peça com rosca integrada — para a
    tampa de 4 mm, o resultado que importa é o do passante.
 
-4. **Ajuste `folga_m24`** com o valor do passante:
-   - em `tampa-botoes.scad`, linha do parâmetro `folga_m24`
-   - ou em `gerar_stl.py`, função `tampa()`, e rode `python gerar_stl.py`
-   - ou direto no esboço do Fusion
+4. **Leve o valor do passante para o modelo.** Hoje o painel usa
+   `D_BARRIL = 26.0` em `gerar_modelo_3mf.py` (especificação Adafruit). Se o
+   gabarito mostrar que um furo menor serve, altere lá e rode
+   `python gerar_modelo_3mf.py && python gerar_desenhos_3mf.py` — modelo e
+   desenho saem juntos.
 
-5. **Imprima a tampa.**
+5. **Imprima o corpo de prova dos rebaixos** (Ø99,30 e Ø61,60) e teste as
+   capas antes do painel inteiro.
 
 ### Parâmetros de impressão — PETG na Creality K1C
 
@@ -662,12 +718,10 @@ numa grade (θ, z) e as colunas são amostradas exatamente nas quebras do perfil
 ```
 gabarito-passante.stl   160 x 40 x 8 mm    2796 triangulos   31,784 cm3  (0,0000 % divergencia)
 gabarito-roscado.stl    160 x 40 x 8 mm   21816 triangulos   33,753 cm3  (0,0005 % divergencia)
-tampa-botoes.stl     209,30 x 108,50 x 4   7824 triangulos   86,497 cm3  (0,0000 % divergencia)
 
 arestas nao pareadas: 0    arestas mal orientadas: 0
 ISO: H 1,7321 | D1 21,8349 (tabela 21,835) | D2 22,7010 | D 24,0000 | soma axial = passo  OK
 raios e fase das cristas: OK para delta 0,10 ... 0,50
-rebaixos M3 (6x): topo D6,500 | base D3,400 | fundo z=2,000   OK
 ```
 
 Os furos rebaixados obrigaram duas extensões no gerador. A placa da tampa
