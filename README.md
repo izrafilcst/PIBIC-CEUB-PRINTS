@@ -6,7 +6,42 @@ desenhos esquemáticos `botao-verde-desenho-esquematico.jpg` e
 
 ---
 
-## ⚠ Revisão atual: A1 mini + botões meio embutidos
+## ⚠ Revisão atual: berço do interruptor na parede de trás
+
+O corpo ganhou uma **estação para a chave deslizante SS12D00G4** na parede
+`y = 130`, embaixo: uma bolsa cercada de plástico nos quatro lados, aberta
+para dentro da caixa, com um rasgo de 6,00 × 3,00 por onde a haste sai. Prende
+com **cola quente**, sem parafuso. Detalhe completo na prancha **PIBIC-CX-04**
+(`desenho-caixa-berco.svg`).
+
+| | Valor | De onde vem |
+|---|---|---|
+| Eixo da haste | `x = 69,50`, `z = 12,00` | projeto |
+| Bolsa | 12,20 × 4,60 × 5,50 | corpo do componente + 0,30 de folga por lado |
+| Rasgo da haste | 6,00 × 3,00 | haste 2,50 + curso 2,00 + folga |
+| Ressalto | 17,20 de largura, avança 3,50 | bolsa + 2,50 de nervura por lado |
+| Haste para fora | 2,00 | haste 4,00 − fundo da bolsa 2,00 |
+| Suporte de impressão | nenhum | o ressalto desce até `z = 0` |
+
+**Por que `x = 69,50` e não `56,00`.** O pedido apontou a parede pelo eixo do
+botão vermelho. Ali não cabe: o ressalto tem 17,20 de largura e a face só é
+plana entre as tangências do R55, `x = 55` e `x = 123`. Centrado em 56 ele
+invadiria 7,60 mm do raio e o rasgo sairia oblíquo em relação à face. A faixa
+reta livre desse lado vai de 55 até 84, onde começa a coluna central Ø10;
+69,50 é o meio dela, com 5,90 mm de sobra dos dois lados.
+
+> **⚠ As cotas do componente são nominais.** Os datasheets públicos da série
+> SS12D00 são digitalização; só o elétrico está confirmado (1P2T, curso
+> 2,00 mm, 0,3 A / 30 V CC, terminais a 2,54 mm). **Meça a chave** e ajuste
+> `INTERRUPTOR` em `gerar_modelo_3mf.py` antes de imprimir o corpo.
+
+> **⚠ São 2 posições, não 3.** "3 posições" no anúncio são os **3 terminais**.
+> A SS12D00G4 é 1P2T. Se o projeto precisar de três estados, o componente é
+> outro e o berço muda.
+
+---
+
+## Revisão anterior: A1 mini + botões meio embutidos
 
 A caixa foi refeita para a **Bambu Lab A1 mini** (mesa 180 × 180) e os botões
 passaram a entrar **meio embutidos** num rebaixo. `gerar_modelo_3mf.py` é agora
@@ -28,6 +63,11 @@ python gerar_modelo_3mf.py     # parametros -> caixa-*.3mf e caixa-*.stl
 python validar_modelo.py       # confere os .3mf gravados
 python gerar_desenhos_3mf.py   # .3mf -> desenho-caixa-*.svg
 ```
+
+Os três param sozinhos se a geometria ficar inconsistente. `validar_modelo.py`
+mede o berço no arquivo gravado por **travessia** — onde começa e onde acaba o
+material ao longo da espessura da parede, em oito sondas — e
+`gerar_desenhos_3mf.py` recusa emitir prancha que discorde do modelo.
 
 ### Placa avulsa de 209,30 × 108,50 — REMOVIDA
 
@@ -77,6 +117,7 @@ paramétrico manda** — ele se recusa a gerar geometria inconsistente, e
 | `desenho-caixa-painel.svg` | PIBIC-CX-01: vista, corte A-A e **detalhe do botão meio embutido** |
 | `desenho-caixa-corpo.svg` | PIBIC-CX-02: vistas, corte da parede e detalhe da coluna de inserto |
 | `desenho-caixa-tampa.svg` | PIBIC-CX-03: 6 furos rebaixados e detalhe 8:1 |
+| `desenho-caixa-berco.svg` | PIBIC-CX-04: **berço do interruptor** — elevação, corte no eixo da haste, corte vertical, montagem e cotas a confirmar |
 | `gerar_desenhos_3mf.py` | Gera os três acima **lendo a malha dos `.3mf`** — toda cota é medida, nenhuma digitada, e o resultado é conferido contra `gerar_modelo_3mf.py` |
 | `gerar_stl.py` | Gera os `.stl` dos gabaritos de tolerância (Python puro) |
 | `gerar_desenhos.py` | Gera os `.svg` dos gabaritos a partir das **mesmas** constantes de `gerar_stl.py` |

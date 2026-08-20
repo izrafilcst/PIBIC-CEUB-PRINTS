@@ -10,6 +10,11 @@ toda cota sai de uma medicao na malha, nenhuma e digitada a mao.
   caixa-painel.3mf  -> desenho-caixa-painel.svg   PIBIC-CX-01
   caixa-corpo.3mf   -> desenho-caixa-corpo.svg    PIBIC-CX-02
   caixa-tampa.3mf   -> desenho-caixa-tampa.svg    PIBIC-CX-03
+  caixa-corpo.3mf   -> desenho-caixa-berco.svg    PIBIC-CX-04
+
+A CX-04 e detalhe do mesmo corpo da CX-02, em prancha propria: o berco do
+interruptor envolve um componente COMPRADO, uma sequencia de montagem e um
+conjunto de cotas ainda a confirmar, e nada disso cabe numa nota de rodape.
 
 Alem de medir, o script CONFERE o que mediu contra gerar_modelo_3mf.py. Sao
 duas fontes independentes - a malha gravada e os parametros de projeto - e a
@@ -656,7 +661,22 @@ def desenho_corpo():
     bate("corpo: n de colunas", len(ins), 6)
     bate("corpo: insertos nas duas pontas", len(cam[-1][3]), len(ins))
 
-    sw = _interruptor(larg, hh, Re, par)
+    sw = _interruptor(V, larg, alt, Re, fix, col)
+    assert sw, "estacao do interruptor nao encontrada na malha do corpo"
+    E = P.estacao()
+    bate("interruptor: parede no berco", sw["par"], P.CORPO_PAR)
+    bate("interruptor: x do eixo", sw["x"], E["x"])
+    bate("interruptor: z do eixo", sw["z"], E["z"])
+    bate("interruptor: fundo da bolsa", sw["fundo"], E["fundo"])
+    bate("interruptor: bolsa em x", sw["bolsa_l"], E["bolsa_l"])
+    bate("interruptor: bolsa em z", sw["bolsa_h"], E["bolsa_h"])
+    bate("interruptor: profundidade da bolsa", sw["bolsa_p"], E["bolsa_p"])
+    bate("interruptor: rasgo em x", sw["rasgo_l"], E["rasgo_l"])
+    bate("interruptor: rasgo em z", sw["rasgo_h"], E["rasgo_h"])
+    bate("interruptor: largura do ressalto", sw["res_l"], E["res_l"])
+    bate("interruptor: topo do ressalto", sw["z_topo"], E["z_topo"])
+    bate("interruptor: avanco sobre a cavidade", sw["saliencia"], E["saliencia"])
+
     L_pain = P.PAIN_ESP - P.REB_PAINEL + P.PENETRACAO
     L_tampa = P.TAMPA_ESP - P.REB_TAMPA + P.PENETRACAO
 
@@ -675,8 +695,17 @@ def desenho_corpo():
     contorno(D, cav, W)
     for f in ins:
         furo(D, W, f)
-    D.ret(W.px(sw["x"] - sw["l"] / 2), W.py(par), sw["l"], par,
-          L_TRACO, cor=C_ATEN, dash=None if sw["definido"] else D_FANTASMA)
+
+    # Berco, em posicao verdadeira na parede de tras. O contorno do ressalto
+    # e visto (e material que avanca sobre a cavidade); bolsa e rasgo estao
+    # atras dele, ocultos por esta vista.
+    D.ret(W.px(sw["x"] - sw["res_l"] / 2), W.py(alt),
+          sw["res_l"], sw["prof"], L_CONTORNO)
+    D.ret(W.px(sw["x"] - sw["bolsa_l"] / 2), W.py(alt - sw["fundo"]),
+          sw["bolsa_l"], sw["bolsa_p"], L_TRACO, cor="#555", dash=D_OCULTA)
+    D.linha(W.px(sw["x"] - sw["rasgo_l"] / 2), W.py(alt),
+            W.px(sw["x"] + sw["rasgo_l"] / 2), W.py(alt), 0.9, C_ATEN)
+    D.centro(W.px(sw["x"]), W.py(alt - sw["prof"] / 2), sw["res_l"] / 2 + 3)
 
     yb = W.py(0)
     xs = sorted({round(f[0], 3) for f in ins})
@@ -720,19 +749,26 @@ def desenho_corpo():
         (4, f"Fixação: em cima {len(ins)}x M3 x {L_pain:.0f} ISO 7380 "
             f"(painel de {vg(P.PAIN_ESP)}), embaixo {len(ins)}x M3 x "
             f"{L_tampa:.0f} ISO 7380 (tampa de {vg(P.TAMPA_ESP)})."),
-    ] + _notas_interruptor(sw, larg, Re, par), titulo="NOTAS DE FABRICAÇÃO",
+    ] + _notas_interruptor(sw, alt, Re, par), titulo="NOTAS DE FABRICAÇÃO",
         larg=250)
 
     y = D.notas(COL_DIR, y + 4, [
         (None, f"Altura da caixa montada = {vg(P.PAIN_ESP)} (painel) + "
                f"{vg(hh)} (corpo) + {vg(P.TAMPA_ESP)} (tampa) = "
                f"{vg(P.PAIN_ESP + hh + P.TAMPA_ESP)} mm."),
-        (None, "Imprimir em pé, como está modelado: as duas faces são planas, "
-               "não há suporte e as camadas ficam perpendiculares ao eixo dos "
-               "parafusos."),
-        (None, "NÃO há passagem de cabo no modelo - o corpo é fechado nos "
-               "quatro lados. Definir posição e diâmetro junto com o "
-               "microcontrolador."),
+        (None, "Imprimir em pé, como está modelado: as duas faces são planas "
+               "e as camadas ficam perpendiculares ao eixo dos parafusos. "
+               "SEM SUPORTE - o ressalto do berço"),
+        (None, f"desce até a base justamente para não ficar em balanço; o "
+               f"único trecho sobre o vazio é o teto da bolsa, uma ponte "
+               f"reta de {vg(sw['bolsa_l'])} mm."),
+        (None, f"NÃO há passagem de cabo no modelo. O rasgo de "
+               f"{vg(sw['rasgo_l'])} x {vg(sw['rasgo_h'])} é da haste do "
+               f"interruptor e não serve de passagem. Definir posição e "
+               f"diâmetro do prensa-cabo"),
+        (None, "junto com o microcontrolador - de preferência nesta mesma "
+               "parede, entre x = 94 e x = 123, que é o resto do trecho reto "
+               "livre."),
     ], titulo="OBSERVAÇÕES DE PROJETO", larg=250)
 
     itens = ([(f"COLUNA {i} topo", f[0], f[1], dins)
@@ -745,49 +781,97 @@ def desenho_corpo():
     D.salvar("desenho-caixa-corpo.svg")
 
 
-def _interruptor(larg, hh, Re, par):
-    s = dict(P.INTERRUPTOR) if hasattr(P, "INTERRUPTOR") else {}
-    s.setdefault("modelo", None)
-    s.setdefault("rasgo_l", None)
-    s.setdefault("rasgo_h", None)
-    s.setdefault("furo_d", None)
-    s.setdefault("env_l", 30.0)
-    s.setdefault("env_h", 25.0)
-    definido = bool(s["furo_d"]) or bool(s["rasgo_l"] and s["rasgo_h"])
-    s["definido"] = definido
-    s["x"] = larg / 2
-    s["z"] = hh / 2
-    if s["furo_d"]:
-        s["l"] = s["h"] = s["furo_d"]
-    elif definido:
-        s["l"], s["h"] = s["rasgo_l"], s["rasgo_h"]
-    else:
-        s["l"], s["h"] = s["env_l"], s["env_h"]
+def _interruptor(V, larg, alt, Re, fix, col):
+    """
+    Le a estacao do interruptor DIRETO dos vertices do corpo.
+
+    Ela e a unica feicao da peca que nao e prismatica: nao aparece em
+    'camadas' e nao tem diametro para 'analisar' medir. O que a denuncia e a
+    contagem de PLANOS. Num trecho reto da parede de tras, longe das
+    colunas, a peca so deveria ter dois planos em y - a face externa e a face
+    interna. Onde ha o berco aparecem mais dois, e os quatro saem ordenados:
+
+        y[0]  face do ressalto     y[2]  fundo da bolsa
+        y[1]  face interna         y[3]  face externa
+
+    Dai vem tudo, inclusive a parede - que assim sai EXATA, e nao pela
+    estimativa de corda que a medicao de perimetro devolve.
+
+    Os dois filtros existem por motivos concretos: sem afastar das colunas, o
+    furo de inserto da coluna central passa de y = 126 (o furo de 4,20 num
+    centro a 6,00 da face chega a 126,10) e vira um quinto plano; sem entrar
+    um pouco no trecho reto, um vertice de arco de canto entra como sexto.
+    """
+    tol = 1e-4
+    dentro = [v for v in V
+              if Re + 1.0 <= v[0] <= larg - Re - 1.0 and v[1] > alt / 2
+              and all(math.hypot(v[0] - cx, v[1] - cy) > col / 2 + tol
+                      for cx, cy in fix)]
+    planos = sorted({round(v[1], 4) for v in dentro})
+    if len(planos) == 2:
+        return None                       # parede lisa - nao ha estacao
+    assert len(planos) == 4, (
+        f"parede de tras com {len(planos)} planos em y ({planos}) - "
+        f"esperado 2 (parede lisa) ou 4 (parede com o berco)")
+    y_res, y_cav, y_piso, y_face = planos
+    assert abs(y_face - alt) < tol, "o maior plano nao e a face externa"
+
+    def grupo(y):
+        return [v for v in dentro if abs(v[1] - y) < tol]
+
+    piso, face = grupo(y_piso), grupo(y_res)
+    xs = sorted({round(v[0], 4) for v in piso})
+    zs = sorted({round(v[2], 4) for v in piso})
+    assert len(xs) == 4 and len(zs) == 4, (
+        f"fundo da bolsa com {len(xs)} cotas em x e {len(zs)} em z - "
+        f"esperado 4 e 4, que sao a bolsa e o rasgo")
+
+    s = dict(modelo=getattr(P, "INTERRUPTOR", {}).get("modelo", "?"))
+    s["par"] = y_face - y_cav
+    s["fundo"] = y_face - y_piso
+    s["prof"] = y_face - y_res
+    s["bolsa_p"] = s["prof"] - s["fundo"]
+    s["saliencia"] = s["prof"] - s["par"]
+    s["bolsa_l"], s["rasgo_l"] = xs[3] - xs[0], xs[2] - xs[1]
+    s["bolsa_h"], s["rasgo_h"] = zs[3] - zs[0], zs[2] - zs[1]
+    s["x"], s["z"] = (xs[0] + xs[3]) / 2, (zs[0] + zs[3]) / 2
+    assert abs((xs[1] + xs[2]) / 2 - s["x"]) < tol, "rasgo fora do eixo da bolsa"
+    assert abs((zs[1] + zs[2]) / 2 - s["z"]) < tol, "rasgo fora do eixo da bolsa"
+
+    xr = sorted({round(v[0], 4) for v in face})
+    s["res_l"] = xr[-1] - xr[0]
+    s["nervura"] = (s["res_l"] - s["bolsa_l"]) / 2
+    s["z_topo"] = max(v[2] for v in face)
+    assert abs((xr[0] + xr[-1]) / 2 - s["x"]) < tol, "ressalto fora do eixo"
+    assert min(v[2] for v in face) < tol, \
+        "ressalto nao desce ate a base - imprimiria em balanco"
     s["reto"] = (Re, larg - Re)
-    s["par"] = par
     return s
 
 
-def _notas_interruptor(sw, larg, Re, par):
-    if sw["definido"]:
-        forma = (dm(sw["furo_d"]) if sw["furo_d"]
-                 else f"{vg(sw['l'])} x {vg(sw['h'])}")
-        return [(5, f"Recorte do interruptor {sw['modelo']}: {forma}, centro a "
-                    f"{vg(sw['x'])} da aresta esquerda e {vg(sw['z'])} da base.")]
+def _notas_interruptor(sw, alt, Re, par):
+    """Resumo na CX-02; quem detalha o berço é a PIBIC-CX-04."""
+    haste = getattr(P, "INTERRUPTOR", {}).get("haste", 0.0)
     return [
-        (5, f"ÁREA RESERVADA PARA O INTERRUPTOR LATERAL - componente ainda não "
-            f"definido. O retângulo {vg(sw['l'])} x {vg(sw['h'])} em linha "
-            f"traço-ponto-ponto"),
-        (None, "é reserva de espaço, NÃO é recorte. Antes de imprimir, "
-               "definir modelo, formato do recorte (retangular L x H ou "
-               "&#216;) e corrente/tensão de trabalho."),
-        (None, f"A parede de {vg(par)} mm já cai na faixa de 2 a 5 mm que a "
-               f"maioria dos interruptores de encaixe aceita: o rebaixo local "
-               f"que a revisão anterior exigia"),
-        (None, "deixou de ser necessário."),
-        (6, f"A face frontal só é plana entre x = {vg(sw['reto'][0])} e "
-            f"x = {vg(sw['reto'][1])} (tangência dos raios R{vg(Re)}); o "
-            f"recorte deve ficar contido nesse trecho."),
+        (5, f"BERÇO DO INTERRUPTOR {sw['modelo']} na parede y = {vg(alt)}, "
+            f"eixo da haste a {vg(sw['x'])} da aresta esquerda e "
+            f"{vg(sw['z'])} da base. Ressalto {vg(sw['res_l'])} de largura"),
+        (None, f"avançando {vg(sw['saliencia'])} sobre a cavidade, do piso "
+               f"até z = {vg(sw['z_topo'])}; bolsa {vg(sw['bolsa_l'])} x "
+               f"{vg(sw['bolsa_h'])} x {vg(sw['bolsa_p'])}, aberta para "
+               f"dentro; rasgo da haste {vg(sw['rasgo_l'])} x "
+               f"{vg(sw['rasgo_h'])},"),
+        (None, f"único furo para fora, com {vg(haste - sw['fundo'])} mm de "
+               f"haste sobrando. Prende com COLA QUENTE, sem parafuso. "
+               f"COTAS, MONTAGEM E RESSALVAS: ver PIBIC-CX-04."),
+        (6, f"A parede só é plana entre x = {vg(sw['reto'][0])} e "
+            f"x = {vg(sw['reto'][1])} (tangência dos raios R{vg(Re)}) e a "
+            f"coluna central ocupa x = 84,00 a 94,00. O berço fica em"),
+        (None, f"{vg(sw['x'] - sw['res_l']/2)} a "
+               f"{vg(sw['x'] + sw['res_l']/2)}, com "
+               f"{vg(sw['x'] - sw['res_l']/2 - sw['reto'][0])} mm de sobra "
+               f"dos dois lados - e não em x = 56,00, no eixo do botão "
+               f"vermelho, onde invadiria 7,60 mm do raio."),
     ]
 
 
@@ -827,22 +911,32 @@ def _vista_frontal(D, ox, y_top, larg, hh, par, esp_pain, esp_tampa, Re,
         D.linha(ox + x, y_p0 - 6, ox + x, y_t1 + 6, L_TRACO, C_ATEN,
                 dash=D_CENTRO)
 
+    # O berco esta na parede de TRAS, entao nesta vista ele e feicao oculta:
+    # tres retangulos concentricos em linha tracejada. Quem mede a montagem
+    # aqui e a altura; a espessura e assunto do detalhe ampliado.
     xs_c, ys_c = ox + sw["x"], y_c1 - sw["z"]
-    D.ret(xs_c - sw["l"] / 2, ys_c - sw["h"] / 2, sw["l"], sw["h"],
-          L_CONTORNO if sw["definido"] else L_TRACO,
-          cor="#111" if sw["definido"] else C_ATEN,
-          dash=None if sw["definido"] else D_FANTASMA)
-    D.centro(xs_c, ys_c, min(sw["l"], sw["h"]) / 2)
-    D.bandeira(xs_c - sw["l"] / 2, ys_c - sw["h"] / 2, 5, ang=-125, comp=18)
+    for l, h, y0, y1 in (
+            (sw["res_l"], None, y_c1 - sw["z_topo"], y_c1),
+            (sw["bolsa_l"], sw["bolsa_h"], None, None),
+            (sw["rasgo_l"], sw["rasgo_h"], None, None)):
+        if h is None:
+            D.ret(xs_c - l / 2, y0, l, y1 - y0, L_TRACO, cor="#555",
+                  dash=D_OCULTA)
+        else:
+            D.ret(xs_c - l / 2, ys_c - h / 2, l, h, L_TRACO, cor="#555",
+                  dash=D_OCULTA)
+    D.centro(xs_c, ys_c, sw["bolsa_l"] / 2 + 3)
+    D.bandeira(xs_c - sw["res_l"] / 2, y_c1 - sw["z_topo"], 5,
+               ang=-125, comp=18)
 
     D.cota_v(y_c0, y_c1, ox - 14, vg(hh), ox)
     D.cota_v(y_p0, y_t1, ox - 28, vg(hh + esp_pain + esp_tampa), ox)
     D.cota_h(ox, xs_c, y_t1 + 14, vg(sw["x"]), y_t1)
-    D.cota_h(xs_c - sw["l"] / 2, xs_c + sw["l"] / 2, y_t1 + 26, vg(sw["l"]),
-             ys_c + sw["h"] / 2, tam=FONTE_P)
+    D.cota_h(xs_c - sw["res_l"] / 2, xs_c + sw["res_l"] / 2, y_t1 + 26,
+             vg(sw["res_l"]), y_c1, tam=FONTE_P)
     D.cota_v(ys_c, y_c1, ox + larg + 20, vg(sw["z"]), ox + larg)
-    D.cota_v(ys_c - sw["h"] / 2, ys_c + sw["h"] / 2, ox + larg + 34,
-             vg(sw["h"]), ox + larg, tam=FONTE_P)
+    D.cota_v(y_c1 - sw["z_topo"], y_c1, ox + larg + 34, vg(sw["z_topo"]),
+             ox + larg, tam=FONTE_P)
     D.rotulo_vista(ox + larg / 2, y_t1 + 38, "VISTA FRONTAL", "1:1")
 
 
@@ -1010,9 +1104,324 @@ def _detalhe_furo(D, ox, oy, esp, hreb, dp, dr, L):
     D.rotulo_vista(ox, oy + ht + 26, "DETALHE - furo de fixação (6x)", "8:1")
 
 
+# =====================================================================
+# 4. Berco do interruptor - detalhe do corpo, em prancha propria
+# =====================================================================
+
+def desenho_berco():
+    """
+    O berco tem folha propria porque nao e so geometria: envolve um
+    componente COMPRADO, uma sequencia de montagem (cola quente depois de
+    testar) e um conjunto de cotas que ainda precisa ser confirmado com a
+    peca na mao. Espremer isso na PIBIC-CX-02 seria perder as tres coisas.
+
+    Continua saindo da mesma malha - a prancha nao sabe nada que o
+    caixa-corpo.3mf nao diga.
+    """
+    V, T = ler_3mf("caixa-corpo.3mf")
+    cam = camadas(V, T)
+    zs = niveis(V)
+    hh = zs[-1]
+    ext = cam[1][2][0]
+    larg = max(p[0] for p in ext) - min(p[0] for p in ext)
+    alt = max(p[1] for p in ext) - min(p[1] for p in ext)
+    Re = raio_canto(ext)
+    ins = cam[0][3]
+    fix = [(f[0], f[1]) for f in ins]
+    col = 2 * max(raio_coluna(V, fx, fy, ins[0][2] + 0.5, P.FIX_INSET - 0.2)
+                  for fx, fy in fix)
+
+    sw = _interruptor(V, larg, alt, Re, fix, col)
+    assert sw, "estacao do interruptor nao encontrada na malha do corpo"
+    I = getattr(P, "INTERRUPTOR", {})
+    fora = I.get("haste", 0.0) - sw["fundo"]
+
+    D = Desenho(FOLHA_W, FOLHA_H, "CORPO - BERÇO DO INTERRUPTOR",
+                f"Detalhe da parede y = {vg(alt)}, para o {sw['modelo']}",
+                escala="ver ampliações", codigo="PIBIC-CX-04")
+
+    _berco_elevacao(D, 66, 50, sw, hh, larg, Re, S=3.0)
+    _berco_corte_h(D, 46, 218, sw, S=5.0)
+    _berco_corte_v(D, 240, 200, sw, S=5.0)
+
+    y = D.notas(COL_DIR, 44, [
+        (1, f"BERÇO fresado na parede de trás, y = {vg(alt)}. Eixo da haste "
+            f"a {vg(sw['x'])} da aresta esquerda e {vg(sw['z'])} da base do "
+            f"corpo."),
+        (2, f"RESSALTO {vg(sw['res_l'])} de largura, avançando "
+            f"{vg(sw['saliencia'])} sobre a cavidade, do piso (z = 0) até "
+            f"z = {vg(sw['z_topo'])}."),
+        (None, "Ele desce até a base de propósito: um bloco solto teria a "
+               "face de baixo em balanço. Assim imprime sem uma linha de "
+               "suporte e ainda se apoia na tampa."),
+        (3, f"BOLSA {vg(sw['bolsa_l'])} x {vg(sw['bolsa_h'])} x "
+            f"{vg(sw['bolsa_p'])} de profundidade, ABERTA para a cavidade - "
+            f"é por ela que o interruptor entra."),
+        (None, f"Sobram {vg(sw['nervura'])} mm de plástico de cada lado e no "
+               f"topo, e {vg(sw['fundo'])} mm no fundo. O teto da bolsa é o "
+               f"único trecho sobre o vazio: ponte reta de "
+               f"{vg(sw['bolsa_l'])} mm."),
+        (4, f"RASGO DA HASTE {vg(sw['rasgo_l'])} x {vg(sw['rasgo_h'])}, único "
+            f"furo do berço para fora. Com haste de {vg(I.get('haste', 0))} "
+            f"sobre fundo de {vg(sw['fundo'])},"),
+        (None, f"sobram {vg(fora)} mm de haste para fora. O comprimento "
+               f"{vg(sw['rasgo_l'])} = haste {vg(I.get('haste_l', 0))} + "
+               f"curso {vg(I.get('curso', 0))} + folga, para a chave "
+               f"completar as duas posições."),
+        (5, f"POSIÇÃO EM x. A parede só é plana entre x = {vg(sw['reto'][0])} "
+            f"e x = {vg(sw['reto'][1])} (tangência dos raios R{vg(Re)}), e a "
+            f"coluna central ocupa"),
+        (None, f"x = {vg(89 - col/2)} a {vg(89 + col/2)}. O berço ocupa "
+               f"{vg(sw['x'] - sw['res_l']/2)} a {vg(sw['x'] + sw['res_l']/2)}"
+               f", com {vg(sw['x'] - sw['res_l']/2 - sw['reto'][0])} mm de "
+               f"sobra dos dois lados. NÃO cabe em x = 56,00,"),
+        (None, "no eixo do botão vermelho, que foi onde o pedido apontou: "
+               "ali o ressalto invadiria 7,60 mm do raio de canto e o rasgo "
+               "sairia oblíquo em relação à face."),
+    ], titulo="NOTAS DE FABRICAÇÃO", larg=250)
+
+    y = D.notas(COL_DIR, y + 4, [
+        (None, "1. Imprima o corpo e teste o encaixe A SECO, sem cola. O "
+               "interruptor entra pela cavidade, com a haste indo para o "
+               "rasgo."),
+        (None, "2. Confira as DUAS posições da haste antes de colar. Se "
+               "raspar, lixe a bolsa - não force."),
+        (None, "3. Solde os três fios ANTES de colar: depois da cola o "
+               "acesso aos terminais fica ruim."),
+        (None, "4. Cole com cola quente nas duas bocas da bolsa, sem invadir "
+               "o corpo da chave. A folga de "
+               f"{vg(I.get('cola', 0))} mm atrás do componente é para isso."),
+        (None, "5. NÃO use parafuso. Os furos de fixação do próprio "
+               "interruptor ficam contra o fundo da bolsa e não são usados."),
+    ], titulo="MONTAGEM", larg=250)
+
+    D.notas(COL_DIR, y + 4, [
+        (None, "As cotas do componente são NOMINAIS. Os datasheets públicos "
+               "da série SS12D00 são digitalização, sem texto extraível."),
+        (None, "Confirmado só o elétrico: 1P2T, curso 2,00 mm, 0,3 A / "
+               "30 V CC, três terminais a 2,54 mm."),
+        (None, "A chave tem 2 POSIÇÕES e 3 TERMINAIS - o anúncio que a chama "
+               "de \"3 posições\" está errado. Se o projeto precisar mesmo de "
+               "três estados,"),
+        (None, "o componente é outro e este berço muda."),
+        (None, "Meça o componente e ajuste INTERRUPTOR em gerar_modelo_3mf.py; "
+               "o modelo se recusa a gerar geometria inconsistente e esta "
+               "prancha se refaz sozinha."),
+    ], titulo="ATENÇÃO - COTAS A CONFIRMAR", larg=250)
+
+    D.tabela(COL_DIR, 330,
+             ["COTA", "VALOR", "DE ONDE VEM"],
+             [["Corpo do interruptor",
+               f"{vg(I.get('corpo_l',0))} x {vg(I.get('corpo_w',0))} x "
+               f"{vg(I.get('corpo_h',0))}", "nominal do componente"],
+              ["Haste sobre o corpo", vg(I.get("haste", 0)),
+               "nominal - o \"4mm\" do nome"],
+              ["Folga bolsa/corpo", vg(I.get("folga", 0)) + " por lado",
+               "projeto"],
+              ["Bolsa",
+               f"{vg(sw['bolsa_l'])} x {vg(sw['bolsa_h'])} x {vg(sw['bolsa_p'])}",
+               "medida em caixa-corpo.3mf"],
+              ["Rasgo da haste", f"{vg(sw['rasgo_l'])} x {vg(sw['rasgo_h'])}",
+               "medida em caixa-corpo.3mf"],
+              ["Ressalto", f"{vg(sw['res_l'])} x {vg(sw['z_topo'])} x "
+                           f"{vg(sw['prof'])}", "medida em caixa-corpo.3mf"],
+              ["Haste para fora", vg(fora), "haste - fundo da bolsa"]],
+             [78, 62, 110], titulo="RESUMO DAS COTAS DO BERÇO")
+
+    D.salvar("desenho-caixa-berco.svg")
+
+
+def _berco_elevacao(D, ox, oy, sw, hh, larg, Re, S=3.0):
+    """A parede vista DE FORA. E o que a pessoa ve da caixa montada."""
+    W = sw["res_l"] / 2 + 7.0     # meia largura do trecho mostrado
+
+    def p(x, z):
+        return (ox + (x + W) * S, oy + (sw["z_topo"] + 8.0 - z) * S)
+
+    D.ret(*p(-W, sw["z_topo"] + 8.0), 2 * W * S, (sw["z_topo"] + 8.0) * S,
+          L_FINA, fill="#fafafa", cor=C_REF)
+    D.linha(*p(-W, 0.0), *p(W, 0.0), L_CONTORNO)
+    D.txt(*p(-W + 1, -2.6), "base do corpo, z = 0 - assenta na tampa",
+          FONTE_P, anc="start", cor=C_REF)
+
+    # ocultos: ressalto e bolsa
+    D.ret(*p(-sw["res_l"] / 2, sw["z_topo"]), sw["res_l"] * S,
+          sw["z_topo"] * S, L_TRACO, cor="#555", dash=D_OCULTA)
+    D.ret(*p(-sw["bolsa_l"] / 2, sw["z"] + sw["bolsa_h"] / 2),
+          sw["bolsa_l"] * S, sw["bolsa_h"] * S, L_TRACO, cor="#555",
+          dash=D_OCULTA)
+    # visto: o rasgo
+    D.ret(*p(-sw["rasgo_l"] / 2, sw["z"] + sw["rasgo_h"] / 2),
+          sw["rasgo_l"] * S, sw["rasgo_h"] * S, L_CONTORNO, fill="#fff")
+
+    D.linha(*p(-W + 2, sw["z"]), *p(W - 2, sw["z"]), L_FINA, C_ATEN,
+            dash=D_CENTRO)
+    D.linha(*p(0.0, sw["z_topo"] + 6.0), *p(0.0, -2.0), L_FINA, C_ATEN,
+            dash=D_CENTRO)
+
+    xd = p(W, 0)[0]
+    D.cota_v(p(0, sw["z"])[1], p(0, 0.0)[1], xd + 12, vg(sw["z"]),
+             p(0, 0)[0], tam=FONTE_P)
+    D.cota_v(p(0, sw["z_topo"])[1], p(0, 0.0)[1], xd + 26, vg(sw["z_topo"]),
+             p(0, 0)[0], tam=FONTE_P)
+    D.cota_h(*[p(s * sw["rasgo_l"] / 2, 0)[0] for s in (-1, 1)],
+             p(0, sw["z"] + sw["rasgo_h"] / 2)[1] - 8, vg(sw["rasgo_l"]),
+             p(0, sw["z"] + sw["rasgo_h"] / 2)[1], tam=FONTE_P)
+    D.cota_h(*[p(s * sw["res_l"] / 2, 0)[0] for s in (-1, 1)],
+             p(0, sw["z_topo"])[1] - 16, vg(sw["res_l"]),
+             p(0, sw["z_topo"])[1], tam=FONTE_P)
+    D.cota_v(p(0, sw["z"] + sw["rasgo_h"] / 2)[1],
+             p(0, sw["z"] - sw["rasgo_h"] / 2)[1],
+             p(sw["rasgo_l"] / 2, 0)[0] + 8, vg(sw["rasgo_h"]),
+             p(sw["rasgo_l"] / 2, 0)[0], tam=FONTE_P)
+    D.bandeira(*p(sw["res_l"] / 2, sw["z_topo"]), 2, ang=-35, comp=20)
+    D.bandeira(*p(sw["rasgo_l"] / 2, sw["z"] - sw["rasgo_h"] / 2), 4,
+               ang=35, comp=26)
+    D.rotulo_vista(p(0, 0)[0], p(0, 0)[1] + 22,
+                   "VISTA DA PAREDE, DE FORA", f"{S:.0f}:1")
+
+
+def _berco_corte_h(D, ox, oy, sw, S=5.0):
+    """Corte no plano do eixo da haste: mostra a parede afinada e engrossada."""
+    I = getattr(P, "INTERRUPTOR", {})
+    mr, mb, ms = sw["res_l"] / 2, sw["bolsa_l"] / 2, sw["rasgo_l"] / 2
+    lado_livre = 7.0
+    fora = I.get("haste", 0.0) - sw["fundo"]
+
+    def p(x, d):
+        return (ox + (x + mr + lado_livre) * S, oy + d * S)
+
+    for s in (-1, 1):
+        D.hachura_poli([
+            p(s * (mr + lado_livre), 0.0), p(s * ms, 0.0),
+            p(s * ms, sw["fundo"]), p(s * mb, sw["fundo"]),
+            p(s * mb, sw["prof"]), p(s * mr, sw["prof"]),
+            p(s * mr, sw["par"]), p(s * (mr + lado_livre), sw["par"])])
+
+    cl, ch = I.get("corpo_l", 0.0), I.get("corpo_h", 0.0)
+    if cl and ch:
+        D.ret(*p(-cl / 2, sw["fundo"]), cl * S, ch * S, L_TRACO, cor=C_REF,
+              dash=D_FANTASMA)
+        D.txt(*p(0.0, sw["fundo"] + ch / 2 + 0.5), sw["modelo"], FONTE_P,
+              cor=C_REF)
+    hl = I.get("haste_l", 0.0)
+    if hl:
+        D.ret(*p(-hl / 2, -fora), hl * S, I.get("haste", 0.0) * S, L_TRACO,
+              cor=C_REF, dash=D_FANTASMA)
+        cu = I.get("curso", 0.0)
+        D.linha(*p(-hl / 2 - cu / 2, -fora - 1.6),
+                *p(hl / 2 + cu / 2, -fora - 1.6), L_FINA, C_ATEN,
+                dash=D_OCULTA)
+        D.txt(*p(0.0, -fora - 2.6), f"curso {vg(cu)}", FONTE_P, cor=C_ATEN)
+
+    for s in (-1, 1):
+        D.poli([p(s * mb, sw["prof"]), p(s * (mb - 1.8), sw["prof"]),
+                p(s * mb, sw["prof"] - 1.8)], L_FINA, fill="#dcdcdc",
+               cor="#888", fechar=True)
+    D.txt(*p(0.0, sw["prof"] + 4.0), "cola quente nas duas bocas (2x)",
+          FONTE_P, cor=C_TXT)
+
+    D.linha(*p(-(mr + lado_livre), 0.0), *p(mr + lado_livre, 0.0), L_FINA,
+            C_REF, dash=D_CENTRO)
+    D.txt(*p(-(mr + lado_livre), -1.8), "FACE EXTERNA", FONTE_P, anc="start",
+          cor=C_REF)
+    D.txt(*p(mr + lado_livre, sw["par"] + 3.2), "cavidade", FONTE_P,
+          anc="end", cor=C_REF)
+
+    yb = p(0, sw["prof"])[1]
+    D.cota_h(p(-ms, 0)[0], p(ms, 0)[0], p(0, 0)[1] - 14, vg(sw["rasgo_l"]),
+             p(0, 0)[1], tam=FONTE_P)
+    D.cota_h(p(-mb, 0)[0], p(mb, 0)[0], yb + 14, vg(sw["bolsa_l"]), yb,
+             tam=FONTE_P)
+    D.cota_h(p(-mr, 0)[0], p(mr, 0)[0], yb + 26, vg(sw["res_l"]), yb,
+             tam=FONTE_P)
+    xd = p(mr + lado_livre, 0)[0]
+    D.cota_v(p(0, -fora)[1], p(0, 0.0)[1], xd + 11, vg(fora), xd, tam=FONTE_P)
+    D.cota_v(p(0, 0.0)[1], p(0, sw["fundo"])[1], xd + 11, vg(sw["fundo"]), xd,
+             tam=FONTE_P)
+    D.cota_v(p(0, sw["fundo"])[1], yb, xd + 23, vg(sw["bolsa_p"]), xd,
+             tam=FONTE_P)
+    D.cota_v(p(0, 0.0)[1], p(0, sw["par"])[1], xd + 35, vg(sw["par"]), xd,
+             tam=FONTE_P)
+    D.bandeira(*p(-mb, sw["fundo"]), 3, ang=-140, comp=22)
+    D.rotulo_vista(p(0, 0)[0], yb + 38,
+                   "CORTE A-A - plano do eixo da haste", f"{S:.0f}:1")
+
+
+def _berco_corte_v(D, ox, oy, sw, S=5.0):
+    """
+    Corte vertical no eixo da haste. E a vista que responde a pergunta de
+    impressao: mostra que o ressalto desce ate a base - nada em balanco - e
+    que o unico trecho sobre o vazio e o teto da bolsa.
+
+    z para cima, profundidade para a direita: a face externa e a aresta
+    esquerda, como na caixa em pe sobre a mesa.
+    """
+    I = getattr(P, "INTERRUPTOR", {})
+    hb, hs = sw["bolsa_h"] / 2, sw["rasgo_h"] / 2
+    z0, z1 = sw["z"] - hb, sw["z"] + hb
+    topo, base, z_ref = sw["z_topo"], 0.0, sw["z_topo"] + 5.0
+    fora = I.get("haste", 0.0) - sw["fundo"]
+
+    def p(z, d):
+        return (ox + d * S, oy + (z_ref - z) * S)
+
+    # bloco de cima: parede lisa, ressalto, teto da bolsa e teto do rasgo
+    D.hachura_poli([
+        p(z_ref, 0.0), p(z_ref, sw["par"]), p(topo, sw["par"]),
+        p(topo, sw["prof"]), p(z1, sw["prof"]), p(z1, sw["fundo"]),
+        p(sw["z"] + hs, sw["fundo"]), p(sw["z"] + hs, 0.0)])
+    # bloco de baixo: do piso ate a soleira do rasgo
+    D.hachura_poli([
+        p(base, 0.0), p(base, sw["prof"]), p(z0, sw["prof"]),
+        p(z0, sw["fundo"]), p(sw["z"] - hs, sw["fundo"]),
+        p(sw["z"] - hs, 0.0)])
+
+    cw, ch = I.get("corpo_w", 0.0), I.get("corpo_h", 0.0)
+    if cw and ch:
+        D.ret(*p(sw["z"] + cw / 2, sw["fundo"]), ch * S, cw * S, L_TRACO,
+              cor=C_REF, dash=D_FANTASMA)
+    hw = I.get("haste_w", 0.0)
+    if hw and I.get("haste"):
+        D.ret(*p(sw["z"] + hw / 2, -fora), I["haste"] * S, hw * S, L_TRACO,
+              cor=C_REF, dash=D_FANTASMA)
+
+    D.linha(*p(z_ref, 0.0), *p(base, 0.0), L_FINA, C_REF, dash=D_CENTRO)
+    D.txt(*p(z_ref + 1.4, 0.0), "FACE EXTERNA", FONTE_P, anc="middle",
+          cor=C_REF)
+    D.linha(*p(base, 0.0), *p(base, sw["prof"] + 4.0), L_FINA, C_REF)
+    D.txt(*p(base - 1.6, sw["prof"] + 4.0), "base z = 0 - assenta na tampa",
+          FONTE_P, anc="end", cor=C_REF)
+    D.linha(*p(sw["z"], -fora - 1.0), *p(sw["z"], sw["prof"] + 2.0), L_FINA,
+            C_ATEN, dash=D_CENTRO)
+
+    # a ponte - unico trecho impresso sobre o vazio
+    D.linha(*p(z1, sw["fundo"]), *p(z1, sw["prof"]), 0.7, C_ATEN)
+    D.txt(*p(z1 + 1.0, sw["prof"] + 1.0),
+          f"teto da bolsa: ponte reta de {vg(sw['bolsa_l'])} (ver A-A)",
+          FONTE_P, anc="start", cor=C_ATEN)
+
+    xd = p(0, sw["prof"])[0]
+    D.cota_v(p(z1, 0)[1], p(z0, 0)[1], xd + 30, vg(sw["bolsa_h"]),
+             p(z1, sw["prof"])[0], tam=FONTE_P)
+    D.cota_v(p(sw["z"] + hs, 0)[1], p(sw["z"] - hs, 0)[1], xd + 18,
+             vg(sw["rasgo_h"]), p(0, 0)[0], tam=FONTE_P)
+    D.cota_v(p(topo, 0)[1], p(base, 0)[1], xd + 44, vg(topo), xd, tam=FONTE_P)
+    D.cota_v(p(sw["z"], 0)[1], p(base, 0)[1], xd + 56, vg(sw["z"]), xd,
+             tam=FONTE_P)
+    D.cota_h(p(0, 0.0)[0], p(0, sw["fundo"])[0], p(base, 0)[1] + 12,
+             vg(sw["fundo"]), p(base, 0)[1], tam=FONTE_P)
+    D.cota_h(p(0, 0.0)[0], p(0, sw["prof"])[0], p(base, 0)[1] + 24,
+             vg(sw["prof"]), p(base, 0)[1], tam=FONTE_P)
+    D.bandeira(*p(topo, sw["prof"]), 2, ang=-40, comp=24)
+    D.rotulo_vista(p(base, sw["prof"] / 2)[0], p(base, 0)[1] + 36,
+                   "CORTE B-B - vertical, no eixo da haste", f"{S:.0f}:1")
+
+
 if __name__ == "__main__":
     desenho_painel()
     desenho_corpo()
     desenho_tampa()
+    desenho_berco()
     encerrar_conferencia()
     print("conferidos contra gerar_modelo_3mf.py: nenhuma divergencia")

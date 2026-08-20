@@ -48,6 +48,18 @@ O QUE MUDOU EM RELACAO AO MODELO DO FUSION
    de quebra resolve a nota 6 do desenho antigo: interruptor de encaixe
    quer painel de 2 a 5 mm, e 4 mm cai dentro sem rebaixo local.
 
+5. BERCO DO INTERRUPTOR. O corpo ganhou uma estacao para a chave
+   deslizante SS12D00G4 na parede y = CX_A, embaixo. E a UNICA parte da
+   caixa onde a secao muda com z: tres retangulos encaixados - ressalto,
+   bolsa e rasgo - que 'corpo()' resolve por faixas de z.
+
+   O ressalto desce ate z = 0 de proposito. Um bloco solto teria a face de
+   baixo em balanco; descendo ate a mesa ele imprime sem uma linha de
+   suporte e ainda se apoia na tampa. Sobra um unico trecho sobre o vazio,
+   o teto da bolsa, que e uma ponte reta de 12,20 mm.
+
+   As cotas do componente sao NOMINAIS - ver o comentario em INTERRUPTOR.
+
 Uso:  python gerar_modelo_3mf.py
 """
 
@@ -115,6 +127,82 @@ REB_PAINEL  = 4.0      # profundidade do rebaixo no painel
 # Comprimento de parafuso que cada peca pede:
 #   L = (espessura - rebaixo) + penetracao no inserto
 PENETRACAO  = 4.0      # = altura util do inserto de 4,0 mm
+
+# =====================================================================
+# Estacao do interruptor - berco na parede de tras do corpo
+# =====================================================================
+# Chave deslizante 1P2T (o anuncio diz "3 posicoes"; sao 3 TERMINAIS, a
+# chave tem 2 posicoes). Vai na parede y = CX_A, embaixo, com a haste
+# saindo por um rasgo e o corpo enfiado numa bolsa cercada de plastico nos
+# quatro lados. Prende com cola quente pelas duas bocas da bolsa - nao ha
+# parafuso M2 nenhum, foi decisao de projeto.
+#
+# POR QUE x = 69,5 E NAO 56. O pedido apontou a parede pelo centro do botao
+# vermelho, x = 56. Ali nao cabe: o ressalto tem 17,20 de largura e a face
+# so e plana entre as tangencias do R55, x = 55 e x = 123. Centrado em 56 o
+# berco invadiria 7,60 mm do raio, e o rasgo sairia oblíquo em relacao a
+# face. A faixa reta livre desse lado vai de x = 55 ate x = 84 (onde comeca
+# a coluna central de Ø10); 69,5 e o meio dela, com 5,90 mm de sobra dos
+# dois lados. Mesma parede, deslocado 13,5 mm.
+#
+# AS COTAS DO COMPONENTE SAO NOMINAIS. Os datasheets publicos da serie
+# SS12D00 sao PDF escaneado; deu para confirmar o eletrico (1P2T, curso
+# 2,0 mm, 0,3 A / 30 V CC, terminais a 2,54 mm), nao o desenho cotado. Meca
+# a peca antes de imprimir o corpo inteiro e corrija 'corpo_*' e 'haste'.
+
+INTERRUPTOR = dict(
+    modelo="SS12D00G4",
+    x=69.5,            # centro do berco, ao longo da parede
+    z=12.0,            # eixo da haste, medido da base do corpo
+    corpo_l=11.6,      # comprimento do corpo, na direcao do curso
+    corpo_w=4.0,       # largura do corpo - vira a altura da bolsa
+    corpo_h=4.5,       # da face da haste ate a face dos terminais
+    haste=4.0,         # o "4mm" do nome, acima da face do corpo
+    haste_l=2.5,       # largura da haste na direcao do curso
+    haste_w=1.5,       # espessura da haste, na vertical
+    curso=2.0,
+    folga=0.30,        # por lado, entre o corpo e a parede da bolsa
+    fundo=2.0,         # parede que sobra no fundo da bolsa
+    nervura=2.5,       # plastico em volta da bolsa
+    cola=1.0,          # sobra atras do corpo, reservada para a cola quente
+    rasgo_l=6.0,       # rasgo da haste, na direcao do curso
+    rasgo_h=3.0,       # rasgo da haste, na vertical
+)
+
+
+def estacao():
+    """
+    Cotas derivadas do berco. Tudo em coordenadas da peca, ja resolvido:
+    a geometria do corpo le daqui e nao recalcula nada.
+
+    Profundidades, contadas da face externa para dentro:
+      0             face externa da caixa
+      fundo         fundo da bolsa - so aqui a parede tem 2 mm
+      fundo+bolsa_p boca da bolsa, que e tambem a face interna do ressalto
+    A bolsa e ABERTA para a cavidade: e por ela que o interruptor entra.
+    """
+    S = INTERRUPTOR
+    e = dict(S)
+    e["bolsa_l"] = S["corpo_l"] + 2 * S["folga"]
+    e["bolsa_h"] = S["corpo_w"] + 2 * S["folga"]
+    e["bolsa_p"] = S["corpo_h"] + S["cola"]
+    e["res_l"] = e["bolsa_l"] + 2 * S["nervura"]
+    e["prof"] = S["fundo"] + e["bolsa_p"]
+    e["saliencia"] = e["prof"] - CORPO_PAR     # avanco sobre a cavidade
+    e["haste_fora"] = S["haste"] - S["fundo"]
+
+    e["y_face"] = CX_A                          # face externa da parede
+    e["y_bolsa"] = CX_A - S["fundo"]            # fundo da bolsa
+    e["y_res"] = CX_A - e["prof"]               # face interna do ressalto
+    e["y_cav"] = CX_A - CORPO_PAR               # face interna da parede
+
+    e["x_res"] = (S["x"] - e["res_l"] / 2, S["x"] + e["res_l"] / 2)
+    e["x_bolsa"] = (S["x"] - e["bolsa_l"] / 2, S["x"] + e["bolsa_l"] / 2)
+    e["x_rasgo"] = (S["x"] - S["rasgo_l"] / 2, S["x"] + S["rasgo_l"] / 2)
+    e["z_bolsa"] = (S["z"] - e["bolsa_h"] / 2, S["z"] + e["bolsa_h"] / 2)
+    e["z_rasgo"] = (S["z"] - S["rasgo_h"] / 2, S["z"] + S["rasgo_h"] / 2)
+    e["z_topo"] = e["z_bolsa"][1] + S["nervura"]
+    return e
 
 # =====================================================================
 # Segmentacao das curvas
@@ -252,12 +340,66 @@ def conferir_projeto():
     exigir(FIX_INSET - COL_D / 2 < CORPO_PAR,
            "coluna nao encosta na parede - ficaria solta no meio da cavidade")
 
+    # ---- estacao do interruptor ----
+    e = estacao()
+    xr0, xr1 = e["x_res"]
+    zb0, zb1 = e["z_bolsa"]
+    zr0, zr1 = e["z_rasgo"]
+
+    # so o trecho reto da parede serve: nas pontas ela ja esta curvando no R55
+    reto = (CX_R, CX_L - CX_R)
+    exigir(xr0 >= reto[0] and xr1 <= reto[1],
+           f"ressalto do interruptor em x [{xr0:.2f}, {xr1:.2f}] sai do trecho "
+           f"reto da parede [{reto[0]:.2f}, {reto[1]:.2f}]")
+
+    # o ressalto e um retangulo encostado na parede; as colunas sao circulos
+    caixa_x = (xr0, xr1)
+    caixa_y = (e["y_res"], CX_A)
+    for i, (cx, cy) in enumerate(fix, 1):
+        dx = max(caixa_x[0] - cx, 0.0, cx - caixa_x[1])
+        dy = max(caixa_y[0] - cy, 0.0, cy - caixa_y[1])
+        exigir(math.hypot(dx, dy) - COL_D / 2 >= 2.0,
+               f"ressalto do interruptor a {math.hypot(dx,dy)-COL_D/2:.2f} mm "
+               f"da coluna {i} - minimo 2,00")
+
+    exigir(e["saliencia"] > 0.5,
+           f"ressalto avanca so {e['saliencia']:.2f} mm sobre a cavidade - "
+           f"a bolsa nao caberia na parede de {CORPO_PAR:.2f}")
+    exigir(INTERRUPTOR["fundo"] >= 1.6,
+           f"fundo da bolsa com {INTERRUPTOR['fundo']:.2f} mm - menos que "
+           f"4 perimetros de 0,4")
+    exigir(INTERRUPTOR["fundo"] < CORPO_PAR,
+           "fundo da bolsa mais grosso que a propria parede")
+    exigir(e["haste_fora"] >= 1.5,
+           f"haste sobra so {e['haste_fora']:.2f} mm para fora - nao da para "
+           f"acionar com o dedo")
+    exigir(INTERRUPTOR["rasgo_l"] >= INTERRUPTOR["curso"] +
+           INTERRUPTOR["haste_l"] + 0.6,
+           f"rasgo de {INTERRUPTOR['rasgo_l']:.2f} nao deixa a haste completar "
+           f"o curso de {INTERRUPTOR['curso']:.2f}")
+    exigir(INTERRUPTOR["rasgo_l"] < e["bolsa_l"] and
+           INTERRUPTOR["rasgo_h"] < e["bolsa_h"],
+           "rasgo maior que a bolsa - o interruptor sairia pela frente")
+    exigir(zb0 > 0.0 and e["z_topo"] < CORPO_H,
+           f"bolsa em z [{zb0:.2f}, {zb1:.2f}] com topo do ressalto em "
+           f"{e['z_topo']:.2f} nao cabe na altura {CORPO_H:.2f}")
+    exigir(zr0 > zb0 and zr1 < zb1,
+           "rasgo nao esta contido na bolsa - as duas aberturas se cruzariam")
+    exigir(e["bolsa_l"] <= 15.0,
+           f"teto da bolsa e uma ponte de {e['bolsa_l']:.2f} mm - PETG faz "
+           f"ponte reta ate uns 15")
+    # a ordem dos x e o que 'entalhar' assume ao montar o perfil do contorno
+    exigir(xr0 < e["x_bolsa"][0] < e["x_rasgo"][0] < e["x_rasgo"][1]
+           < e["x_bolsa"][1] < xr1,
+           "os tres retangulos do berco nao estao encaixados um no outro")
+
     if msgs:
         raise AssertionError("projeto inconsistente:\n  - " + "\n  - ".join(msgs))
 
     return dict(folga_capas=folga, entre_rebaixos=entre,
                 L_tampa=(TAMPA_ESP - REB_TAMPA) + PENETRACAO,
-                L_painel=(PAIN_ESP - REB_PAINEL) + PENETRACAO)
+                L_painel=(PAIN_ESP - REB_PAINEL) + PENETRACAO,
+                sw=e)
 
 
 # =====================================================================
@@ -335,30 +477,124 @@ def corpo():
     Anel de parede CORPO_PAR com seis colunas Ø COL_D que nascem na parede e
     avancam sobre a cavidade. Cada coluna e passante e leva um furo de inserto
     nas duas pontas: em cima prende o painel, embaixo a tampa.
+
+    A parede y = CX_A ainda carrega a ESTACAO DO INTERRUPTOR, que e o unico
+    lugar da caixa onde a secao muda com z. Ela nasce de tres retangulos
+    encaixados, todos centrados em INTERRUPTOR['x']:
+
+      ressalto  engrossa a parede por dentro, de z = 0 ate z_topo
+      bolsa     vazia o ressalto, e a boca por onde o interruptor entra
+      rasgo     atravessa os 2 mm de fundo que sobraram, so para a haste
+
+    O ressalto desce ate z = 0 de proposito. Um bloco solto teria a face de
+    baixo em balanco; descendo ate a mesa ele imprime sem uma linha de
+    suporte e ainda se apoia na tampa depois de montado. O unico trecho em
+    balanco que sobra e o teto da bolsa, uma ponte reta de bolsa_l.
     """
     S = M.Solido("corpo")
     ext = silhueta()
     fix = pontos_fixacao()
+    e = estacao()
+
+    xr0, xr1 = e["x_res"]
+    xb0, xb1 = e["x_bolsa"]
+    xs0, xs1 = e["x_rasgo"]
+    yf, yb, yr, yc = e["y_face"], e["y_bolsa"], e["y_res"], e["y_cav"]
+    zb0, zb1 = e["z_bolsa"]
+    zs0, zs1 = e["z_rasgo"]
+    z_topo = e["z_topo"]
+
+    # ---- contornos ----
+    # No trecho do rasgo a silhueta perde os vertices de densificacao: aquela
+    # aresta passa a ser compartilhada com a face do rasgo, e as duas tem de
+    # ser subdivididas igual, senao a malha abre.
+    ext = M.entalhar(ext, yf, xs1, xs0, [])
 
     cav = M.subtrair_discos(silhueta(CORPO_PAR),
                             [(x, y, COL_D / 2, SEG_MEDIO) for x, y in fix])
+    cav = M.entalhar(cav, yc, xr1, xr0, [])       # aresta unica sob o ressalto
+
+    # cav_r: cavidade com o ressalto macico (abaixo e acima da bolsa)
+    cav_r = M.entalhar(cav, yc, xr1, xr0,
+                       [(xr1, yr), (xb1, yr), (xb0, yr), (xr0, yr)])
+    # cav_b: cavidade na altura da bolsa - o ressalto aberto ate o fundo
+    cav_b = M.entalhar(cav, yc, xr1, xr0,
+                       [(xr1, yr), (xb1, yr), (xb1, yb), (xs1, yb),
+                        (xs0, yb), (xb0, yb), (xb0, yr), (xr0, yr)])
+
     ins = [M.circulo(x, y, D_INSERTO / 2, SEG_PEQ) for x, y in fix]
     z_alto = CORPO_H - PROF_INSERTO
 
+    # As faces do berco. Cada uma e a diferenca entre a secao de baixo e a de
+    # cima, e por isso repete, vertice a vertice, a subdivisao dos contornos
+    # que encosta nela.
+    f_bolsa = [(xb0, yr), (xb1, yr), (xb1, yb), (xs1, yb), (xs0, yb), (xb0, yb)]
+    f_rasgo = [(xs0, yb), (xs1, yb), (xs1, yf), (xs0, yf)]
+    f_res = [(xr0, yr), (xb0, yr), (xb1, yr), (xr1, yr), (xr1, yc), (xr0, yc)]
+
+    # ---- faces horizontais ----
     S.face(ext, [cav] + ins, CORPO_H, cima=True)
-    S.face(ext, [cav] + ins, 0.0, cima=False)
+    S.face(ext, [cav_r] + ins, 0.0, cima=False)
+    S.face(f_bolsa, [], zb0, cima=True)      # fundo do vao da bolsa
+    S.face(f_bolsa, [], zb1, cima=False)     # teto da bolsa - a ponte
+    S.face(f_rasgo, [], zs0, cima=True)
+    S.face(f_rasgo, [], zs1, cima=False)
+    S.face(f_res, [], z_topo, cima=True)     # topo do ressalto
     for c in ins:
-        S.face(c, [], z_alto, cima=True)        # fundo do furo de cima
+        S.face(c, [], z_alto, cima=True)         # fundo do furo de cima
         S.face(c, [], PROF_INSERTO, cima=False)  # teto do furo de baixo
         S.parede(c, z_alto, CORPO_H, fora=False)
         S.parede(c, 0.0, PROF_INSERTO, fora=False)
-    S.parede(ext, 0.0, CORPO_H, fora=True)
-    S.parede(cav, 0.0, CORPO_H, fora=False)
+
+    # ---- paredes ----
+    # A secao so muda com z no trecho do berco. Emitir o contorno INTEIRO uma
+    # vez por faixa custaria 5 mil triangulos a mais - o corpo dobraria de
+    # tamanho por causa de 17 mm de parede. Entao cada contorno sai em duas
+    # partes: o trecho LONGE do berco, que vale de z = 0 ao topo e e emitido
+    # uma unica vez, e o perfil LOCAL, esse sim faixa por faixa.
+    #
+    # 'parede(fora=False)' percorre o contorno ao contrario; os perfis locais
+    # da cavidade saem ja nessa ordem, senao as normais invertem.
+    z_cheio = [0.0, CORPO_H]
+    z_rasgo = [0.0, zs0, zs1, CORPO_H]
+    z_est = [0.0, zb0, zs0, zs1, zb1, z_topo, CORPO_H]
+
+    longe = M.trecho(ext, (xs0, yf), (xs1, yf))
+    S.faixa(longe[1:-1], 0.0, CORPO_H)
+    S.costura(longe[0], longe[1], z_rasgo, z_cheio)
+    S.costura(longe[-2], longe[-1], z_cheio, z_rasgo)
+    S.faixa([(xs1, yf), (xs0, yf)], 0.0, zs0)       # soleira do rasgo
+    S.faixa([(xs1, yf), (xs0, yf)], zs1, CORPO_H)   # verga do rasgo
+
+    longe = M.trecho(list(reversed(cav)), (xr1, yc), (xr0, yc))
+    S.faixa(longe[1:-1], 0.0, CORPO_H)
+    S.costura(longe[0], longe[1], z_est, z_cheio)
+    S.costura(longe[-2], longe[-1], z_cheio, z_est)
+
+    loc_r = [(xr0, yc), (xr0, yr), (xb0, yr), (xb1, yr), (xr1, yr), (xr1, yc)]
+    loc_b = [(xr0, yc), (xr0, yr), (xb0, yr), (xb0, yb), (xs0, yb),
+             (xs1, yb), (xb1, yb), (xb1, yr), (xr1, yr), (xr1, yc)]
+    i = loc_b.index((xs0, yb))
+    S.faixa(loc_r, 0.0, zb0)                 # ressalto macico, abaixo da bolsa
+    S.faixa(loc_b, zb0, zs0)
+    S.faixa(loc_b[:i + 1], zs0, zs1)         # no rasgo o fundo da bolsa some
+    S.faixa(loc_b[i + 1:], zs0, zs1)
+    S.faixa(loc_b, zs1, zb1)
+    S.faixa(loc_r, zb1, z_topo)              # ressalto macico, acima da bolsa
+    S.faixa([(xr0, yc), (xr1, yc)], z_topo, CORPO_H)   # parede lisa de novo
+
+    S.faixa([(xs0, yb), (xs0, yf)], zs0, zs1)    # flanco esquerdo do rasgo
+    S.faixa([(xs1, yf), (xs1, yb)], zs0, zs1)    # flanco direito
 
     A = M.area_assinada
-    anel = A(ext) - A(cav)
     a_ins = A(ins[0])
-    esperado = (anel * CORPO_H) - 2 * (6 * a_ins * PROF_INSERTO)
+    esperado = (
+        (A(ext) - A(cav_r)) * zb0
+        + (A(ext) - A(cav_b)) * (zb1 - zb0)
+        + (A(ext) - A(cav_r)) * (z_topo - zb1)
+        + (A(ext) - A(cav)) * (CORPO_H - z_topo)
+        - INTERRUPTOR["rasgo_l"] * INTERRUPTOR["fundo"] * (zs1 - zs0)
+        - 2 * (6 * a_ins * PROF_INSERTO))
     return S, esperado
 
 
@@ -408,6 +644,13 @@ def main():
         print(f"botao {b['nome']:9s} rebaixo {b['rebaixo']:.1f}  "
               f"para fora {b['h_capa']-b['rebaixo']:.1f}  "
               f"apertado {PAIN_ESP-b['rebaixo']:.1f} (max {b['esp_max']})")
+    e = info["sw"]
+    print(f"interruptor {e['modelo']}  parede y={CX_A:.0f}  x={e['x']:.1f}  "
+          f"z={e['z']:.1f}")
+    print(f"  bolsa {e['bolsa_l']:.2f} x {e['bolsa_h']:.2f} x {e['bolsa_p']:.2f}"
+          f"   ressalto {e['res_l']:.2f} avancando {e['saliencia']:.2f}"
+          f"   rasgo {e['rasgo_l']:.2f} x {e['rasgo_h']:.2f}"
+          f"   haste para fora {e['haste_fora']:.2f}")
     print()
 
     total = 0.0

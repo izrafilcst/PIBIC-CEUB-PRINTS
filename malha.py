@@ -37,6 +37,25 @@ mantem o custo praticavel em Python puro.
 Aneis concentricos (rebaixo de parafuso, fundo de furo cego) nao passam
 por ai: 'Solido.coroa' costura os dois circulos diretamente, o que e exato
 e muito mais barato.
+
+PECA QUE NAO E PRISMA INTEIRA
+-----------------------------
+O berco do interruptor quebrou a hipotese de que a secao nao muda com z.
+Tres primitivas resolvem o caso sem abandonar o resto:
+
+  'entalhar'         troca um trecho de aresta reta de um contorno por
+                     outro perfil - e assim que a mesma cavidade ganha, ou
+                     nao, o ressalto, conforme a faixa de z
+  'Solido.faixa'     parede sobre polilinha ABERTA, porque um rasgo
+                     INTERROMPE a parede e um contorno fechado nao sabe
+                     pular pedaco ('parede' virou um caso particular dela)
+  'Solido.costura'   fecha a emenda entre um trecho que vale a altura toda
+                     e um que muda de perfil, sem propagar a subdivisao
+                     pelo contorno inteiro
+
+A alternativa - emitir o contorno completo uma vez por faixa de z - e
+correta e foi o primeiro rascunho, mas dobrava a contagem de triangulos do
+corpo por causa de 17 mm de parede.
 """
 
 import math
@@ -213,6 +232,83 @@ def subtrair_discos(poly, discos):
             i = (i + 1) % n
         pts = manter + [p_ent] + arco + [p_sai]
     return pts
+
+
+def inserir_ponto(poly, p, tol=TOL_VERT):
+    """
+    Devolve 'poly' com um vertice em 'p'; se 'p' ja e vertice, devolve como
+    esta. Levanta erro se 'p' nao cai sobre nenhuma aresta - que e o sintoma
+    de uma cota escrita fora do trecho onde ela faz sentido, e o lugar certo
+    de descobrir isso e aqui, nao no visualizador.
+    """
+    pts = [tuple(q) for q in poly]
+    if any(math.dist(q, p) <= tol for q in pts):
+        return pts
+    n = len(pts)
+    for i in range(n):
+        a, b = pts[i], pts[(i + 1) % n]
+        dx, dy = b[0] - a[0], b[1] - a[1]
+        L = math.hypot(dx, dy)
+        if L <= tol:
+            continue
+        t = ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (L * L)
+        if not (tol / L < t < 1 - tol / L):
+            continue
+        if math.dist(p, (a[0] + t * dx, a[1] + t * dy)) <= tol:
+            return pts[:i + 1] + [tuple(p)] + pts[i + 1:]
+    raise ValueError(f"ponto {p} nao esta sobre nenhuma aresta do contorno")
+
+
+def entalhar(poly, y_face, x_ini, x_fim, perfil, tol=TOL_VERT):
+    """
+    Troca, na aresta reta y = y_face de 'poly', o trecho que vai de x_ini ate
+    x_fim pelo 'perfil' - a lista de pontos do entalhe, PONTAS EXCLUIDAS.
+
+    'poly' vem anti-horario, e nessa orientacao a aresta de cima e percorrida
+    com x DECRESCENDO; dai a exigencia x_ini > x_fim. Um perfil vazio nao e
+    caso degenerado: e como se apagam os vertices de densificacao de um
+    trecho que vai virar uma aresta unica, compartilhada com uma face.
+    """
+    assert x_ini > x_fim, "o percurso anti-horario vai do maior x para o menor"
+    pts = inserir_ponto(inserir_ponto(poly, (x_ini, y_face), tol),
+                        (x_fim, y_face), tol)
+
+    def achar(xq):
+        for i, q in enumerate(pts):
+            if abs(q[1] - y_face) <= tol and abs(q[0] - xq) <= tol:
+                return i
+        raise ValueError(f"vertice ({xq}, {y_face}) nao encontrado no contorno")
+
+    i0, i1 = achar(x_ini), achar(x_fim)
+    saida = [pts[i0]] + [tuple(q) for q in perfil] + [pts[i1]]
+    i = (i1 + 1) % len(pts)
+    while i != i0:
+        saida.append(pts[i])
+        i = (i + 1) % len(pts)
+    return saida
+
+
+def trecho(poly, p_ini, p_fim, tol=TOL_VERT):
+    """
+    Polilinha ABERTA que sai de 'p_ini' e caminha pelo contorno, no sentido
+    em que ele esta escrito, ate 'p_fim'. O que fica de fora e exatamente a
+    aresta de p_fim para p_ini - e assim que um rasgo interrompe uma parede.
+    """
+    pts = [tuple(q) for q in poly]
+    n = len(pts)
+
+    def achar(q):
+        for i, r in enumerate(pts):
+            if math.dist(r, q) <= tol:
+                return i
+        raise ValueError(f"ponto {q} nao e vertice do contorno")
+
+    i, j = achar(p_ini), achar(p_fim)
+    saida = [pts[i]]
+    while i != j:
+        i = (i + 1) % n
+        saida.append(pts[i])
+    return saida
 
 
 # =====================================================================
@@ -400,13 +496,56 @@ class Solido:
         p = antihorario(list(pts))
         if not fora:
             p = list(reversed(p))
-        n = len(p)
-        for i in range(n):
-            a, b = p[i], p[(i + 1) % n]
+        self.faixa(p + [p[0]], z0, z1)
+
+    def faixa(self, pts, z0, z1):
+        """
+        Parede vertical sobre a POLILINHA ABERTA 'pts', de z0 a z1.
+
+        A normal sai para a DIREITA de quem caminha de pts[0] para pts[-1] -
+        a mesma convencao de 'parede', porque e la que fica o lado de fora
+        quando o contorno vem anti-horario. Existe porque um rasgo
+        INTERROMPE a parede: o trecho vazado nao pode receber triangulo, e um
+        contorno fechado nao sabe pular pedaco. 'parede' agora e o caso
+        particular em que a polilinha fecha sobre si mesma.
+        """
+        for a, b in zip(pts, pts[1:]):
             a0, b0 = (a[0], a[1], z0), (b[0], b[1], z0)
             a1, b1 = (a[0], a[1], z1), (b[0], b[1], z1)
             self.tri(a0, b0, b1)
             self.tri(a0, b1, a1)
+
+    def costura(self, a, b, za, zb):
+        """
+        Parede sobre o segmento a-b quando as duas arestas VERTICAIS estao
+        divididas de formas diferentes: 'za' e 'zb' sao as listas crescentes
+        de z de cada ponta, com o mesmo primeiro e o mesmo ultimo valor.
+
+        Existe por causa da junta em T. Uma parede que vale a altura inteira
+        encontra, na emenda, uma parede que muda de perfil com z: de um lado
+        ha uma aresta longa, do outro varias curtas, e 'conferir' acusa malha
+        aberta - com razao, porque os triangulos nao compartilham vertice.
+        O ziper abaixo consome as duas listas ao mesmo tempo e fecha a emenda
+        sem exigir que a subdivisao se propague pelo contorno todo, que era o
+        que dobrava o tamanho da peca.
+
+        Com za == zb de dois valores, produz exatamente os dois triangulos de
+        'faixa' - e o caso geral, nao um caso a parte.
+        """
+        assert za[0] == zb[0] and za[-1] == zb[-1], \
+            "as duas pontas da costura tem de comecar e terminar no mesmo z"
+        A = lambda z: (a[0], a[1], z)
+        B = lambda z: (b[0], b[1], z)
+        i = j = 0
+        while i < len(za) - 1 or j < len(zb) - 1:
+            pa = za[i + 1] if i < len(za) - 1 else float("inf")
+            pb = zb[j + 1] if j < len(zb) - 1 else float("inf")
+            if pb <= pa:
+                self.tri(A(za[i]), B(zb[j]), B(pb))
+                j += 1
+            else:
+                self.tri(A(za[i]), B(zb[j]), A(pa))
+                i += 1
 
     # ---------- conferencia ----------
 

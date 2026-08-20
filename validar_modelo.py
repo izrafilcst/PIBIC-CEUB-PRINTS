@@ -111,6 +111,39 @@ def diametro(segs, cx, cy, d_esp, banda=1.5):
     return 2 * max(rs)
 
 
+def travessia(segs, x0, y_min=0.0, tol=1e-6):
+    """
+    Onde a reta vertical x = x0 corta a secao, listado em y crescente.
+
+    E a medida certa para a estacao do interruptor: la a secao muda com z, e
+    o que interessa nao e diametro nenhum, e ONDE COMECA E ONDE ACABA o
+    material ao longo da espessura da parede. Dois pontos, parede cheia;
+    nenhum, parede vazada naquela altura.
+
+    A regra e SEMIABERTA - conta o cruzamento quando x0 esta em [ax, bx) ou
+    em [bx, ax) - e nao o cruzamento estrito. Sem isso a medida erra sempre
+    que x0 cai em cima de um vertice, e ele cai: a secao de uma parede
+    retangular parte no meio da diagonal dos dois triangulos, ou seja
+    exatamente no ponto medio da aresta, que e onde qualquer sonda escrita
+    como media de duas cotas vai parar. A regra semiaberta conta uma vez o
+    contorno que atravessa e nenhuma o que so encosta.
+    """
+    ys = []
+    for (ax, ay), (bx, by) in segs:
+        if (ax <= x0 < bx) or (bx <= x0 < ax):
+            ys.append(ay + (x0 - ax) / (bx - ax) * (by - ay))
+    return sorted(y for y in ys if y >= y_min)
+
+
+def largura_do_vao(segs, y0, tol=1e-6):
+    """Maior intervalo SEM material na aresta y = y0 da secao, e onde fica."""
+    xs = sorted({round(x, 6) for s in segs for x, y in s if abs(y - y0) <= tol})
+    if len(xs) < 2:
+        return None, None
+    a, b = max(zip(xs, xs[1:]), key=lambda p: p[1] - p[0])
+    return b - a, (a + b) / 2
+
+
 def dist_ate_poligono(p, poly):
     melhor = float("inf")
     n = len(poly)
@@ -148,6 +181,71 @@ def conferir(nome, arquivo, altura, furos_esperados):
         d = diametro(secao(V, T, z), cx, cy, d_esp)
         ok(d is not None and abs(d - d_esp) < 0.02, rotulo,
            f"esperado {d_esp:.2f}  medido {d:.3f}" if d else "furo nao achado")
+
+
+def conferir_interruptor(V, T):
+    """
+    A estacao do interruptor, lida do arquivo.
+
+    Nao da para conferir por diametro nem por bounding box: o berco esta
+    inteiro DENTRO da silhueta, e o unico furo que ele abre para fora tem
+    6 x 3 mm. Confere-se por travessia - a lista de onde comeca e onde acaba
+    o material ao longo da espessura da parede, em pontos escolhidos para
+    passar um por cada feicao.
+    """
+    e = P.estacao()
+    print("\ncaixa-corpo.3mf - estacao do interruptor")
+
+    yf, yb, yr, yc = e["y_face"], e["y_bolsa"], e["y_res"], e["y_cav"]
+    xr0, xr1 = e["x_res"]
+    xb0, xb1 = e["x_bolsa"]
+    zb0, zb1 = e["z_bolsa"]
+
+    sondas = [
+        # x, z, y esperados, o que a sonda prova
+        # no eixo da haste nao sobra material NENHUM: bolsa por dentro e
+        # rasgo por fora se encontram, e e por ai que a haste sai
+        (e["x"], e["z"], [], "no eixo da haste a parede esta vazada de lado a lado"),
+        (e["x"], zb0 / 2, [yr, yf], "abaixo da bolsa o ressalto e macico"),
+        (e["x"], (zb1 + e["z_topo"]) / 2, [yr, yf],
+         "acima da bolsa o ressalto e macico"),
+        (e["x"], e["z_topo"] + 3.0, [yc, yf],
+         "acima do ressalto volta a parede de {:.2f}".format(P.CORPO_PAR)),
+        ((xb0 + e["x_rasgo"][0]) / 2, e["z"], [yb, yf],
+         "ao lado do rasgo sobra o fundo de {:.2f}".format(e["fundo"])),
+        ((xr0 + xb0) / 2, e["z"], [yr, yf], "flanco da bolsa e macico"),
+        ((xb1 + xr1) / 2, e["z"], [yr, yf], "flanco oposto tambem"),
+        (xr1 + 1.0, e["z"], [yc, yf], "fora do ressalto a parede e a normal"),
+    ]
+    for x, z, esp, texto in sondas:
+        m = travessia(secao(V, T, z), x, y_min=yr - 1.0)
+        bate = len(m) == len(esp) and all(abs(a - b) < 0.01 for a, b in zip(m, esp))
+        ok(bate, f"x={x:.2f} z={z:.2f}: {texto}",
+           "esperado y " + " e ".join(f"{v:.2f}" for v in esp) +
+           "   medido " + (" e ".join(f"{v:.2f}" for v in m) if m else "nada"))
+
+    segs = secao(V, T, e["z"])
+    larg, centro = largura_do_vao(segs, yf)
+    ok(larg is not None and abs(larg - e["rasgo_l"]) < 0.01
+       and abs(centro - e["x"]) < 0.01,
+       f"rasgo na face externa: {e['rasgo_l']:.2f} centrado em {e['x']:.2f}",
+       f"medido {larg:.3f} centrado em {centro:.3f}" if larg else "nao achado")
+
+    larg, centro = largura_do_vao(secao(V, T, (zb0 + P.INTERRUPTOR['z']) / 2), yr)
+    ok(larg is not None and abs(larg - e["bolsa_l"]) < 0.01
+       and abs(centro - e["x"]) < 0.01,
+       f"boca da bolsa: {e['bolsa_l']:.2f} centrada em {e['x']:.2f}",
+       f"medida {larg:.3f} centrada em {centro:.3f}" if larg else "nao achada")
+
+    # o ressalto nao pode encostar em coluna nenhuma
+    g = min(math.hypot(max(xr0 - cx, 0.0, cx - xr1), max(yr - cy, 0.0, cy - yf))
+            - P.COL_D / 2 for cx, cy in P.pontos_fixacao())
+    ok(g >= 2.0, "ressalto livre das 6 colunas", f"folga minima {g:.2f} mm")
+
+    # e tem de caber no trecho reto da parede, senao sai obliquo
+    ok(xr0 >= P.CX_R and xr1 <= P.CX_L - P.CX_R,
+       f"ressalto no trecho reto da parede [{P.CX_R:.2f}, {P.CX_L-P.CX_R:.2f}]",
+       f"ocupa [{xr0:.2f}, {xr1:.2f}]")
 
 
 def main():
@@ -193,6 +291,8 @@ def main():
     ok(par is not None and abs(par - P.CORPO_PAR) < 0.05,
        f"parede do corpo {P.CORPO_PAR:.2f} mm (minimo do perimetro)",
        f"medida {par:.3f} em {len(cav)} pontos da cavidade" if par else "nao medida")
+
+    conferir_interruptor(V, T)
 
     # --- tampa ---
     f = [(1.0, *fix[0], P.D_PASSAGEM, f"passagem M3: Ø{P.D_PASSAGEM:.2f}"),

@@ -129,7 +129,41 @@ Se **não** for iluminação, me diga o que são e eu recoto o desenho.
 
 ---
 
-## 5. Eletrônica de controle
+## 5. Interruptor geral — SS12D00G4
+
+| Qtd | Item | Status | Observação |
+|---|---|---|---|
+| **1** | **Chave deslizante SS12D00G4**, 1P2T, haste de 4 mm | ⚠ | 0,3 A / 30 V CC — ver ressalva abaixo |
+| — | Cola quente | ✅ | já está na lista de ferramentas |
+
+Vai num **berço integrado à parede de trás do corpo** (`y = 130`), eixo da
+haste a `x = 69,50` da aresta esquerda e `z = 12,00` da base. Prancha
+**PIBIC-CX-04**. O berço é uma bolsa 12,20 × 4,60 × 5,50 aberta para dentro da
+caixa, com 2,50 mm de plástico em volta e 2,00 mm no fundo; a haste sai por um
+rasgo de 6,00 × 3,00 e sobra 2,00 mm para fora. **Prende com cola quente, sem
+parafuso** — os furos de fixação da própria chave ficam contra o fundo da bolsa
+e não são usados.
+
+> **⚠ São 2 posições, não 3.** O anúncio chama de "3 posições" os **3
+> terminais**. A SS12D00G4 é 1P2T: liga/desliga, comum no meio. Se o projeto
+> precisar mesmo de três estados, **o componente é outro e o berço muda** —
+> avise antes de comprar.
+
+> **⚠ As cotas mecânicas são nominais.** Os datasheets públicos da série
+> SS12D00 são digitalização, sem texto extraível; só o elétrico está
+> confirmado (1P2T, curso 2,00 mm, 0,3 A / 30 V CC, terminais a 2,54 mm). O
+> berço foi desenhado para corpo de **11,60 × 4,00 × 4,50** com haste de
+> **4,00**. **Meça a chave com o paquímetro** e ajuste `INTERRUPTOR` em
+> `gerar_modelo_3mf.py` antes de imprimir o corpo — são ~5 h de impressão.
+
+> **Corrente.** 0,3 A / 30 V CC serve para chavear o **sinal** de habilitação
+> ou a alimentação de um microcontrolador (o Pro Micro puxa ~20 mA). **Não**
+> serve para cortar carga de LED de 12 V em quantidade. Se for esse o uso,
+> troque por chave de 3 A ou use a SS12D00G4 para acionar um MOSFET.
+
+---
+
+## 6. Eletrônica de controle
 
 ❓ **Ainda não há decisão registrada no projeto.** Duas rotas usuais:
 
@@ -139,11 +173,13 @@ Se **não** for iluminação, me diga o que são e eu recoto o desenho.
 | **Raspberry Pi Pico** | mais I/O e mais barato, mas exige firmware HID |
 
 Em qualquer uma: 1 × cabo USB e 1 × passa-cabo ou recorte na caixa (**não
-existe no modelo atual** — o corpo é fechado nos 4 lados).
+existe no modelo atual**). O rasgo de 6,00 × 3,00 da parede de trás é da
+haste do interruptor e **não serve de passagem**. Sugestão: mesma parede,
+entre `x = 94` e `x = 123`, que é o resto do trecho reto livre.
 
 ---
 
-## 6. Consumíveis de impressão
+## 7. Consumíveis de impressão
 
 | Qtd | Item | Status |
 |---|---|---|
@@ -184,7 +220,7 @@ lado em X**. Isso tem consequência prática:
 
 ---
 
-## 7. Ferramentas
+## 8. Ferramentas
 
 | Item | Para quê | Status |
 |---|---|---|
@@ -202,6 +238,8 @@ lado em X**. Isso tem consequência prática:
 1. **Largura do terminal do microswitch** — 4,8 mm ou 2,8 mm. Define o faston.
 2. **Função dos 9 furos Ø10** — define se entram LEDs, suportes e resistores.
 3. **Microcontrolador** — define cabo, conector e recorte de saída na caixa.
+4. **Nº de posições do interruptor** — o berço da PIBIC-CX-04 é para uma
+   chave de **2 posições**. Se forem necessárias 3, o componente muda.
 
 ~~Profundidade do furo do inserto~~ — **resolvido: M3 × 6 na tampa e M3 × 16 no
 painel**, os dois no mesmo inserto de 4,0 mm.
@@ -216,3 +254,5 @@ Os itens ✅ podem ser comprados hoje sem risco de sobrar.
 - **Folga do rebaixo da capa (0,80 diametral).** Estimada. Corpo de prova antes
   do painel.
 - **Posição do pino anti-rotação do flange.** Não cotada pelo fabricante.
+- **Cotas mecânicas do SS12D00G4.** Nominais; datasheet só em imagem.
+  Meça antes de imprimir o corpo.
