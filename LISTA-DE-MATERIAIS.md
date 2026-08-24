@@ -2,12 +2,12 @@
 
 > **Revisão A1 mini + botões embutidos.** Levantada a partir da geometria real
 > dos `.3mf` gerados por `gerar_modelo_3mf.py` — **178 × 130 mm**, 6 colunas de
-> fixação com inserto nas **duas** pontas, 2 furos Ø26, 9 furos Ø10, 2 rebaixos
-> de assento de capa. Substitui o levantamento de 215 × 120 feito para a
-> Creality K1C.
+> fixação com inserto **só no topo**, 2 furos Ø26 e 9 furos Ø10 no painel liso.
+> Substitui o levantamento de 215 × 120 feito para a Creality K1C.
 >
-> O que mudou para a compra: **12 insertos** em vez de 6, e **dois**
-> comprimentos de parafuso em vez de um.
+> O que mudou para a compra nesta revisão: **6 insertos** em vez de 12, **um**
+> comprimento de parafuso em vez de dois, **PLA** em vez de PETG, a chave
+> **KCD1** no lugar da SS12D00G4, e uma **perfboard 7 × 9**.
 
 Legenda da coluna **Status**:
 
@@ -54,19 +54,19 @@ painel passou de 10 para 16 mm.
 
 ---
 
-## 2. Fixação — 6 colunas, inserto nas duas pontas
+## 2. Fixação — 6 colunas, inserto só no topo
 
-As 6 colunas do corpo são **passantes** e levam furo Ø4,20 × 5,00 em cada
-ponta: em cima prendem o painel, embaixo a tampa. No modelo do Fusion só a
-tampa tinha fixação e o painel não tinha como prender — as três peças não
-fechavam uma caixa.
+As 6 colunas do corpo levam furo Ø4,20 × 5,00 **só na ponta de cima**, onde a
+tampa prende. Eram 12 insertos porque o painel também parafusava; o painel
+virou parte do corpo e **a metade de baixo da ferragem desapareceu**.
 
 | Qtd | Item | Status | Observação |
 |---|---|---|---|
-| 6 | Parafuso **M3 × 16 ISO 7380**, cabeça abaulada, sextavado interno 2,0 mm | ✅ | **painel**, que tem 16 mm |
 | 6 | Parafuso **M3 × 6 ISO 7380**, cabeça abaulada, sextavado interno 2,0 mm | ✅ | **tampa**, que tem 4 mm |
-| **12** | **Inserto roscado de latão M3**, Ø externo 4,6 × **4,0** mm | ✅ | 4,0 e não 5,0 — ver abaixo. **Dobrou:** 2 por coluna |
-| — | *alternativa sem inserto:* 12 × porca M3 DIN 934 em bolso sextavado | ❓ | 5,5 mm entre faces × 2,4 de espessura; exige redesenhar a coluna |
+| **6** | **Inserto roscado de latão M3**, Ø externo 4,6 × **4,0** mm | ✅ | eram 12 |
+| — | *alternativa sem inserto:* 6 × porca M3 DIN 934 em bolso sextavado | ❓ | 5,5 mm entre faces × 2,4 de espessura; exige redesenhar a coluna |
+
+~~6 × Parafuso M3 × 16~~ — **não compre.** Eram os do painel.
 
 As duas contas fecham no mesmo furo de 5,00 mm e no mesmo inserto de 4,0:
 
@@ -82,7 +82,7 @@ para o parafuso cair num comprimento de catálogo. Com rebaixo de 2,00 o painel
 pediria um M3 × 18, que quase não se acha.
 
 > **Peça o inserto de 4,0 mm, não o de 5,0.** Um inserto de 5,0 num furo de
-> 5,00 não deixa vazio nenhum embaixo, e o PETG derretido na instalação não
+> 5,00 não deixa vazio nenhum embaixo, e o PLA derretido na instalação não
 > tem para onde ir — ele sobe em volta e empurra o inserto para fora, o que
 > impede a tampa de assentar. Com 4,0 sobra 1,00 mm de folga no fundo, e o
 > M3 × 6 penetra exatamente os 4,0 mm do latão.
@@ -129,39 +129,55 @@ Se **não** for iluminação, me diga o que são e eu recoto o desenho.
 
 ---
 
-## 5. Interruptor geral — SS12D00G4
+## 5. Interruptor geral — chave gangorra redonda KCD1
 
 | Qtd | Item | Status | Observação |
 |---|---|---|---|
-| **1** | **Chave deslizante SS12D00G4**, 1P2T, haste de 4 mm | ⚠ | 0,3 A / 30 V CC — ver ressalva abaixo |
-| — | Cola quente | ✅ | já está na lista de ferramentas |
+| **1** | **Chave gangorra redonda KCD1**, snap-in, furo de painel Ø20 | ⚠ | 3 terminais faston 4,80; 6 A / 250 V CA |
+| 3 | Terminal faston fêmea 4,80 mm | ⚠ | crimpado nos fios |
 
-Vai num **berço integrado à parede de trás do corpo** (`y = 130`), eixo da
-haste a `x = 69,50` da aresta esquerda e `z = 12,00` da base. Prancha
-**PIBIC-CX-04**. O berço é uma bolsa 12,20 × 4,60 × 5,50 aberta para dentro da
-caixa, com 2,50 mm de plástico em volta e 2,00 mm no fundo; a haste sai por um
-rasgo de 6,00 × 3,00 e sobra 2,00 mm para fora. **Prende com cola quente, sem
-parafuso** — os furos de fixação da própria chave ficam contra o fundo da bolsa
-e não são usados.
+Vai **encaixada** na parede de trás do corpo (`y = 130`), eixo em `x = 69,50`
+e `z = 35,00`. Prancha **PIBIC-CX-04**. A parede é rebaixada por dentro
+(Ø25,00 × 2,00) para sobrar 2,00 mm locais — a chave é snap-in e as garras
+querem painel fino. **Não há cola nem parafuso.**
 
-> **⚠ São 2 posições, não 3.** O anúncio chama de "3 posições" os **3
-> terminais**. A SS12D00G4 é 1P2T: liga/desliga, comum no meio. Se o projeto
-> precisar mesmo de três estados, **o componente é outro e o berço muda** —
-> avise antes de comprar.
+Cotas do componente, de desenho cotado do fabricante:
 
-> **⚠ As cotas mecânicas são nominais.** Os datasheets públicos da série
-> SS12D00 são digitalização, sem texto extraível; só o elétrico está
-> confirmado (1P2T, curso 2,00 mm, 0,3 A / 30 V CC, terminais a 2,54 mm). O
-> berço foi desenhado para corpo de **11,60 × 4,00 × 4,50** com haste de
-> **4,00**. **Meça a chave com o paquímetro** e ajuste `INTERRUPTOR` em
-> `gerar_modelo_3mf.py` antes de imprimir o corpo — são ~5 h de impressão.
+| Cota | Valor |
+|---|---|
+| Corpo que atravessa o painel | Ø19,80 ± 0,20 |
+| Aro visível | Ø23,00 ± 0,20 |
+| Corpo atrás do painel | Ø19,30 |
+| Profundidade do corpo | 17,80 ± 0,30 |
+| Total atrás do painel | 25,70 ± 0,30 |
+| Terminais | 3, passo 7,00, vão 14,00, lâmina 4,80 × 0,80 |
 
-> **Corrente.** 0,3 A / 30 V CC serve para chavear o **sinal** de habilitação
-> ou a alimentação de um microcontrolador (o Pro Micro puxa ~20 mA). **Não**
-> serve para cortar carga de LED de 12 V em quantidade. Se for esse o uso,
-> troque por chave de 3 A ou use a SS12D00G4 para acionar um MOSFET.
+> **⚠ O que o desenho do fabricante NÃO cota** é a faixa de espessura de painel
+> que as garras aceitam. O projeto arbitrou 2,00 mm, que é o valor seguro da
+> família. Meça a garra com o paquímetro antes de imprimir o corpo.
+
+> **Corrente.** 6 A / 250 V CA é folgado para chavear a alimentação de um
+> microcontrolador ou uma fita de LED. A chave anterior, a SS12D00G4, dava
+> 0,3 A / 30 V CC e era o gargalo.
+
+**A SS12D00G4 saiu do projeto**, e com ela o berço colado e a cola quente que
+o prendia. Se você já comprou a deslizante, ela não serve: o berço não existe
+mais.
 
 ---
+
+### 5b. Perfboard e o encaixe dela
+
+| Qtd | Item | Status | Observação |
+|---|---|---|---|
+| 1 | **Perfboard 7 × 9 cm** genérica, furos de canto Ø3,0 | ⚠ | 4 furos de canto são requisito |
+
+Prende na tampa por **4 pinos farpados, sem parafuso**. A placa assenta no
+ombro Ø6,00 e trava sob a farpa Ø3,60.
+
+> **⚠ Ø3,00 do furo e recuo de 3,50 da borda são PRESUMIDOS.** Meça a placa
+> antes de imprimir a tampa — errar o recuo põe os 4 pinos no lugar errado de
+> uma vez. Os dois valores são parâmetro no topo de `gerar_modelo_3mf.py`.
 
 ## 6. Eletrônica de controle
 
@@ -183,21 +199,19 @@ entre `x = 94` e `x = 123`, que é o resto do trecho reto livre.
 
 | Qtd | Item | Status |
 |---|---|---|
-| 1 kg | **Filamento PETG** | ✅ |
-| 1 | Bastão de cola escolar | ✅ agente de **soltura** no PEI, não de adesão |
+| 1 kg | **Filamento PLA** | ✅ |
 | 1 | Álcool isopropílico | ✅ |
 
 **Estimativa de filamento**, dos volumes reais das malhas (`validar_modelo.py`):
 
 ```
-caixa-painel     233,93 cm3     era 214,37 - engordou de 10 para 16 mm
-caixa-corpo      130,26 cm3     era 309,04 - parede de 10 para 4 mm
-caixa-tampa       81,64 cm3     era  92,22 - silhueta menor
+caixa-corpo      279,13 cm3     painel + corpo fundidos
+caixa-tampa       81,98 cm3     com os 4 pinos da perfboard
                  ──────────
-sólido           445,83 cm3     era 615,63
+sólido           361,11 cm3     era 445,83   (-19 %)
 ```
 
-A 4 perímetros e 30 % de preenchimento giroide, a densidade efetiva fica em
+A 4 perímetros e 20 % de preenchimento giroide, a densidade efetiva fica em
 torno de 50 % → **≈ 223 cm³ ≈ 283 g**. Some refugo, o corpo de prova dos
 rebaixos e uma peça refeita: **compre 1 kg**.
 
@@ -211,12 +225,13 @@ lado em X**. Isso tem consequência prática:
 
 - **Centralize na mesa** e confira antes de fatiar. Não é margem para
   improvisar posição.
-- **Não use brim.** Não cabe. O projeto já trata o PETG no PEI como problema de
-  *soltura*, não de aderência, então o brim não faz falta — mas conte com isso
-  na hora de fatiar, e não descubra depois.
-- Nenhuma das três peças pede suporte, desde que impressas na orientação
-  modelada: painel com a face interna na mesa (os rebaixos abrem para cima),
-  corpo em pé, tampa com o rebaixo para cima.
+- **Não use brim.** Não cabe. Em PLA ele não faz falta — mas conte com isso na
+  hora de fatiar, e não descubra depois.
+- **Nenhuma das duas peças pede suporte**, desde que impressas na orientação
+  modelada: o corpo com a **face dos botões na mesa**, a tampa com os **pinos
+  para cima**.
+- A primeira camada do corpo é a face **visível** dos botões. A textura da mesa
+  transfere direto para ela.
 
 ---
 
@@ -224,7 +239,7 @@ lado em X**. Isso tem consequência prática:
 
 | Item | Para quê | Status |
 |---|---|---|
-| **Ferro de solda com controle de temperatura** | 220–240 °C para os insertos; sem controle você queima o PETG | ✅ |
+| **Ferro de solda com controle de temperatura** | 220–240 °C para os insertos; sem controle você queima o PLA | ✅ |
 | Ponta cônica dedicada aos insertos | latão sujo estraga a ponta de eletrônica | ✅ |
 | Chave allen 2,0 mm | cabeça dos M3 ISO 7380 | ✅ |
 | **Paquímetro** | resolve as duas pendências abertas do projeto | ✅ |
@@ -238,21 +253,26 @@ lado em X**. Isso tem consequência prática:
 1. **Largura do terminal do microswitch** — 4,8 mm ou 2,8 mm. Define o faston.
 2. **Função dos 9 furos Ø10** — define se entram LEDs, suportes e resistores.
 3. **Microcontrolador** — define cabo, conector e recorte de saída na caixa.
-4. **Nº de posições do interruptor** — o berço da PIBIC-CX-04 é para uma
-   chave de **2 posições**. Se forem necessárias 3, o componente muda.
+4. **Ø do furo e recuo da borda da perfboard** — presumidos em 3,00 e 3,50.
+   Definem a posição dos 4 pinos da tampa; errar põe os quatro errados de uma
+   vez.
 
-~~Profundidade do furo do inserto~~ — **resolvido: M3 × 6 na tampa e M3 × 16 no
-painel**, os dois no mesmo inserto de 4,0 mm.
+~~Profundidade do furo do inserto~~ — **resolvido: M3 × 6 na tampa**, inserto de
+4,0 mm.
 
-~~Fixação do painel~~ — **resolvido:** as colunas viraram passantes e recebem
-inserto nas duas pontas.
+~~Fixação do painel~~ — **resolvido de outro jeito:** o painel virou parte do
+corpo e deixou de precisar de fixação.
+
+~~Nº de posições do interruptor~~ — **resolvido:** a SS12D00G4 saiu do projeto.
 
 Os itens ✅ podem ser comprados hoje sem risco de sobrar.
 
 ## Ainda por confirmar na bancada (não trava compra)
 
-- **Folga do rebaixo da capa (0,80 diametral).** Estimada. Corpo de prova antes
-  do painel.
+- **Faixa de espessura de painel das garras da KCD1.** O desenho do fabricante
+  não cota. O projeto arbitrou 2,00 mm. Meça a garra antes de imprimir o corpo.
+- **Ø e recuo do furo da perfboard.** Presumidos em 3,00 e 3,50.
 - **Posição do pino anti-rotação do flange.** Não cotada pelo fabricante.
-- **Cotas mecânicas do SS12D00G4.** Nominais; datasheet só em imagem.
-  Meça antes de imprimir o corpo.
+
+~~Folga do rebaixo da capa~~ — **sem objeto:** o rebaixo de capa deixou de
+existir quando o painel ficou liso.

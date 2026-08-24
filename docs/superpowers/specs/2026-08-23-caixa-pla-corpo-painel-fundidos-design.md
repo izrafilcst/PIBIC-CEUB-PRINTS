@@ -2,7 +2,9 @@
 
 Autor: Rafael Alves de Sousa Costa
 Data: 23/08/2026
-Estado: seções 1, 2 e 3 aprovadas em conversa; pendente revisão desta spec
+Estado: IMPLEMENTADA. Os números abaixo foram conferidos contra a malha
+gerada; onde a implementação corrigiu a spec, a correção está no texto e o
+motivo no parágrafo ao lado.
 
 ---
 
@@ -122,27 +124,30 @@ nominais e nunca foram confirmadas.
 Posição: parede de trás `y = 130`, `x = 69,50`, eixo em `z = 35,00`.
 
 ```
-y = 126,00 .. 128,00   rebaixo Ø26,00, aberto só para DENTRO
-y = 128,00 .. 130,00   parede local de 2,00 mm, furo Ø20,40
+y = 126,00 .. 128,00   rebaixo Ø25,00, aberto só para DENTRO
+y = 128,00 .. 130,00   parede local de 2,00 mm, furo Ø20,20
 y = 130,00             face externa, lisa
 ```
 
 - **`x = 69,50`** é o meio do único trecho reto livre da parede: de `x = 55`
-  (tangência do R55) a `x = 84` (início da coluna central Ø10). O rebaixo Ø26
-  ocupa `[56,50 – 82,50]` — cabe com 1,50 mm de sobra de cada lado.
+  (tangência do R55) a `x = 84` (início da coluna central Ø10). O rebaixo Ø25
+  ocupa `[57,00 – 82,00]` — 2,00 mm de sobra de cada lado, e 2,28 mm até a
+  coluna central. Com Ø26 sobrava 1,80 mm da coluna, abaixo do mínimo de 2,00
+  da própria conferência: o rebaixo circular é mais largo que o ressalto
+  retangular da SS12D00G4 que ele substitui.
 - **`z = 35,00`** põe o rebaixo em `[22,00 – 48,00]`, dentro da faixa útil
   `[8,00 – 63,00]`.
 - **Parede local de 2,00 mm** existe porque a chave é snap-in e as garras querem
   painel fino; a parede cheia de 4,00 não entra na faixa.
-- **Furo Ø20,40** = Ø20,00 + 0,40 de folga. Furo de eixo horizontal fecha mais
-  que furo em pé em PLA, e o aro Ø23 cobre 1,30 mm radiais — a folga não
+- **Furo Ø20,20** = corpo real Ø19,80 + 0,40 de folga. Furo de eixo horizontal fecha mais
+  que furo em pé em PLA, e o aro Ø23 cobre 1,40 mm radiais — a folga não
   aparece por fora.
 - **Nenhum chanfro no furo**, nem por dentro nem por fora. Por dentro é onde as
   garras mordem; por fora seria cone, e vale a mesma restrição de volume
   analítico da nota do painel. Os 0,40 mm de folga já dão a entrada.
 - Reserva atrás da parede: 25,70 mm, ocupando até `y = 102,30`, em cavidade
   livre.
-- Pontes: o topo do furo (14,40 mm) e o topo do rebaixo (18,40 mm) são pontes
+- Pontes: o topo do furo (14,28 mm) e o topo do rebaixo (17,68 mm) são pontes
   apoiadas dos dois lados, ambas com só 2,00 mm de profundidade. PLA faz.
 
 ### 3.4 Peça 2 — `caixa-tampa`
@@ -225,7 +230,7 @@ quatro pinos por pinos lisos de localização.
 
 ## 4. Núcleo de malha — duas primitivas novas
 
-O `malha.py` assume *prisma*: contornos em (x,y) extrudados em z. O furo Ø20,40
+O `malha.py` assume *prisma*: contornos em (x,y) extrudados em z. O furo Ø20,20
 do KCD1 tem eixo em **y** e não cabe nessa hipótese. Duas primitivas resolvem:
 
 **`face_vertical(externo, buracos, y, frente)`** — triangula uma região plana no
@@ -235,18 +240,18 @@ troca de eixos, não motor novo.
 **`tubo(anel_a, anel_b, fora)`** — costura dois anéis fechados de mesma contagem
 de pontos em dois planos paralelos quaisquer.
 
-`tubo` sozinho resolve três coisas: o cilindro Ø20,40 de eixo horizontal, o cone
-de 45° da ponta do pino da perfboard e o escalonamento Ø26 → Ø20,40 do rebaixo
-da chave.
+`tubo` sozinho resolve três coisas: o cilindro Ø20,20 de eixo horizontal, os dois
+cilindros concentricos do rebaixo da chave e o escalonamento Ø25 → Ø20,20
+entre eles.
 
 **Como a parede de trás passa a ser emitida:**
 
 | Superfície | Antes | Agora |
 |---|---|---|
-| Face externa `y = 130`, trecho reto | `parede(ext)` | `face_vertical` com furo Ø20,40 |
-| Face interna `y = 126`, trecho reto | `parede(cav)` | `face_vertical` com furo Ø26,00 |
-| Anel em `y = 128` | — | `face_vertical`, Ø26,00 com furo Ø20,40 |
-| Cilindros Ø26,00 e Ø20,40 | — | `tubo` |
+| Face externa `y = 130`, trecho reto | `parede(ext)` | `face_vertical` com furo Ø20,20 |
+| Face interna `y = 126`, trecho reto | `parede(cav)` | `face_vertical` com furo Ø25,00 |
+| Anel em `y = 128` | — | `face_vertical`, Ø25,00 com furo Ø20,20 |
+| Cilindros Ø25,00 e Ø20,20 | — | `tubo` |
 
 A emenda entre o trecho de `face_vertical` e o `parede` vizinho fecha sem junta
 em T: as arestas verticais em `x = x_a` e `x = x_b` vão de `z = 0` a `z = 63` sem
@@ -278,7 +283,7 @@ tritura.
 
 | Feature | Nominal | Modelado | Motivo |
 |---|---|---|---|
-| Furo do KCD1 (eixo horizontal) | Ø20,00 | **Ø20,40** | furo deitado fecha mais; aro Ø23 cobre |
+| Furo do KCD1 (eixo horizontal) | Ø19,80 (corpo) | **Ø20,20** | furo deitado fecha mais; aro Ø23 cobre 1,40 radiais |
 | Barril M24 (eixo vertical) | Ø26,00 | Ø26,00 | já é a folga da Adafruit |
 | Haste do pino × furo da placa | Ø3,00 | Ø2,80 | 0,20 diametral |
 | Farpa do pino | — | Ø3,60 | 0,30 radial de retenção sobre o furo Ø3,00 |
@@ -307,17 +312,18 @@ a pessoa olha.
 ### 5.3 Volume
 
 ```
-caixa-corpo (fundida)   ≈ 279,5 cm3     era 233,93 + 130,26 = 364,19
-caixa-tampa             ≈  82,0 cm3     era  81,64
+caixa-corpo (fundida)     279,13 cm3     era 233,93 + 130,26 = 364,19
+caixa-tampa                81,98 cm3     era  81,64
                           ─────────
-sólido                  ≈ 361,5 cm3     era 445,83   (−19 %)
+sólido                    361,11 cm3     era 445,83   (−19 %)
 ```
 
 A 4 perímetros e 20 % giroide, densidade efetiva ~50 % → ≈ 181 cm³ → **≈ 224 g
 de PLA**. Com refugo e uma peça refeita, 1 kg continua sendo a compra certa.
 
-Os números acima são estimativa analítica desta spec; os valores finais saem de
-`validar_modelo.py` depois da implementação e substituem esta tabela.
+Os números acima são os medidos por `validar_modelo.py` na malha gravada, e
+substituíram a estimativa analítica que esta seção trazia antes. A estimativa
+errava por 0,4 % no corpo.
 
 ---
 
@@ -377,7 +383,7 @@ borda; furos Ø10 dentro da capa; coluna contra a parede.
 5. Rebaixo Ø26 contido no trecho reto `[55 – 84]` da parede
 6. Rebaixo livre das 6 colunas por ≥ 2,00 mm
 7. Parede local da chave ∈ `[1,60 – 3,00]` e menor que a parede cheia
-8. Vãos de ponte (14,40 no furo, 18,40 no rebaixo) ≤ `PONTE_PLA = 20,00`
+8. Vãos de ponte (14,28 no furo, 17,68 no rebaixo) ≤ `PONTE_PLA = 20,00`
 9. Reserva de 25,70 mm atrás da parede cabe na cavidade
 
 **Novas — perfboard**
@@ -408,8 +414,9 @@ O projeto já tem o mecanismo certo, e ele continua valendo:
   modelo bate.
 
 Conferência nova a acrescentar: o volume analítico do **pino da perfboard**
-(ombro + haste + farpa + cone − rasgo) tem de ser escrito à mão na conta esperada
-da tampa, senão o cone entra sem ninguém verificar.
+(ombro + haste + farpa + as duas guias, menos o rasgo) tem de ser escrito à mão
+na conta esperada da tampa. Como todo o perfil ficou prismático, cada trecho é
+área de polígono vezes altura, e a conferência fecha em 1e-9 como no resto.
 
 ---
 
