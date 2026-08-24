@@ -99,7 +99,7 @@ def test_o_rebaixo_da_chave_tem_o_diametro_certo():
     S, esperado = P.corpo()
     S.conferir(esperado, tol_rel=1e-9)
     k = P.estacao_chave()
-    # a 1 mm dentro do rebaixo a secao horizontal corta o Ø26
+    # no eixo da chave a secao horizontal corta o rebaixo no diametro cheio
     segs = V.secao([tuple(v) for v in S.v], list(S.t), k["z"])
     larg, centro = V.largura_do_vao(segs, k["y_cav"])
     assert abs(larg - k["d_rebaixo"]) < 0.05, f"boca do rebaixo {larg:.3f}"

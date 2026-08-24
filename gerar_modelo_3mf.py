@@ -164,10 +164,15 @@ CHAVE = dict(
     z=35.0,            # eixo, medido da face dos botoes (a mesa)
     d_corpo=19.8,      # o que atravessa o painel
     d_aro=23.0,        # aro visivel
+    d_corpo_tras=19.3, # corpo atras do painel
     folga=0.4,         # diametral - furo deitado fecha mais que furo em pe
     d_rebaixo=25.0,    # rebaixo por dentro, onde as garras trabalham
     parede=2.0,        # parede local que sobra sob o rebaixo
+    prof_corpo=17.8,   # so o corpo, sem terminal
     atras=25.7,        # reserva atras da parede: corpo + terminal
+    saliencia_aro=2.7, # quanto o aro sobra para fora da face
+    n_term=3, passo_term=7.0, vao_term=14.0,
+    lamina=4.8, esp_lamina=0.8,
     x_face=(55.0, 84.0),   # trecho da parede que a face_vertical assume
 )
 
@@ -442,6 +447,11 @@ def corpo():
         z = 0,00 .. 0,50    alivio da boca dos furos (pe de elefante)
         z = 0,50 .. 8,00    painel
         z = 8,00 .. 63,00   cavidade, paredes e colunas
+
+    A parede de tras carrega a ESTACAO DA CHAVE, o unico furo da caixa com
+    eixo HORIZONTAL. No trecho x [55, 84] ela deixa de ser parede e vira
+    chapa plana com furo: tres 'face_vertical' e dois 'tubo', em vez de
+    'parede'.
     """
     S = M.Solido("corpo")
     ext = silhueta()

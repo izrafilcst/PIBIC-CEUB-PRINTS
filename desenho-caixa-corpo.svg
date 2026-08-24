@@ -130,9 +130,12 @@
 <polygon points="179.000,268.000 181.400,267.550 181.400,268.450" fill="#111"/>
 <polygon points="221.000,268.000 218.600,268.450 218.600,267.550" fill="#111"/>
 <text x="200.000" y="266.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;42,00 - 3 furos a 120°</text>
-<circle cx="129.500" cy="173.000" r="10.100" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
-<line x1="111.000" y1="172.000" x2="148.000" y2="172.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<line x1="129.500" y1="153.500" x2="129.500" y2="190.500" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="119.400" y1="172.000" x2="119.400" y2="174.000" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<line x1="117.000" y1="174.000" x2="117.000" y2="175.998" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<line x1="139.600" y1="172.000" x2="139.600" y2="174.000" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<line x1="142.000" y1="174.000" x2="142.000" y2="175.998" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<line x1="111.000" y1="173.999" x2="148.000" y2="173.999" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="129.500" y1="155.499" x2="129.500" y2="192.499" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
 <line x1="60.000" y1="172.000" x2="60.000" y2="156.000" stroke="#1a5276" stroke-width="0.16"/>
 <line x1="116.000" y1="172.000" x2="116.000" y2="156.000" stroke="#1a5276" stroke-width="0.16"/>
 <line x1="60.000" y1="158.000" x2="116.000" y2="158.000" stroke="#1a5276" stroke-width="0.16"/>
@@ -191,10 +194,14 @@
 <polygon points="129.500,172.000 127.485,170.621 128.121,169.985" fill="#111"/>
 <circle cx="115.358" cy="157.858" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
 <text x="115.358" y="158.758" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">5</text>
+<line x1="80.352" y1="298.100" x2="67.624" y2="285.372" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="80.352,298.100 78.337,296.721 78.973,296.085" fill="#111"/>
+<circle cx="67.624" cy="285.372" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="67.624" y="286.272" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">6</text>
 <text x="149.000" y="340.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">VISTA SUPERIOR    escala 1:1</text>
 <line x1="122.400" y1="341.500" x2="175.600" y2="341.500" stroke="#333" stroke-width="0.25"/>
-<defs><pattern id="hp193" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="422.000,92.000 360.000,92.000 360.000,96.000 364.000,96.000 364.000,116.000 422.000,116.000" fill="url(#hp193)" stroke="#111" stroke-width="0.45"/>
-<defs><pattern id="hp194" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="514.000,92.000 576.000,92.000 576.000,96.000 572.000,96.000 572.000,116.000 514.000,116.000" fill="url(#hp194)" stroke="#111" stroke-width="0.45"/>
+<defs><pattern id="hp200" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="422.000,92.000 360.000,92.000 360.000,96.000 364.000,96.000 364.000,116.000 422.000,116.000" fill="url(#hp200)" stroke="#111" stroke-width="0.45"/>
+<defs><pattern id="hp201" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="514.000,92.000 576.000,92.000 576.000,96.000 572.000,96.000 572.000,116.000 514.000,116.000" fill="url(#hp201)" stroke="#111" stroke-width="0.45"/>
 <text x="468.000" y="84.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="middle">face dos botões - vai na MESA</text>
 <line x1="360.000" y1="92.000" x2="360.000" y2="87.000" stroke="#1a5276" stroke-width="0.16"/>
 <line x1="576.000" y1="92.000" x2="576.000" y2="87.000" stroke="#1a5276" stroke-width="0.16"/>
@@ -220,7 +227,7 @@
 <text x="516.000" y="94.900" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">4</text>
 <text x="468.000" y="140.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">DETALHE - alívio de boca (11x)    escala 8:1</text>
 <line x1="426.200" y1="141.500" x2="509.800" y2="141.500" stroke="#333" stroke-width="0.25"/>
-<defs><pattern id="hp220" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="434.000,214.000 502.000,214.000 502.000,229.991 486.327,229.991 486.925,231.531 487.394,233.115 487.731,234.732 487.934,236.371 488.000,238.022 487.930,239.672 487.724,241.311 487.383,242.928 486.911,244.510 486.309,246.049 485.582,247.532 484.736,248.951 483.775,250.294 482.707,251.554 481.538,252.721 480.277,253.788 478.932,254.748 477.513,255.593 476.029,256.318 474.490,256.918 472.906,257.389 471.290,257.728 469.650,257.932 468.000,258.000 466.350,257.932 464.710,257.728 463.094,257.389 461.510,256.918 459.971,256.318 458.487,255.593 457.068,254.748 455.723,253.788 454.462,252.721 453.293,251.554 452.225,250.294 451.264,248.951 450.418,247.532 449.691,246.049 449.089,244.510 448.617,242.928 448.276,241.311 448.070,239.672 448.000,238.022 448.066,236.371 448.269,234.732 448.606,233.115 449.075,231.531 449.673,229.991 434.000,229.991" fill="url(#hp220)" stroke="#111" stroke-width="0.45"/>
+<defs><pattern id="hp227" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="434.000,214.000 502.000,214.000 502.000,229.991 486.327,229.991 486.925,231.531 487.394,233.115 487.731,234.732 487.934,236.371 488.000,238.022 487.930,239.672 487.724,241.311 487.383,242.928 486.911,244.510 486.309,246.049 485.582,247.532 484.736,248.951 483.775,250.294 482.707,251.554 481.538,252.721 480.277,253.788 478.932,254.748 477.513,255.593 476.029,256.318 474.490,256.918 472.906,257.389 471.290,257.728 469.650,257.932 468.000,258.000 466.350,257.932 464.710,257.728 463.094,257.389 461.510,256.918 459.971,256.318 458.487,255.593 457.068,254.748 455.723,253.788 454.462,252.721 453.293,251.554 452.225,250.294 451.264,248.951 450.418,247.532 449.691,246.049 449.089,244.510 448.617,242.928 448.276,241.311 448.070,239.672 448.000,238.022 448.066,236.371 448.269,234.732 448.606,233.115 449.075,231.531 449.673,229.991 434.000,229.991" fill="url(#hp227)" stroke="#111" stroke-width="0.45"/>
 <circle cx="468.000" cy="238.000" r="8.400" fill="#fff" stroke="#111" stroke-width="0.45"/>
 <line x1="445.000" y1="238.000" x2="491.000" y2="238.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
 <line x1="468.000" y1="215.000" x2="468.000" y2="261.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>

@@ -161,6 +161,14 @@ y = 130,00             face externa, lisa
 voltado para baixo, mas são 1,55 mm radiais de balanço sobre um vão de 6,50 mm —
 não pede suporte.
 
+> **Assimetria conhecida, deixada de propósito.** Os 6 rebaixos Ø6,50 nascem na
+> primeira camada, exatamente como os 11 furos do painel — e não ganharam
+> alívio de boca. A causa é a mesma e o tratamento é diferente. Foi decisão:
+> a cabeça ISO 7380 tem Ø5,70, então sobram 0,40 mm radiais de margem, e o pé
+> de elefante teria de comer isso tudo para atrapalhar. Se na prática o
+> parafuso não assentar, o alívio é o mesmo `REB_ALIVIO`/`FOLGA_ALIVIO` do
+> painel aplicado aqui — mas mexe na geometria e na conta de volume da tampa.
+
 ### 3.5 Encaixe da perfboard
 
 Placa genérica **90 × 70 × 1,60**, 4 furos de canto `Ø3,00` a **3,50 mm de cada
@@ -219,8 +227,17 @@ daria 11 % e a perna quebraria na primeira montagem. Vira **regra do
 `conferir_projeto()`**, com teto em 1,00 %.
 
 Com o ombro em 3,50, a placa fica com a face de cima em `z = 57,90` montada, e a
-folga sob o botão verde cai de 10,60 para **5,50 mm** — ainda positiva, e é ela
-que a regra 12 do `conferir_projeto()` vigia.
+
+Com o ombro em 3,50, a placa fica com a face de cima em `z = 57,90` montada, e
+a folga sob o botão verde cai de 10,60 para **5,50 mm**.
+
+> **Atenção à leitura dessa folga.** Ela não é o que segura a placa longe do
+> verde. Com o centro em `(73 / 65)` a placa **desvia do verde no plano**, com
+> 3,15 mm — e a regra 11 se dá por satisfeita antes de olhar o z. Os 5,50 mm
+> só passariam a ser avaliados se alguém deslocasse a placa para debaixo do
+> verde, e aí eles reprovariam contra os 10,00 de `ALT_COMPONENTE`. É assim
+> que a regra segura: pelo plano primeiro, pela altura se o plano falhar.
+
 
 ⚠ **Ponto de desgaste conhecido:** encaixar e desencaixar a placa muitas vezes
 cansa as farpas. Se o uso previsto exigir isso, a mitigação é trocar dois dos
@@ -237,7 +254,7 @@ do KCD1 tem eixo em **y** e não cabe nessa hipótese. Duas primitivas resolvem:
 plano (x,z) a `y` constante, reaproveitando o `triangular()` que já existe; é
 troca de eixos, não motor novo.
 
-**`tubo(anel_a, anel_b, fora)`** — costura dois anéis fechados de mesma contagem
+**`tubo(anel_a, anel_b, inverter)`** — costura dois anéis fechados de mesma contagem
 de pontos em dois planos paralelos quaisquer.
 
 `tubo` sozinho resolve três coisas: o cilindro Ø20,20 de eixo horizontal, os dois
@@ -380,7 +397,7 @@ borda; furos Ø10 dentro da capa; coluna contra a parede.
 
 **Novas — chave**
 
-5. Rebaixo Ø26 contido no trecho reto `[55 – 84]` da parede
+5. Rebaixo Ø25 contido no trecho reto `[55 – 84]` da parede
 6. Rebaixo livre das 6 colunas por ≥ 2,00 mm
 7. Parede local da chave ∈ `[1,60 – 3,00]` e menor que a parede cheia
 8. Vãos de ponte (14,28 no furo, 17,68 no rebaixo) ≤ `PONTE_PLA = 20,00`
@@ -389,8 +406,12 @@ borda; furos Ø10 dentro da capa; coluna contra a parede.
 **Novas — perfboard**
 
 10. Placa livre das 6 colunas por ≥ 2,00 mm
-11. Placa livre do envelope do botão verde por ≥ 2,00 mm
-12. Folga vertical entre a face de cima da placa e o corpo de cada botão > 0
+11. Folga da placa com cada botão **no plano OU na altura** — basta uma. Onde
+    ela passa por baixo (folga no plano < 2,00), o que sobra em z tem de dar
+    `ALT_COMPONENTE = 10,00` mm para um componente de pé
+12. *(fundida na regra 11)* — a formulação anterior exigia folga no plano dos
+    **dois** botões e reprovava por construção: a placa passa sob o vermelho de
+    propósito, e a distância no plano dá zero
 13. Ombro do pino ≥ 2,50 mm (pernas soldadas)
 14. Deformação de flexão das pernas do pino ≤ 1,00 % (projeto: 0,85 %)
 15. Pinos livres das colunas

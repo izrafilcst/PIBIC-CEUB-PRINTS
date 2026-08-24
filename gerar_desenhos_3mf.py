@@ -182,7 +182,7 @@ def raio_coluna(V, cx, cy, r_int, r_ext):
 
     Nao medir no corte. A secao de uma parede vertical devolve, alem dos
     vertices do contorno, o ponto MEDIO de cada corda - que num circulo cai
-    para dentro. Num arco de 7 graus dá 0,01 mm, o bastante para a coluna de
+    para dentro. Num arco de 7 graus da 0,01 mm, o bastante para a coluna de
     10,00 sair cotada como 9,98.
 
     E o MENOR raio da janela, nao o maior. Os vertices do arco da coluna estao
@@ -351,6 +351,11 @@ def medir_corpo(V, T):
 
     Aqui cada sonda corta numa altura ESCOLHIDA, dentro da faixa da feicao que
     ela mede. E 'bate' confere tudo contra gerar_modelo_3mf.py no fim.
+
+    Restam tres indexacoes por posicao em 'zs' - a primeira quebra e as duas
+    ultimas. Elas valem porque nada mora abaixo do alivio nem entre o furo do
+    inserto e o topo, e nao porque a peca seja prismatica. Se alguma feicao
+    nascer nessas faixas, e aqui que quebra.
     """
     zs = niveis(V)
     m = dict(hh=zs[-1], reb_al=zs[1])
@@ -411,10 +416,14 @@ def medir_chave(V, hh):
     caem em tres planos de y bem definidos, e ali o raio sai exato - os pontos
     estao SOBRE o circulo, nao inscritos nele como acontece num corte.
 
-    Dois filtros isolam o que interessa. O de z descarta tudo que esta nas
-    cotas do painel e do topo, que e onde vivem os contornos prismaticos; o de
-    y restringe a parede de tras. Sem o segundo, os circulos dos furos de
-    inserto entrariam na conta.
+    Tres filtros isolam o que interessa, e vale saber qual faz o que. O de z
+    descarta as cotas do painel e do topo, onde vivem os contornos
+    prismaticos. O de y restringe a parede de tras. Quem de fato rejeita os
+    circulos dos furos de inserto e o TERCEIRO, 'len(pts) < 8': eles caem em
+    planos de y como 126,06 por causa da coluna em (89, 124), passam pelo
+    filtro de y e sao poucos pontos por plano. Se SEG_PEQ crescer, eles
+    passam a ter 8 e o assert dispara - falha segura, mas o diagnostico esta
+    aqui.
     """
     por_y = defaultdict(list)
     for x, y, z in V:
@@ -475,6 +484,13 @@ def desenho_corpo():
     bate("corpo: n de barris", len(m["barril"]), len(P.BOTOES))
     bate("corpo: n de LEDs", len(m["led"]),
          sum(b["led_n"] for b in P.BOTOES))
+    # estes viram cota na prancha, entao tem de ser conferidos como as outras
+    bate("corpo: largura da cavidade", m["larg_i"], P.CX_L - 2 * P.CORPO_PAR)
+    bate("corpo: profundidade da cavidade", m["alt_i"], P.CX_A - 2 * P.CORPO_PAR)
+    bate("corpo: raio da cavidade", m["Ri"], P.CX_R - P.CORPO_PAR)
+    for b, spec in zip(m["botoes"], sorted(P.BOTOES, key=lambda s: s["x"])):
+        bate(f"corpo: circulo de furacao do {spec['nome']}", b["rf"],
+             spec["led_r"])
     bate("chave: x do eixo", sw["x"], k["x"])
     bate("chave: z do eixo", sw["z"], k["z"])
     bate("chave: Ø do rebaixo", sw["d_rebaixo"], k["d_rebaixo"])
@@ -513,10 +529,18 @@ def desenho_corpo():
                  f"{dm(2 * b['rf'])} - {len(b['leds'])} furos a "
                  f"{360 // len(b['leds'])}°", W.py(b["y"]), tam=FONTE_P)
 
-    # a chave, na parede de tras, em posicao verdadeira
-    D.circ(*W.p(sw["x"], m["alt"] - sw["parede"] / 2), sw["d_furo"] / 2,
-           L_TRACO, cor="#555", dash=D_OCULTA)
-    D.centro(*W.p(sw["x"], m["alt"]), sw["d_rebaixo"] / 2 + 3)
+    # A chave, na parede de tras. Em PLANTA um furo de eixo HORIZONTAL sao
+    # duas linhas ocultas, nao um circulo: desenhar o circulo o faria
+    # transbordar 9 mm para fora do contorno da peca.
+    for s in (-1, 1):
+        D.linha(W.px(sw["x"] + s * sw["d_furo"] / 2), W.py(m["alt"]),
+                W.px(sw["x"] + s * sw["d_furo"] / 2),
+                W.py(m["alt"] - sw["parede"]), L_TRACO, "#555", dash=D_OCULTA)
+        D.linha(W.px(sw["x"] + s * sw["d_rebaixo"] / 2),
+                W.py(m["alt"] - sw["parede"]),
+                W.px(sw["x"] + s * sw["d_rebaixo"] / 2),
+                W.py(m["alt"] - m["par"]), L_TRACO, "#555", dash=D_OCULTA)
+    D.centro(*W.p(sw["x"], m["alt"] - m["par"] / 2), sw["d_rebaixo"] / 2 + 3)
 
     yb = W.py(0)
     xs = sorted({round(f[0], 3) for f in ins})
@@ -538,6 +562,7 @@ def desenho_corpo():
     D.bandeira(W.px(m["larg"] - m["R"] * 0.293),
                W.py(m["alt"] - m["R"] * 0.293), 3, ang=-30, comp=18)
     D.bandeira(*W.p(sw["x"], m["alt"]), 5, ang=-135, comp=20)
+    D.bandeira(*W.p(xs[0], ys[0] - dins / 2), 6, ang=-135, comp=18)
     D.rotulo_vista(W.px(m["larg"] / 2), yb + 38, "VISTA SUPERIOR", "1:1")
 
     # ---------------- detalhes ----------------
@@ -874,6 +899,8 @@ def desenho_tampa():
                comp=18)
     D.bandeira(*W.p(pn["centros"][0][0], pn["centros"][0][1]), 5, ang=-135,
                comp=20)
+    D.bandeira(*W.p(xs[0], ys[0] - dr / 2), 4, ang=-135, comp=18)
+    D.bandeira(W.px(R * 0.293), W.py(alt - R * 0.293), 6, ang=-150, comp=18)
     D.rotulo_vista(W.px(larg / 2), yb + 62, "VISTA SUPERIOR", "1:1")
 
     _detalhe_furo(D, 468, 84, esp, hreb, dp, dr, L)
@@ -1074,12 +1101,13 @@ def desenho_chave():
     linhas = [
         ("corpo no painel", dm(C["d_corpo"]) + " ± 0,20", "fabricante"),
         ("aro visível", dm(C["d_aro"]) + " ± 0,20", "fabricante"),
-        ("corpo atrás", dm(C["d_corpo_tras"]) if "d_corpo_tras" in C
-         else "&#216;19,30", "fabricante"),
-        ("profundidade do corpo", "17,80 ± 0,30", "fabricante"),
+        ("corpo atrás", dm(C["d_corpo_tras"]), "fabricante"),
+        ("profundidade do corpo", vg(C["prof_corpo"]) + " ± 0,30", "fabricante"),
         ("total atrás do painel", vg(C["atras"]) + " ± 0,30", "fabricante"),
-        ("terminais", "3, passo 7,00, vão 14,00", "fabricante"),
-        ("lâmina faston", "4,80 x 0,80", "fabricante"),
+        ("terminais", f"{C['n_term']}, passo {vg(C['passo_term'])}, "
+         f"vão {vg(C['vao_term'])}", "fabricante"),
+        ("lâmina faston", f"{vg(C['lamina'])} x {vg(C['esp_lamina'])}",
+         "fabricante"),
         ("furo do painel", dm(sw["d_furo"]), "medido na malha"),
         ("rebaixo", dm(sw["d_rebaixo"]) + " x " + vg(sw["prof_reb"]),
          "medido na malha"),
@@ -1134,17 +1162,19 @@ def _chave_corte(D, ox, oy, sw, C, S=5.0):
                         (ox + sg * rf, y_face), (ox + sg * W, y_face)])
 
     # a chave em linha de referencia: aro por fora, corpo e terminais por dentro
-    da, dc = C["d_aro"] / 2 * S, 19.3 / 2 * S
-    D.ret(ox - da, y_face, 2 * da, 2.7 * S, L_TRACO, cor=C_REF, dash=D_FANTASMA)
-    D.ret(ox - dc, y_reb - 17.8 * S, 2 * dc, 17.8 * S, L_TRACO, cor=C_REF,
+    da, dc = C["d_aro"] / 2 * S, C["d_corpo_tras"] / 2 * S
+    pc, vt = C["prof_corpo"], C["vao_term"]
+    D.ret(ox - da, y_face, 2 * da, C["saliencia_aro"] * S, L_TRACO, cor=C_REF,
           dash=D_FANTASMA)
-    D.ret(ox - 7.0 * S, y_reb - C["atras"] * S, 14.0 * S,
-          (C["atras"] - 17.8) * S, L_TRACO, cor=C_REF, dash=D_FANTASMA)
-    D.txt(ox + dc + 6, y_reb - 17.8 * S / 2, "corpo da chave (ref.)", FONTE_P,
+    D.ret(ox - dc, y_reb - pc * S, 2 * dc, pc * S, L_TRACO, cor=C_REF,
+          dash=D_FANTASMA)
+    D.ret(ox - vt / 2 * S, y_reb - C["atras"] * S, vt * S,
+          (C["atras"] - pc) * S, L_TRACO, cor=C_REF, dash=D_FANTASMA)
+    D.txt(ox + dc + 6, y_reb - pc * S / 2, "corpo da chave (ref.)", FONTE_P,
           anc="start", cor=C_REF)
-    D.txt(ox + 7.0 * S + 6, y_reb - (C["atras"] + 17.8) / 2 * S,
-          "terminais faston 4,80 (ref.)", FONTE_P, anc="start", cor=C_REF)
-    D.txt(ox, y_face + 2.7 * S + 8, "FORA", FONTE_P, cor=C_TXT)
+    D.txt(ox + vt / 2 * S + 6, y_reb - (C["atras"] + pc) / 2 * S,
+          f"terminais faston {vg(C['lamina'])} (ref.)", FONTE_P, anc="start", cor=C_REF)
+    D.txt(ox, y_face + C["saliencia_aro"] * S + 8, "FORA", FONTE_P, cor=C_TXT)
     D.txt(ox, y_cav - 6, "DENTRO (cavidade)", FONTE_P, cor=C_TXT)
 
     D.cota_v(y_cav, y_reb, ox - W - 10, vg(sw["prof_reb"]), ox - W,
