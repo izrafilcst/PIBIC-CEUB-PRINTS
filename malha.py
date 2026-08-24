@@ -515,6 +515,34 @@ class Solido:
             self.tri(a0, b0, b1)
             self.tri(a0, b1, a1)
 
+    def tubo(self, anel_a, anel_b, inverter=False):
+        """
+        Casca entre dois aneis FECHADOS de mesma contagem de pontos, em dois
+        planos paralelos quaisquer. O ponto i de 'anel_a' casa com o ponto i
+        de 'anel_b'; os dois entram como listas de pontos 3D.
+
+        Existe porque 'faixa' so sabe parede VERTICAL sobre polilinha, e o
+        furo da chave KCD1 tem eixo HORIZONTAL: a parede dele nao e vertical
+        e o eixo nao e z. 'tubo' nao conhece eixo nenhum.
+
+        A normal e a de (a[i+1] - a[i]) x (b[i] - a[i]); 'inverter' troca o
+        sentido. Nao ha convencao "fora/dentro" aqui, porque com eixo
+        arbitrario ela nao significaria nada - quem reprova a escolha errada
+        e 'conferir', que exige volume positivo e volume analitico batendo.
+        """
+        assert len(anel_a) == len(anel_b), \
+            f"{self.nome}: aneis de tamanhos diferentes no tubo"
+        n = len(anel_a)
+        for i in range(n):
+            a0, a1 = anel_a[i], anel_a[(i + 1) % n]
+            b0, b1 = anel_b[i], anel_b[(i + 1) % n]
+            if inverter:
+                self.tri(a0, b0, a1)
+                self.tri(a1, b0, b1)
+            else:
+                self.tri(a0, a1, b0)
+                self.tri(a1, b1, b0)
+
     def costura(self, a, b, za, zb):
         """
         Parede sobre o segmento a-b quando as duas arestas VERTICAIS estao
