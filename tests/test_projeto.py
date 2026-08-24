@@ -60,3 +60,20 @@ def test_perna_curta_demais_e_reprovada(restaurar):
     restaurar("PLACA", dict(P.PLACA, rasgo_h=1.8))
     with pytest.raises(AssertionError, match="deforma"):
         P.conferir_projeto()
+
+
+def test_corpo_fundido_fecha_e_bate_o_volume():
+    S, esperado = P.corpo()
+    vol = S.conferir(esperado, tol_rel=1e-9)
+    assert vol > 0
+    zs = [v[2] for v in S.v]
+    assert abs(max(zs) - min(zs) - P.CORPO_H) < 1e-9
+    xs = [v[0] for v in S.v]
+    ys = [v[1] for v in S.v]
+    assert abs(max(xs) - min(xs) - P.CX_L) < 1e-9
+    assert abs(max(ys) - min(ys) - P.CX_A) < 1e-9
+
+
+def test_nao_existe_mais_peca_de_painel():
+    assert not hasattr(P, "painel")
+    assert [n for n, _, _ in P.PECAS] == ["caixa-corpo", "caixa-tampa"]
