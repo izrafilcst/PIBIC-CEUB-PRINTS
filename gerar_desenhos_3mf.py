@@ -355,6 +355,11 @@ def medir_corpo(V, T):
     zs = niveis(V)
     m = dict(hh=zs[-1], reb_al=zs[1])
     m["prof_ins"] = m["hh"] - zs[-2]        # ultima quebra antes do topo
+    # espessura do painel: a primeira altura, acima do alivio, em que a secao
+    # deixa de ser so a silhueta e passa a ter tambem o contorno da cavidade.
+    # E medicao - nao 'zs[2]', que so estaria certo por acidente de ordem.
+    m["esp_pain"] = next(z for z in zs if z > m["reb_al"]
+                         and len(analisar(V, T, z + 1e-3)[0]) > 1)
 
     k = P.estacao_chave()
     # boca dos furos, dentro do alivio; painel macico, ja no diametro nominal;
@@ -455,7 +460,7 @@ def desenho_corpo():
     bate("corpo: profundidade", m["alt"], P.CX_A)
     bate("corpo: raio de canto", m["R"], P.CX_R)
     bate("corpo: parede", par, P.CORPO_PAR, tol=0.05)
-    bate("corpo: espessura do painel", P.PAIN_ESP, P.PAIN_ESP)
+    bate("corpo: espessura do painel", m["esp_pain"], P.PAIN_ESP)
     bate("corpo: alivio de boca", m["reb_al"], P.REB_ALIVIO)
     bate("corpo: Ø da coluna", m["col"], P.COL_D)
     bate("corpo: Ø do inserto", dins, P.D_INSERTO)
@@ -501,6 +506,12 @@ def desenho_corpo():
     for b in m["botoes"]:
         D.circ(*W.p(b["x"], b["y"]), b["rf"], L_FINA, cor=C_ATEN,
                dash=D_CENTRO)
+        # o circulo de furacao dos LEDs e a unica cota que os localiza: sao 9
+        # furos e a tabela sozinha nao mostra que eles sao equiespacados
+        D.cota_h(*[W.px(b["x"] + s * b["rf"]) for s in (-1, 1)],
+                 W.py(b["y"] - b["rf"]) + 10,
+                 f"{dm(2 * b['rf'])} - {len(b['leds'])} furos a "
+                 f"{360 // len(b['leds'])}°", W.py(b["y"]), tam=FONTE_P)
 
     # a chave, na parede de tras, em posicao verdadeira
     D.circ(*W.p(sw["x"], m["alt"] - sw["parede"] / 2), sw["d_furo"] / 2,
@@ -573,9 +584,12 @@ def desenho_corpo():
                "preferência nesta mesma parede, entre x = 94 e x = 123."),
     ], titulo="OBSERVAÇÕES DE PROJETO", larg=250)
 
-    itens = ([(f"COLUNA {i}", f[0], f[1], dins) for i, f in enumerate(ins, 1)]
-             + [(f"BARRIL {i}", f[0], f[1], 2 * f[2])
-                for i, f in enumerate(m["barril"], 1)])
+    itens = ([(f"BARRIL {i}", f[0], f[1], 2 * f[2])
+              for i, f in enumerate(m["barril"], 1)]
+             + [(f"LED {i}", f[0], f[1], 2 * f[2])
+                for i, f in enumerate(m["led"], 1)]
+             + [(f"COLUNA {i}", f[0], f[1], dins)
+                for i, f in enumerate(ins, 1)])
     tabela_furos(D, COL_DIR, y + 14, itens,
                  "FUROS - origem no canto inferior esquerdo", por_coluna=8)
     D.salvar("desenho-caixa-corpo.svg")
@@ -589,7 +603,15 @@ def _vista_frontal(D, ox, y_top, larg, hh, par, esp_tampa, xs, dins, prof,
 
     y_top e a face dos BOTOES, que e a que vai na mesa. No 1o diedro a vista
     superior fica abaixo desta, entao a face que aparece aqui e a aresta de
-    baixo daquela - a parede de tras, onde fica a chave.
+    BAIXO daquela: a parede da FRENTE, y = 0.
+
+    A chave esta na parede de TRAS, y = 130, logo aqui ela e feicao OCULTA e
+    sai inteira em tracejado - inclusive o furo. Desenha-la em linha cheia
+    diria que ela esta na parede da frente, que e a face que o observador
+    desta vista encosta.
+
+    O x nao espelha. Olhando de -y para +y com +z para cima, a direita e +x,
+    o mesmo sentido da vista superior - as duas vistas ficam alinhadas.
     """
     y0 = y_top                      # face dos botoes (z = 0)
     y1 = y_top + hh                 # assento da tampa (z = hh)
@@ -612,21 +634,22 @@ def _vista_frontal(D, ox, y_top, larg, hh, par, esp_tampa, xs, dins, prof,
         D.linha(ox + x - dins / 2, y1 - prof, ox + x + dins / 2, y1 - prof,
                 L_TRACO, "#555", dash=D_OCULTA)
 
-    # a chave, vista de fora: o furo e visto, o rebaixo esta atras da parede
+    # a chave esta na parede OPOSTA a que esta vista mostra: tudo tracejado
     xc, yc = ox + sw["x"], y0 + sw["z"]
-    D.circ(xc, yc, sw["d_furo"] / 2, L_CONTORNO)
+    D.circ(xc, yc, sw["d_furo"] / 2, L_TRACO, cor="#555", dash=D_OCULTA)
     D.circ(xc, yc, sw["d_rebaixo"] / 2, L_TRACO, cor="#555", dash=D_OCULTA)
-    D.circ(xc, yc, P.CHAVE["d_aro"] / 2, L_FINA, cor=C_REF, dash=D_FANTASMA)
-    D.txt(xc + P.CHAVE["d_aro"] / 2 + 4, yc - 4,
-          f"aro {dm(P.CHAVE['d_aro'])} (ref.)", FONTE_P, anc="start",
-          cor=C_REF)
+    D.txt(xc + sw["d_rebaixo"] / 2 + 4, yc - 4,
+          "chave na parede de trás (oculta) - ver CX-04", FONTE_P,
+          anc="start", cor=C_REF)
     D.centro(xc, yc, sw["d_rebaixo"] / 2 + 4)
 
     D.cota_v(y0, y1, ox - 14, vg(hh), ox)
     D.cota_v(y0, y0 + esp_pain, ox - 28, vg(esp_pain), ox, tam=FONTE_P)
     D.cota_v(y0, y_t, ox - 42, vg(hh + esp_tampa), ox)
     D.cota_h(ox, xc, y_t + 14, vg(sw["x"]), y_t)
-    D.cota_v(yc, y1, ox + larg + 16, vg(sw["z"]), ox + larg)
+    # z da chave e medido da face dos BOTOES, entao a cota sai de y0 - nao do
+    # assento da tampa, que daria 28 desenhados sob um texto de 35
+    D.cota_v(y0, yc, ox + larg + 16, vg(sw["z"]), ox + larg)
     D.rotulo_vista(ox + larg / 2, y_t + 30, "VISTA FRONTAL", "1:1")
 
 
@@ -696,7 +719,7 @@ def _detalhe_coluna(D, ox, oy, par, col, prof, dfuro, hh):
              cy - dfuro / 2 * S, tam=FONTE_P)
     D.cota_h(cx - W, cx - W + par * S, oy - 10, vg(par), oy, tam=FONTE_P)
     D.txt(cx, cy + R + 24,
-          f"furo {dm(dfuro)} x {vg(prof)} nas DUAS pontas da coluna",
+          f"furo {dm(dfuro)} x {vg(prof)} SÓ NA PONTA DE CIMA",
           FONTE_P, cor=C_TXT)
     D.txt(cx, cy + R + 28.5,
           "inserto de latão M3 &#216;ext 4,6 x 4,0", FONTE_P, cor=C_TXT)
@@ -707,14 +730,66 @@ def _detalhe_coluna(D, ox, oy, par, col, prof, dfuro, hh):
 # 2. Tampa de servico, com o encaixe da perfboard
 # =====================================================================
 
+def _esp_chapa(V, T, zs):
+    """
+    Espessura da chapa da tampa, medida: a ultima faixa de z em que a secao
+    ainda tem a silhueta inteira. Acima dela so existem os pinos, e o contorno
+    mais largo passa a ser uma perna.
+    """
+    for z0, z1 in zip(zs, zs[1:]):
+        c, _ = analisar(V, T, (z0 + z1) / 2)
+        larg = max(p[0] for p in c[0]) - min(p[0] for p in c[0])
+        if larg < P.CX_L / 2:
+            return z0
+    return zs[-1]
+
+
+def _centros_pino(V, T, z, tol=8.0):
+    """
+    Centros dos pinos na altura z, agrupando os pontos da secao por
+    proximidade. Acima da chapa so existem as pernas, entao cada aglomerado e
+    um pino - as duas metades dele juntas.
+    """
+    pts = [p for s in secao(V, T, z) for p in s]
+    grupos = []
+    for q in pts:
+        for g in grupos:
+            if math.hypot(q[0] - g[0][0], q[1] - g[0][1]) < tol:
+                g.append(q)
+                break
+        else:
+            grupos.append([q])
+    cs = [((max(x for x, _ in g) + min(x for x, _ in g)) / 2,
+           (max(y for _, y in g) + min(y for _, y in g)) / 2) for g in grupos]
+    return sorted(cs, key=lambda c: (round(c[1], 1), c[0]))
+
+
+def _diam_pino(V, T, c, z, r_max=6.0):
+    """Diametro externo da perna na altura z - o maior raio em volta de 'c'."""
+    rs = [math.hypot(p[0] - c[0], p[1] - c[1])
+          for s in secao(V, T, z) for p in s
+          if math.hypot(p[0] - c[0], p[1] - c[1]) < r_max]
+    return 2 * max(rs) if rs else None
+
+
+def _fenda_pino(V, T, c, z, r_max=6.0):
+    """
+    Largura da fenda na altura z. E o dobro da menor distancia em x ate o
+    eixo: os pontos da CORDA de cada perna caem todos sobre x = cx +- w/2.
+    """
+    dx = [abs(p[0] - c[0]) for s in secao(V, T, z) for p in s
+          if math.hypot(p[0] - c[0], p[1] - c[1]) < r_max]
+    return 2 * min(dx) if dx else None
+
+
 def desenho_tampa():
     V, T = ler_3mf("caixa-tampa.3mf")
     zs = niveis(V)
     pn = P.pinos_placa()
     pl = P.PLACA
-    esp = P.TAMPA_ESP
     hreb = zs[1]
     alt_total = zs[-1]
+    esp = _esp_chapa(V, T, zs)
 
     # A chapa: corte a meia espessura do rebaixo e a meia espessura da
     # passagem. z = 0 e a face EXTERNA - a tampa inverteu quando ganhou os
@@ -728,15 +803,24 @@ def desenho_tampa():
     rebaixos, passantes = f_r, f_p
     dp, dr = 2 * passantes[0][2], 2 * rebaixos[0][2]
 
-    # os pinos: cada altura do perfil, medida no meio do seu trecho
-    perfil = []
-    for i, (z0, z1) in enumerate(zip(pn["z"], pn["z"][1:])):
-        _, fu = analisar(V, T, esp + (z0 + z1) / 2)
-        largs = sorted({round(2 * f[2], 3) for f in fu})
-        perfil.append(dict(z0=z0, z1=z1, d=max(largs) if largs else None,
-                           n=len(fu)))
+    # os pinos, MEDIDOS na malha. 'analisar' nao serve aqui: a secao de uma
+    # perna e um D (arco + corda), 'eh_circulo' a rejeita e devolveria zero
+    # furos em toda altura - uma sonda que sempre concorda.
+    centros = _centros_pino(V, T, esp + (pn["z"][1] + pn["z"][2]) / 2)
+    perfil = [dict(z0=z0, z1=z1,
+                   d=_diam_pino(V, T, centros[0], esp + (z0 + z1) / 2),
+                   fenda=_fenda_pino(V, T, centros[0], esp + (z0 + z1) / 2))
+              for z0, z1 in zip(pn["z"], pn["z"][1:])]
 
     bate("tampa: espessura da chapa", esp, P.TAMPA_ESP)
+    bate("tampa: n de pinos", len(centros), len(pn["centros"]))
+    for i, (c, d) in enumerate(zip(centros, pn["centros"]), 1):
+        bate(f"tampa: pino {i} em x", c[0], d[0])
+        bate(f"tampa: pino {i} em y", c[1], d[1])
+    for pf, d_esp in zip(perfil, [pl["ombro_d"], pl["haste_d"], pl["farpa_d"]]
+                         + [d for d, _ in pl["guia"]]):
+        bate(f"tampa: pino Ø em z {pf['z0']:.2f}", pf["d"], d_esp)
+        bate(f"tampa: fenda em z {pf['z0']:.2f}", pf["fenda"], pl["rasgo_w"])
     bate("tampa: altura total", alt_total, P.TAMPA_ESP + pn["topo"])
     bate("tampa: largura", larg, P.CX_L)
     bate("tampa: profundidade", alt, P.CX_A)
@@ -745,8 +829,7 @@ def desenho_tampa():
     bate("tampa: Ø de passagem", dp, P.D_PASSAGEM)
     bate("tampa: Ø do rebaixo", dr, P.D_REBAIXO)
     bate("tampa: n de furos", len(rebaixos), 6)
-    bate("tampa: n de pinos", len(pn["centros"]), 4)
-    bate("tampa: topo do pino", pn["topo"], pl["rasgo_h"])
+    bate("tampa: topo do pino", alt_total - esp, pn["topo"])
 
     L = esp - hreb + P.PENETRACAO
 
