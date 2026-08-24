@@ -77,3 +77,30 @@ def test_corpo_fundido_fecha_e_bate_o_volume():
 def test_nao_existe_mais_peca_de_painel():
     assert not hasattr(P, "painel")
     assert [n for n, _, _ in P.PECAS] == ["caixa-corpo", "caixa-tampa"]
+
+
+def test_a_parede_de_tras_esta_vazada_no_eixo_da_chave():
+    """
+    Sonda de travessia: no eixo da chave nao pode sobrar material NENHUM
+    entre a cavidade e a face externa.
+    """
+    import validar_modelo as V
+    S, esperado = P.corpo()
+    S.conferir(esperado, tol_rel=1e-9)
+    V_, T_ = [tuple(v) for v in S.v], list(S.t)
+    k = P.estacao_chave()
+    segs = V.secao(V_, T_, k["z"])
+    ys = V.travessia(segs, k["x"], y_min=k["y_cav"] - 1.0)
+    assert ys == [], f"parede fechada no eixo da chave: material em y={ys}"
+
+
+def test_o_rebaixo_da_chave_tem_o_diametro_certo():
+    import validar_modelo as V
+    S, esperado = P.corpo()
+    S.conferir(esperado, tol_rel=1e-9)
+    k = P.estacao_chave()
+    # a 1 mm dentro do rebaixo a secao horizontal corta o Ø26
+    segs = V.secao([tuple(v) for v in S.v], list(S.t), k["z"])
+    larg, centro = V.largura_do_vao(segs, k["y_cav"])
+    assert abs(larg - k["d_rebaixo"]) < 0.05, f"boca do rebaixo {larg:.3f}"
+    assert abs(centro - k["x"]) < 0.01

@@ -449,6 +449,15 @@ def corpo():
     cav = M.subtrair_discos(silhueta(CORPO_PAR),
                             [(x, y, COL_D / 2, SEG_MEDIO) for x, y in fix])
 
+    k = estacao_chave()
+    xa, xb = k["x_face"]
+    # no trecho da chave a parede deixa de ser parede: vira chapa plana com
+    # furo, e quem emite e 'face_vertical'. 'entalhar' com perfil vazio apaga
+    # os vertices de densificacao do trecho, deixando UMA aresta - que e o que
+    # a face vertical vai compartilhar, sem junta em T.
+    ext = M.entalhar(ext, CX_A, xb, xa, [])
+    cav = M.entalhar(cav, k["y_cav"], xb, xa, [])
+
     # cada furo aparece duas vezes: o alivio (boca) e o furo util
     bar = [M.circulo(b["x"], b["y"], D_BARRIL / 2, SEG_BARRIL) for b in BOTOES]
     bar_al = [M.circulo(b["x"], b["y"], (D_BARRIL + FOLGA_ALIVIO) / 2, SEG_BARRIL)
@@ -474,8 +483,25 @@ def corpo():
         S.parede(c, z_ins, CORPO_H, fora=False)
 
     # ---- paredes ----
-    S.parede(ext, 0.0, CORPO_H, fora=True)
-    S.parede(cav, PAIN_ESP, CORPO_H, fora=False)
+    # 'faixa' em vez de 'parede': o trecho [xa, xb] da parede de tras fica de
+    # fora, porque quem fecha aquele pedaco e a estacao da chave, abaixo.
+    S.faixa(M.trecho(ext, (xa, CX_A), (xb, CX_A)), 0.0, CORPO_H)
+    S.faixa(M.trecho(list(reversed(cav)), (xb, k["y_cav"]), (xa, k["y_cav"])),
+            PAIN_ESP, CORPO_H)
+
+    # ---- estacao da chave ----
+    c_reb = M.circulo(k["x"], k["z"], k["d_rebaixo"] / 2, SEG_MEDIO)
+    c_fur = M.circulo(k["x"], k["z"], k["d_furo"] / 2, SEG_MEDIO)
+    anel = lambda c, y: [(p[0], y, p[1]) for p in c]
+
+    ret_ext = [(xa, 0.0), (xb, 0.0), (xb, CORPO_H), (xa, CORPO_H)]
+    ret_cav = [(xa, PAIN_ESP), (xb, PAIN_ESP), (xb, CORPO_H), (xa, CORPO_H)]
+
+    S.face_vertical(ret_ext, [c_fur], k["y_face"], frente=True)
+    S.face_vertical(ret_cav, [c_reb], k["y_cav"], frente=False)
+    S.face_vertical(c_reb, [c_fur], k["y_reb"], frente=False)
+    S.tubo(anel(c_reb, k["y_cav"]), anel(c_reb, k["y_reb"]), inverter=False)
+    S.tubo(anel(c_fur, k["y_reb"]), anel(c_fur, k["y_face"]), inverter=False)
 
     A = M.area_assinada
     a_ext, a_cav = A(ext), A(cav)
@@ -483,7 +509,9 @@ def corpo():
         (a_ext - sum(A(c) for c in bar_al + led_al)) * REB_ALIVIO
         + (a_ext - sum(A(c) for c in bar + led)) * (PAIN_ESP - REB_ALIVIO)
         + (a_ext - a_cav) * (CORPO_H - PAIN_ESP)
-        - 6 * A(ins[0]) * PROF_INSERTO)
+        - 6 * A(ins[0]) * PROF_INSERTO
+        - A(c_reb) * k["prof_reb"]
+        - A(c_fur) * k["parede"])
     return S, esperado
 
 
