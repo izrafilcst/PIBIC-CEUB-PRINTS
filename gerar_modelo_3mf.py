@@ -364,6 +364,9 @@ def conferir_projeto():
 
     # ---- parafuso da tampa ----
     L = (TAMPA_ESP - REB_TAMPA) + PENETRACAO
+    exigir(TAMPA_ESP - REB_TAMPA >= 1.5,
+           f"tampa: so {TAMPA_ESP-REB_TAMPA:.2f} mm de material sob a cabeca "
+           f"do parafuso - minimo 1,50")
     exigir(PROF_INSERTO > PENETRACAO, "parafuso encosta no fundo do inserto")
     exigir(abs(L - round(L)) < 1e-9, f"tampa pede M3 x {L:.2f}, fora de catalogo")
 
