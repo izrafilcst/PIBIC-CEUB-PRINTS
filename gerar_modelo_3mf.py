@@ -92,10 +92,12 @@ CX_R = 55.0         # raio dos quatro cantos
 BOTOES = [
     dict(nome="vermelho", modelo="Adafruit 1185/1187/1188 - 100 mm",
          x=56.0, y=65.0, capa=98.5, h_capa=17.5, rebaixo=8.0,
-         esp_max=12.7, led_n=6, led_r=31.5, led_a0=30.0),
+         esp_max=12.7, led_n=6, led_r=31.5, led_a0=30.0,
+         flange=87.8, abaixo=41.0),
     dict(nome="verde", modelo="Adafruit 1190/1192/1193 - 60 mm",
          x=140.0, y=65.0, capa=60.8, h_capa=10.0, rebaixo=5.0,
-         esp_max=12.7, led_n=3, led_r=21.0, led_a0=90.0),
+         esp_max=12.7, led_n=3, led_r=21.0, led_a0=90.0,
+         flange=37.7, abaixo=52.4),
 ]
 
 D_BARRIL   = 26.0      # passagem do barril M24 (especificacao Adafruit)
@@ -105,104 +107,145 @@ FOLGA_CAPA = 0.8       # diametral, entre a capa e a parede do rebaixo
 # =====================================================================
 # Espessuras
 # =====================================================================
+# O painel encolheu de 16 para 8: os 16 so existiam para sobrar material sob
+# o rebaixo de 8 mm da capa vermelha, e o rebaixo acabou. Com a peca fundida
+# a face dos botoes vai para a MESA, e todo rebaixo nela viraria teto no ar.
 
-PAIN_ESP  = 16.0
-CORPO_H   = 55.0
+PAIN_ESP  = 8.0        # painel liso
+CAVIDADE  = 55.0       # da face interna do painel ao assento da tampa
+CORPO_H   = PAIN_ESP + CAVIDADE      # 63.0 - altura da peca fundida
 CORPO_PAR = 4.0
 TAMPA_ESP = 4.0
 
-# =====================================================================
-# Fixacao - 6 colunas, inserto M3 nas duas pontas
-# =====================================================================
+LINHA     = 0.42       # largura de extrusao com bico 0,4 - paredes sao multiplos
+PONTE_PLA = 20.0       # maior ponte reta admitida em PLA, apoiada dos dois lados
 
-FIX_INSET   = 6.0      # centro da coluna, medido da face externa
-COL_D       = 10.0     # diametro externo da coluna
-D_INSERTO   = 4.2      # furo do inserto de latao M3 (Ø ext 4,6 x 4,0)
+# Alivio na boca dos furos do painel. Eles nascem na PRIMEIRA CAMADA agora, e
+# o pe de elefante os fecharia. E rebaixo RETO, nao chanfro: chanfro e cone,
+# cone nao tem area de poligono, e 'conferir' casa volume em 1e-9 usando area
+# de poligono. A porca M24 cobre o alivio do barril.
+REB_ALIVIO   = 0.5
+FOLGA_ALIVIO = 1.0     # diametral, alivio = furo + isto
+
+# =====================================================================
+# Fixacao - 6 colunas, inserto M3 SO no topo
+# =====================================================================
+# Eram 12 insertos porque o painel tambem parafusava. O painel virou parte do
+# corpo; sobraram os 6 da tampa.
+
+FIX_INSET    = 6.0
+COL_D        = 10.0
+D_INSERTO    = 4.2
 PROF_INSERTO = 5.0
-D_PASSAGEM  = 3.4      # furo de passagem do M3
-D_REBAIXO   = 6.5      # rebaixo da cabeca ISO 7380
-REB_TAMPA   = 2.0      # profundidade do rebaixo na tampa
-REB_PAINEL  = 4.0      # profundidade do rebaixo no painel
-
-# Comprimento de parafuso que cada peca pede:
-#   L = (espessura - rebaixo) + penetracao no inserto
-PENETRACAO  = 4.0      # = altura util do inserto de 4,0 mm
+D_PASSAGEM   = 3.4
+D_REBAIXO    = 6.5
+REB_TAMPA    = 2.0
+PENETRACAO   = 4.0
 
 # =====================================================================
-# Estacao do interruptor - berco na parede de tras do corpo
+# Chave gangorra redonda KCD1 - snap-in na parede de tras
 # =====================================================================
-# Chave deslizante 1P2T (o anuncio diz "3 posicoes"; sao 3 TERMINAIS, a
-# chave tem 2 posicoes). Vai na parede y = CX_A, embaixo, com a haste
-# saindo por um rasgo e o corpo enfiado numa bolsa cercada de plastico nos
-# quatro lados. Prende com cola quente pelas duas bocas da bolsa - nao ha
-# parafuso M2 nenhum, foi decisao de projeto.
+# Cotas do desenho cotado do fabricante (nao do PDF escaneado que travou o
+# berco da SS12D00G4):
+#     corpo que atravessa o painel   19,80 +/- 0,20
+#     aro visivel                    23,00 +/- 0,20   cobre a borda do furo
+#     corpo atras do painel          19,30
+#     profundidade do corpo          17,80 +/- 0,30
+#     total atras do painel          25,70 +/- 0,30   corpo + terminal
+#     3 terminais, passo 7,00, lamina faston 4,80 x 0,80
 #
-# POR QUE x = 69,5 E NAO 56. O pedido apontou a parede pelo centro do botao
-# vermelho, x = 56. Ali nao cabe: o ressalto tem 17,20 de largura e a face
-# so e plana entre as tangencias do R55, x = 55 e x = 123. Centrado em 56 o
-# berco invadiria 7,60 mm do raio, e o rasgo sairia oblíquo em relacao a
-# face. A faixa reta livre desse lado vai de x = 55 ate x = 84 (onde comeca
-# a coluna central de Ø10); 69,5 e o meio dela, com 5,90 mm de sobra dos
-# dois lados. Mesma parede, deslocado 13,5 mm.
+# A chave prende sozinha nas garras e para isso quer parede FINA. A parede do
+# corpo tem 4,00, entao o rebaixo circular abre SO PARA DENTRO e deixa 2,00 de
+# parede local. A face externa continua lisa.
 #
-# AS COTAS DO COMPONENTE SAO NOMINAIS. Os datasheets publicos da serie
-# SS12D00 sao PDF escaneado; deu para confirmar o eletrico (1P2T, curso
-# 2,0 mm, 0,3 A / 30 V CC, terminais a 2,54 mm), nao o desenho cotado. Meca
-# a peca antes de imprimir o corpo inteiro e corrija 'corpo_*' e 'haste'.
+# x = 69,50 e o meio do unico trecho reto livre: de x = 55 (tangencia do R55)
+# a x = 84 (inicio da coluna central). O rebaixo Ø25 ocupa [57,00 - 82,00].
+#
+# NAO ha chanfro no furo. Por dentro e onde as garras mordem; por fora seria
+# cone. Os 0,40 de folga ja dao a entrada.
+#
+# d_rebaixo = 25,0, nao 26,0: o rebaixo circular e mais largo que o antigo
+# ressalto retangular que ele substitui e encostava na coluna central em
+# (89, 124) - folga diagonal de so 1,80 mm contra o minimo de 2,00. D25,0
+# ainda deixa 2,4 mm de assento anular alem do furo Ø20,2 (folgado para as
+# garras) e abre a folga da coluna para 2,28 mm.
 
-INTERRUPTOR = dict(
-    modelo="SS12D00G4",
-    x=69.5,            # centro do berco, ao longo da parede
-    z=12.0,            # eixo da haste, medido da base do corpo
-    corpo_l=11.6,      # comprimento do corpo, na direcao do curso
-    corpo_w=4.0,       # largura do corpo - vira a altura da bolsa
-    corpo_h=4.5,       # da face da haste ate a face dos terminais
-    haste=4.0,         # o "4mm" do nome, acima da face do corpo
-    haste_l=2.5,       # largura da haste na direcao do curso
-    haste_w=1.5,       # espessura da haste, na vertical
-    curso=2.0,
-    folga=0.30,        # por lado, entre o corpo e a parede da bolsa
-    fundo=2.0,         # parede que sobra no fundo da bolsa
-    nervura=2.5,       # plastico em volta da bolsa
-    cola=1.0,          # sobra atras do corpo, reservada para a cola quente
-    rasgo_l=6.0,       # rasgo da haste, na direcao do curso
-    rasgo_h=3.0,       # rasgo da haste, na vertical
+CHAVE = dict(
+    modelo="KCD1 redonda 3T",
+    x=69.5,            # centro, ao longo da parede y = CX_A
+    z=35.0,            # eixo, medido da face dos botoes (a mesa)
+    d_corpo=19.8,      # o que atravessa o painel
+    d_aro=23.0,        # aro visivel
+    folga=0.4,         # diametral - furo deitado fecha mais que furo em pe
+    d_rebaixo=25.0,    # rebaixo por dentro, onde as garras trabalham
+    parede=2.0,        # parede local que sobra sob o rebaixo
+    atras=25.7,        # reserva atras da parede: corpo + terminal
+    x_face=(55.0, 84.0),   # trecho da parede que a face_vertical assume
 )
 
+# =====================================================================
+# Perfboard 7 x 9 - encaixe por pino farpado na tampa
+# =====================================================================
+# ATENCAO: 'furo_d' e 'furo_inset' sao PRESUMIDOS. Meca a placa com o
+# paquimetro antes de imprimir a tampa - sao 4 pinos, e errar o recuo poe
+# todos no lugar errado de uma vez.
+#
+# Centro em (73, 65) nao e estetica: e o que sobrou entre as 4 colunas de
+# canto, as 2 do meio e o flange Ø37,7 do botao verde.
+#
+# O rasgo de 6,50 e dimensionado. Duas pernas de 0,80 fletindo 0,30 (a
+# interferencia da farpa Ø3,60 sobre o furo Ø3,00) num braco de 6,50:
+#     eps = 3*t*y / (2*L^2) = 3*0,80*0,30 / (2*42,25) = 0,85 %
+# Com rasgo so na haste (1,80 de braco) daria 11 % e a perna quebraria na
+# primeira montagem.
+#
+# A guia de entrada e ESCALONADA, nao conica - mesma razao do alivio dos
+# furos do painel.
 
-def estacao():
-    """
-    Cotas derivadas do berco. Tudo em coordenadas da peca, ja resolvido:
-    a geometria do corpo le daqui e nao recalcula nada.
+PLACA = dict(
+    larg=90.0, alt=70.0, esp=1.6,
+    x=73.0, y=65.0,
+    furo_d=3.0,        # PRESUMIDO - conferir
+    furo_inset=3.5,    # PRESUMIDO - conferir
+    ombro_d=6.0, ombro_h=3.5,       # afastador: espaco das pernas soldadas
+    haste_d=2.8,                     # furo 3,00 - 0,20 de folga
+    farpa_d=3.6, farpa_h=0.6,        # 0,30 radial de retencao
+    guia=((3.0, 0.3), (2.4, 0.3)),   # degraus de entrada (diametro, altura)
+    rasgo_w=1.2,
+    rasgo_h=6.5,       # = ombro_h + haste_h + farpa_h + guias
+    folga_placa=0.2,   # entre a face de cima da placa e a farpa
+)
 
-    Profundidades, contadas da face externa para dentro:
-      0             face externa da caixa
-      fundo         fundo da bolsa - so aqui a parede tem 2 mm
-      fundo+bolsa_p boca da bolsa, que e tambem a face interna do ressalto
-    A bolsa e ABERTA para a cavidade: e por ela que o interruptor entra.
-    """
-    S = INTERRUPTOR
-    e = dict(S)
-    e["bolsa_l"] = S["corpo_l"] + 2 * S["folga"]
-    e["bolsa_h"] = S["corpo_w"] + 2 * S["folga"]
-    e["bolsa_p"] = S["corpo_h"] + S["cola"]
-    e["res_l"] = e["bolsa_l"] + 2 * S["nervura"]
-    e["prof"] = S["fundo"] + e["bolsa_p"]
-    e["saliencia"] = e["prof"] - CORPO_PAR     # avanco sobre a cavidade
-    e["haste_fora"] = S["haste"] - S["fundo"]
+ALT_COMPONENTE = 10.0  # altura livre minima sob a placa, para componente de pe
 
-    e["y_face"] = CX_A                          # face externa da parede
-    e["y_bolsa"] = CX_A - S["fundo"]            # fundo da bolsa
-    e["y_res"] = CX_A - e["prof"]               # face interna do ressalto
-    e["y_cav"] = CX_A - CORPO_PAR               # face interna da parede
 
-    e["x_res"] = (S["x"] - e["res_l"] / 2, S["x"] + e["res_l"] / 2)
-    e["x_bolsa"] = (S["x"] - e["bolsa_l"] / 2, S["x"] + e["bolsa_l"] / 2)
-    e["x_rasgo"] = (S["x"] - S["rasgo_l"] / 2, S["x"] + S["rasgo_l"] / 2)
-    e["z_bolsa"] = (S["z"] - e["bolsa_h"] / 2, S["z"] + e["bolsa_h"] / 2)
-    e["z_rasgo"] = (S["z"] - S["rasgo_h"] / 2, S["z"] + S["rasgo_h"] / 2)
-    e["z_topo"] = e["z_bolsa"][1] + S["nervura"]
-    return e
+def estacao_chave():
+    """Cotas derivadas da estacao da chave, em coordenadas da peca."""
+    k = dict(CHAVE)
+    k["d_furo"] = k["d_corpo"] + k["folga"]              # 20,20
+    k["prof_reb"] = CORPO_PAR - k["parede"]              # 2,00
+    k["y_cav"] = CX_A - CORPO_PAR                        # 126,00
+    k["y_reb"] = k["y_cav"] + k["prof_reb"]              # 128,00
+    k["y_face"] = CX_A                                   # 130,00
+    k["y_fundo"] = k["y_reb"] - k["atras"]               # ate onde a chave chega
+    k["ponte_furo"] = k["d_furo"] / math.sqrt(2.0)
+    k["ponte_reb"] = k["d_rebaixo"] / math.sqrt(2.0)
+    return k
+
+
+def pinos_placa():
+    """Os 4 centros dos pinos, e as alturas acumuladas do perfil."""
+    p = PLACA
+    dx = p["larg"] / 2 - p["furo_inset"]
+    dy = p["alt"] / 2 - p["furo_inset"]
+    centros = [(p["x"] - dx, p["y"] - dy), (p["x"] + dx, p["y"] - dy),
+               (p["x"] - dx, p["y"] + dy), (p["x"] + dx, p["y"] + dy)]
+    haste_h = p["esp"] + p["folga_placa"]
+    z = [0.0, p["ombro_h"], p["ombro_h"] + haste_h,
+         p["ombro_h"] + haste_h + p["farpa_h"]]
+    for _, h in p["guia"]:
+        z.append(z[-1] + h)
+    return dict(centros=centros, haste_h=haste_h, z=z, topo=z[-1])
 
 # =====================================================================
 # Segmentacao das curvas
@@ -290,7 +333,7 @@ def conferir_projeto():
 
     sil = silhueta()
     for b in BOTOES:
-        rr = r_rebaixo(b)
+        rr = b["capa"] / 2
         borda = min(math.dist((b["x"], b["y"]), p) for p in sil) - rr
         exigir(borda > 3.0,
                f"rebaixo do botao {b['nome']} a {borda:.2f} mm da borda")
@@ -300,39 +343,6 @@ def conferir_projeto():
         exigir(b["capa"] / 2 > D_BARRIL / 2,
                f"capa do botao {b['nome']} menor que o furo do barril")
 
-    # ---- rebaixo contra rebaixo ----
-    entre = d - r_rebaixo(bv) - r_rebaixo(bg)
-    exigir(entre > 3.0, f"nervura entre os rebaixos {entre:.2f} mm")
-
-    # ---- fixacao livre dos rebaixos ----
-    for i, p in enumerate(fix, 1):
-        for b in BOTOES:
-            g = math.dist(p, (b["x"], b["y"])) - r_rebaixo(b) - D_REBAIXO / 2
-            exigir(g > 2.0, f"fixacao {i} a {g:.2f} mm do rebaixo do "
-                            f"botao {b['nome']}")
-        exigir(min(math.dist(p, q) for q in sil) - D_REBAIXO / 2 > 2.0,
-               f"fixacao {i} perto demais da borda")
-
-    # ---- botao: espessura apertada pela porca ----
-    for b in BOTOES:
-        ap = PAIN_ESP - b["rebaixo"]
-        exigir(ap <= b["esp_max"],
-               f"botao {b['nome']} aperta {ap:.2f} mm, maximo {b['esp_max']}")
-        exigir(ap >= 5.0,
-               f"botao {b['nome']} aperta so {ap:.2f} mm - material de menos")
-        exigir(b["rebaixo"] < PAIN_ESP - 4.0,
-               f"rebaixo do botao {b['nome']} deixa o painel fino demais")
-
-    # ---- parafusos: penetram sem bater no fundo ----
-    for nome, esp, reb in (("tampa", TAMPA_ESP, REB_TAMPA),
-                           ("painel", PAIN_ESP, REB_PAINEL)):
-        L = (esp - reb) + PENETRACAO
-        sobra = PROF_INSERTO - PENETRACAO
-        exigir(sobra > 0, f"{nome}: parafuso encosta no fundo do furo")
-        exigir(esp - reb >= 1.5, f"{nome}: so {esp-reb:.2f} mm sob a cabeca")
-        exigir(abs(L - round(L)) < 1e-9, f"{nome}: pede M3 x {L:.2f}, "
-                                         f"comprimento fora de catalogo")
-
     # ---- coluna de inserto contra a parede ----
     exigir(COL_D / 2 > D_INSERTO / 2 + 2.0, "coluna fina demais em volta do inserto")
     exigir(FIX_INSET + COL_D / 2 > CORPO_PAR,
@@ -340,66 +350,94 @@ def conferir_projeto():
     exigir(FIX_INSET - COL_D / 2 < CORPO_PAR,
            "coluna nao encosta na parede - ficaria solta no meio da cavidade")
 
-    # ---- estacao do interruptor ----
-    e = estacao()
-    xr0, xr1 = e["x_res"]
-    zb0, zb1 = e["z_bolsa"]
-    zr0, zr1 = e["z_rasgo"]
+    # ---- botao: espessura apertada pela porca, agora sem rebaixo ----
+    for b in BOTOES:
+        exigir(PAIN_ESP <= b["esp_max"],
+               f"botao {b['nome']} aperta {PAIN_ESP:.2f} mm, maximo {b['esp_max']}")
+        exigir(PAIN_ESP >= 5.0,
+               f"botao {b['nome']} aperta so {PAIN_ESP:.2f} mm - material de menos")
+    exigir(PAIN_ESP / 2.0 >= 3.0,
+           f"painel de {PAIN_ESP:.2f} da menos de 3 filetes de M24 x 2")
 
-    # so o trecho reto da parede serve: nas pontas ela ja esta curvando no R55
-    reto = (CX_R, CX_L - CX_R)
-    exigir(xr0 >= reto[0] and xr1 <= reto[1],
-           f"ressalto do interruptor em x [{xr0:.2f}, {xr1:.2f}] sai do trecho "
-           f"reto da parede [{reto[0]:.2f}, {reto[1]:.2f}]")
+    # ---- peca fundida na mesa ----
+    exigir(CORPO_H <= MESA[2], f"peca fundida com {CORPO_H:.2f} passa da mesa")
 
-    # o ressalto e um retangulo encostado na parede; as colunas sao circulos
-    caixa_x = (xr0, xr1)
-    caixa_y = (e["y_res"], CX_A)
+    # ---- parafuso da tampa ----
+    L = (TAMPA_ESP - REB_TAMPA) + PENETRACAO
+    exigir(PROF_INSERTO > PENETRACAO, "parafuso encosta no fundo do inserto")
+    exigir(abs(L - round(L)) < 1e-9, f"tampa pede M3 x {L:.2f}, fora de catalogo")
+
+    # ---- estacao da chave ----
+    k = estacao_chave()
+    xa, xb = k["x_face"]
+    r = k["d_rebaixo"] / 2
+    exigir(CX_R <= xa and xb <= CX_L - CX_R,
+           f"trecho reto da face_vertical [{xa}, {xb}] sai do trecho reto da parede")
+    exigir(xa + 1.0 <= k["x"] - r and k["x"] + r <= xb - 1.0,
+           f"rebaixo da chave em [{k['x']-r:.2f}, {k['x']+r:.2f}] nao cabe no "
+           f"trecho reto [{xa:.2f}, {xb:.2f}]")
+    exigir(k["z"] - r > PAIN_ESP and k["z"] + r < CORPO_H,
+           f"rebaixo da chave em z [{k['z']-r:.2f}, {k['z']+r:.2f}] sai da parede")
     for i, (cx, cy) in enumerate(fix, 1):
-        dx = max(caixa_x[0] - cx, 0.0, cx - caixa_x[1])
-        dy = max(caixa_y[0] - cy, 0.0, cy - caixa_y[1])
-        exigir(math.hypot(dx, dy) - COL_D / 2 >= 2.0,
-               f"ressalto do interruptor a {math.hypot(dx,dy)-COL_D/2:.2f} mm "
-               f"da coluna {i} - minimo 2,00")
+        d = math.hypot(max(k["x"] - r - cx, 0.0, cx - k["x"] - r),
+                       max(k["y_cav"] - cy, 0.0, cy - CX_A))
+        exigir(d - COL_D / 2 >= 2.0,
+               f"rebaixo da chave a {d-COL_D/2:.2f} mm da coluna {i} - minimo 2,00")
+    exigir(1.6 <= k["parede"] <= 3.0,
+           f"parede local da chave {k['parede']:.2f} fora da faixa de snap")
+    exigir(k["parede"] < CORPO_PAR, "parede local mais grossa que a parede cheia")
+    exigir(k["ponte_furo"] <= PONTE_PLA and k["ponte_reb"] <= PONTE_PLA,
+           f"ponte de {max(k['ponte_furo'], k['ponte_reb']):.2f} mm passa do "
+           f"limite de {PONTE_PLA:.2f} em PLA")
+    exigir(k["y_fundo"] > CORPO_PAR,
+           f"a chave chega a y={k['y_fundo']:.2f} e bate na parede oposta")
 
-    exigir(e["saliencia"] > 0.5,
-           f"ressalto avanca so {e['saliencia']:.2f} mm sobre a cavidade - "
-           f"a bolsa nao caberia na parede de {CORPO_PAR:.2f}")
-    exigir(INTERRUPTOR["fundo"] >= 1.6,
-           f"fundo da bolsa com {INTERRUPTOR['fundo']:.2f} mm - menos que "
-           f"4 perimetros de 0,4")
-    exigir(INTERRUPTOR["fundo"] < CORPO_PAR,
-           "fundo da bolsa mais grosso que a propria parede")
-    exigir(e["haste_fora"] >= 1.5,
-           f"haste sobra so {e['haste_fora']:.2f} mm para fora - nao da para "
-           f"acionar com o dedo")
-    exigir(INTERRUPTOR["rasgo_l"] >= INTERRUPTOR["curso"] +
-           INTERRUPTOR["haste_l"] + 0.6,
-           f"rasgo de {INTERRUPTOR['rasgo_l']:.2f} nao deixa a haste completar "
-           f"o curso de {INTERRUPTOR['curso']:.2f}")
-    exigir(INTERRUPTOR["rasgo_l"] < e["bolsa_l"] and
-           INTERRUPTOR["rasgo_h"] < e["bolsa_h"],
-           "rasgo maior que a bolsa - o interruptor sairia pela frente")
-    exigir(zb0 > 0.0 and e["z_topo"] < CORPO_H,
-           f"bolsa em z [{zb0:.2f}, {zb1:.2f}] com topo do ressalto em "
-           f"{e['z_topo']:.2f} nao cabe na altura {CORPO_H:.2f}")
-    exigir(zr0 > zb0 and zr1 < zb1,
-           "rasgo nao esta contido na bolsa - as duas aberturas se cruzariam")
-    exigir(e["bolsa_l"] <= 15.0,
-           f"teto da bolsa e uma ponte de {e['bolsa_l']:.2f} mm - PETG faz "
-           f"ponte reta ate uns 15")
-    # a ordem dos x e o que 'entalhar' assume ao montar o perfil do contorno
-    exigir(xr0 < e["x_bolsa"][0] < e["x_rasgo"][0] < e["x_rasgo"][1]
-           < e["x_bolsa"][1] < xr1,
-           "os tres retangulos do berco nao estao encaixados um no outro")
+    # ---- perfboard ----
+    pl, pn = PLACA, pinos_placa()
+    x0, x1 = pl["x"] - pl["larg"] / 2, pl["x"] + pl["larg"] / 2
+    y0, y1 = pl["y"] - pl["alt"] / 2, pl["y"] + pl["alt"] / 2
+    for i, (cx, cy) in enumerate(fix, 1):
+        d = math.hypot(max(x0 - cx, 0.0, cx - x1), max(y0 - cy, 0.0, cy - y1))
+        exigir(d - COL_D / 2 >= 2.0,
+               f"placa a {d-COL_D/2:.2f} mm da coluna {i} - minimo 2,00")
+        for j, (px, py) in enumerate(pn["centros"], 1):
+            g = math.dist((px, py), (cx, cy)) - COL_D / 2 - pl["ombro_d"] / 2
+            exigir(g >= 2.0, f"pino {j} a {g:.2f} mm da coluna {i}")
+    z_placa = CORPO_H - pl["ombro_h"] - pl["esp"]     # face de cima da placa
+
+    # A placa passa POR BAIXO do botao vermelho de proposito: e o unico jeito
+    # de 90 x 70 caber entre as seis colunas. Entao a folga com cada botao
+    # pode ser NO PLANO ou NA ALTURA, e basta uma das duas. Onde ela passa por
+    # baixo, o que sobra em z tem de dar para um componente de pe - e e essa
+    # regra que segura a placa longe do botao verde, que desce muito mais.
+    for b in BOTOES:
+        d = math.hypot(max(x0 - b["x"], 0.0, b["x"] - x1),
+                       max(y0 - b["y"], 0.0, b["y"] - y1)) - b["flange"] / 2
+        if d >= 2.0:
+            continue
+        sobra = z_placa - b["abaixo"]
+        exigir(sobra >= ALT_COMPONENTE,
+               f"placa passa sob o botao {b['nome']} com {d:.2f} mm no plano "
+               f"e so {sobra:.2f} mm em z - minimo {ALT_COMPONENTE:.2f}")
+
+    exigir(pl["ombro_h"] >= 2.5,
+           f"ombro de {pl['ombro_h']:.2f} nao deixa espaco para as pernas soldadas")
+    t = (pl["haste_d"] - pl["rasgo_w"]) / 2
+    y = (pl["farpa_d"] - pl["furo_d"]) / 2
+    eps = 3 * t * y / (2 * pl["rasgo_h"] ** 2)
+    exigir(eps <= 0.010,
+           f"deformacao de flexao da perna do pino {eps*100:.2f} % - maximo 1,00")
+    exigir(abs(pl["rasgo_h"] - pn["topo"]) < 1e-9,
+           f"rasgo de {pl['rasgo_h']:.2f} nao atravessa o pino de {pn['topo']:.2f}")
+    exigir(pl["farpa_d"] > pl["furo_d"] > pl["haste_d"],
+           "a farpa nao retem: diametros fora de ordem")
 
     if msgs:
         raise AssertionError("projeto inconsistente:\n  - " + "\n  - ".join(msgs))
 
-    return dict(folga_capas=folga, entre_rebaixos=entre,
-                L_tampa=(TAMPA_ESP - REB_TAMPA) + PENETRACAO,
-                L_painel=(PAIN_ESP - REB_PAINEL) + PENETRACAO,
-                sw=e)
+    return dict(folga_capas=folga, L_tampa=L, sw=k,
+                placa=dict(centro=(PLACA["x"], PLACA["y"]),
+                           z_topo=z_placa, eps=eps, pinos=pn))
 
 
 # =====================================================================
