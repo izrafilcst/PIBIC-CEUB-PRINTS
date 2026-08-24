@@ -23,34 +23,36 @@ Legenda da coluna **Status**:
 
 | Qtd | Item | Status | Observação |
 |---|---|---|---|
-| 1 | Adafruit **Massive Arcade Button 100 mm** — #1185 verm. / #1187 branco / #1188 verde | ✅ | furo Ø26 em (56 ; 65), rebaixo Ø99,30 × 8,00 |
-| 1 | Adafruit **Large Arcade Button 60 mm** — #1190 verm. / #1192 branco / #1193 verde | ✅ | furo Ø26 em (140 ; 65), rebaixo Ø61,60 × 5,00 |
+| 1 | Adafruit **Massive Arcade Button 100 mm** — #1185 verm. / #1187 branco / #1188 verde | ✅ | furo Ø26 em (56 ; 65), com alívio de boca Ø27,00 × 0,50 |
+| 1 | Adafruit **Large Arcade Button 60 mm** — #1190 verm. / #1192 branco / #1193 verde | ✅ | furo Ø26 em (140 ; 65), mesmo alívio |
 | 2 | Microswitch de arcade NO, sobressalente | ✅ | é a peça que morre primeiro num controle de impacto |
 
 > **Não compre porca M24.** Ela vem com o botão, junto com o microswitch e o
 > LED interno com resistor embutido. Comprar avulso é desperdício — e porca
 > M24 avulsa é cara e difícil de achar no diâmetro/passo certo.
 
-**Os botões agora entram meio embutidos.** O flange assenta no fundo de um
-rebaixo, e o conjunto inteiro desce por essa profundidade:
+**Os botões assentam direto na face, sem rebaixo.** O painel é liso.
 
-| Botão | Capa | Rebaixo | Fica para fora | Painel apertado pela porca |
+| Botão | Capa | Fica para fora | Painel apertado pela porca | Desce na cavidade |
 |---|---|---|---|---|
-| 100 mm | Ø98,5 × 17,5 | 8,00 | 9,50 | 8,00 |
-| 60 mm | Ø60,8 × 10,0 | 5,00 | 5,00 | 11,00 |
+| 100 mm | Ø98,5 × 17,5 | 17,50 | **8,00** | 33,00 |
+| 60 mm | Ø60,8 × 10,0 | 10,00 | **8,00** | 44,40 |
 
-O trecho apertado pela porca é a espessura do painel **menos** o rebaixo — os
-dois ficam dentro dos 12,70 mm máximos que o botão admite. Foi por isso que o
-painel passou de 10 para 16 mm.
+Os 8,00 mm são a espessura do painel, e são os mesmos nos dois botões — ficam
+dentro dos 12,70 mm máximos que o botão admite e acima dos 5,00 mínimos.
 
-> **Antes de imprimir o painel inteiro, imprima um corpo de prova** com os dois
-> rebaixos (Ø99,30 e Ø61,60) e teste a capa. A folga de 0,80 diametral é
-> estimada; é ajuste aparente, e um painel de 16 mm errado custa ~6 h de
-> impressão.
+> **Os botões meio embutidos foram abandonados nesta revisão.** Com o painel
+> fundido no corpo, a peça só imprime com a face dos botões na mesa, e ali
+> qualquer rebaixo vira teto no ar. Não há corpo de prova de rebaixo para
+> imprimir, e a folga de 0,80 diametral da capa deixou de existir.
 
-> **Anti-rotação:** o pino do flange não está cotado na documentação do
-> fabricante, então o rebaixo é liso. Meça no botão físico se quiser abrir o
-> rasgo, ou mantenha a cola quente.
+> **Anti-rotação:** o pino do flange não está cotado pelo fabricante. Com o
+> painel liso não há rebaixo onde abrir rasgo; se o botão girar, resolva com
+> cola quente entre o flange e a face.
+
+**A coluna "desce na cavidade"** é o que decide a folga da perfboard: o botão
+verde desce 44,40 mm dos 55,00 de cavidade, e é por isso que a placa foge dele
+em x. Ver seção 5b.
 
 ---
 
@@ -71,15 +73,12 @@ virou parte do corpo e **a metade de baixo da ferragem desapareceu**.
 As duas contas fecham no mesmo furo de 5,00 mm e no mesmo inserto de 4,0:
 
 ```
-painel   penetração     = 16,00 − (16,00 − 4,00) = 4,00 mm
-         folga no fundo = 5,00 − 4,00            = 1,00 mm   ✔
 tampa    penetração     =  6,00 − ( 4,00 − 2,00) = 4,00 mm
          folga no fundo = 5,00 − 4,00            = 1,00 mm   ✔
 ```
 
-O rebaixo do painel tem 4,00 mm de profundidade (o da tampa, 2,00) justamente
-para o parafuso cair num comprimento de catálogo. Com rebaixo de 2,00 o painel
-pediria um M3 × 18, que quase não se acha.
+O rebaixo da tampa tem 2,00 mm de profundidade justamente para o parafuso cair
+num comprimento de catálogo: `(4,00 − 2,00) + 4,00 = 6,00`.
 
 > **Peça o inserto de 4,0 mm, não o de 5,0.** Um inserto de 5,0 num furo de
 > 5,00 não deixa vazio nenhum embaixo, e o PLA derretido na instalação não
@@ -87,8 +86,9 @@ pediria um M3 × 18, que quase não se acha.
 > impede a tampa de assentar. Com 4,0 sobra 1,00 mm de folga no fundo, e o
 > M3 × 6 penetra exatamente os 4,0 mm do latão.
 >
-> Se só achar o de 5,0 mm, dá para usar: aprofunde o furo para 6,00 mm no
-> Fusion antes de imprimir.
+> Se só achar o de 5,0 mm, dá para usar: aumente `PROF_INSERTO` para 6,00 em
+> `gerar_modelo_3mf.py` e regere. Não há Fusion no caminho — a geometria toda
+> sai daquele arquivo.
 
 ---
 
@@ -189,9 +189,9 @@ ombro Ø6,00 e trava sob a farpa Ø3,60.
 | **Raspberry Pi Pico** | mais I/O e mais barato, mas exige firmware HID |
 
 Em qualquer uma: 1 × cabo USB e 1 × passa-cabo ou recorte na caixa (**não
-existe no modelo atual**). O rasgo de 6,00 × 3,00 da parede de trás é da
-haste do interruptor e **não serve de passagem**. Sugestão: mesma parede,
-entre `x = 94` e `x = 123`, que é o resto do trecho reto livre.
+existe no modelo atual**). O furo Ø20,20 da parede de trás é da chave KCD1 e
+fica cheio por ela. Sugestão: mesma parede, entre `x = 94` e `x = 123`, que é o
+resto do trecho reto livre — a chave ocupa até x = 82.
 
 ---
 
@@ -212,15 +212,15 @@ sólido           361,11 cm3     era 445,83   (-19 %)
 ```
 
 A 4 perímetros e 20 % de preenchimento giroide, a densidade efetiva fica em
-torno de 50 % → **≈ 223 cm³ ≈ 283 g**. Some refugo, o corpo de prova dos
-rebaixos e uma peça refeita: **compre 1 kg**.
+torno de 50 % → **≈ 181 cm³ ≈ 224 g** de PLA (densidade 1,24 g/cm³). Some
+refugo e uma peça refeita: **compre 1 kg**.
 
-A caixa saiu **mais leve** que a versão de 215 × 120, apesar do painel mais
-grosso: a parede de 4 mm economiza mais do que os 6 mm de painel custam.
+A caixa saiu **muito mais leve**: a parede de 4 mm, o painel liso de 8 mm e a
+fusão das duas peças tiraram 19 % do sólido.
 
 ### Impressão na A1 mini
 
-As três peças têm 178 × 130 mm numa mesa de 180 × 180 — sobra **1,0 mm de cada
+As duas peças têm 178 × 130 mm numa mesa de 180 × 180 — sobra **1,0 mm de cada
 lado em X**. Isso tem consequência prática:
 
 - **Centralize na mesa** e confira antes de fatiar. Não é margem para
@@ -244,7 +244,7 @@ lado em X**. Isso tem consequência prática:
 | Chave allen 2,0 mm | cabeça dos M3 ISO 7380 | ✅ |
 | **Paquímetro** | resolve as duas pendências abertas do projeto | ✅ |
 | Alicate de crimpar faston | crimpar torto é o defeito nº 1 em fiação de arcade | ✅ |
-| Pistola de cola quente | alívio de tração dos fios e anti-rotação dos botões | ✅ |
+| Pistola de cola quente | alívio de tração dos fios e anti-rotação dos botões (entre o flange e a face) | ✅ |
 
 ---
 

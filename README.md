@@ -123,7 +123,7 @@ dar para montar os botões na bancada e depois fechar.
 
 A caixa foi refeita para a **Bambu Lab A1 mini** (mesa 180 × 180) e os botões
 passaram a entrar **meio embutidos** num rebaixo. `gerar_modelo_3mf.py` é agora
-a fonte única da geometria das três peças — os `.3mf` e os desenhos saem dele.
+a fonte única da geometria das duas peças — os `.3mf` e os desenhos saem dele.
 
 | | Antes (K1C) | Agora (A1 mini) |
 |---|---|---|
@@ -143,7 +143,7 @@ python gerar_desenhos_3mf.py   # .3mf -> desenho-caixa-*.svg
 ```
 
 Os três param sozinhos se a geometria ficar inconsistente. `validar_modelo.py`
-mede o berço no arquivo gravado por **travessia** — onde começa e onde acaba o
+mede a estação da chave no arquivo gravado por **travessia** — onde começa e onde acaba o
 material ao longo da espessura da parede, em oito sondas — e
 `gerar_desenhos_3mf.py` recusa emitir prancha que discorde do modelo.
 
@@ -642,7 +642,7 @@ Todos os números abaixo estão nos SVG; esta seção é só o roteiro.
 ### Painel, corpo e tampa — não precisam mais de Fusion
 
 Esta seção descrevia como modelar à mão a placa avulsa de 209,30 × 108,50, que
-foi removida. As três peças da caixa agora saem prontas de
+foi removida. As duas peças da caixa agora saem prontas de
 `gerar_modelo_3mf.py`, com `.3mf` e `.stl` para abrir direto no slicer — e o
 desenho é medido delas, não digitado.
 
@@ -748,8 +748,9 @@ Fusion só a tampa final. Os STL já estão validados.
    `python gerar_modelo_3mf.py && python gerar_desenhos_3mf.py` — modelo e
    desenho saem juntos.
 
-5. **Imprima o corpo de prova dos rebaixos** (Ø99,30 e Ø61,60) e teste as
-   capas antes do painel inteiro.
+5. ~~Imprima o corpo de prova dos rebaixos~~ — **sem objeto.** Os rebaixos de
+   capa deixaram de existir quando o painel ficou liso. Não há folga de
+   assento para calibrar.
 
 ### Parâmetros de impressão — PLA na Bambu Lab A1 mini
 
@@ -781,8 +782,9 @@ voltar a ser aquela.
 
 ### Instalação dos insertos de latão
 
-Ferro de solda a **220–240 °C** (abaixo disso o PETG não flui; acima ele
-degrada e solta fumo).
+Ferro de solda a **200–220 °C** para PLA (abaixo disso o material não flui;
+acima ele degrada e solta fumo). A faixa de 220–240 °C desta seção era do PETG
+— PLA amolece bem antes, e temperatura a mais só borbulha o furo.
 
 1. Apoie o inserto reto sobre o furo de 4,2 mm, sem forçar.
 2. Encoste a ponta do ferro no latão **sem fazer pressão** — quem afunda o
@@ -790,14 +792,16 @@ degrada e solta fumo).
 3. Deixe descer até ficar rente à face do pilar, ou **0,5 mm abaixo** dela.
    Nunca acima: um inserto saliente impede a tampa de assentar.
 4. Retire o ferro e encoste uma superfície metálica plana sobre o topo
-   enquanto o PETG esfria — é isso que garante a rosca ortogonal.
+   enquanto o PLA esfria — é isso que garante a rosca ortogonal. PLA esfria
+   mais rápido que PETG: tenha a superfície à mão antes de começar.
 
 Faça um pilar de teste avulso antes dos 6 definitivos. Se o inserto girar sob
 torque depois de frio, o furo está grande: refaça com 4,0 mm.
 
-> **Mesa:** a tampa tem 209,30 × 108,50 mm. Na K1C (220 × 220) sobram ~5,3 mm
-> de cada lado em X — o suficiente para o skirt e para a sondagem do
-> nivelamento. Se quiser mais borda, aumente `margem`, mas não passe de 7.
+> **Mesa:** as duas peças têm 178 × 130 mm. Na A1 mini (180 × 180) sobra
+> **1,0 mm de cada lado em X** — centralize e confira antes de fatiar, e não
+> use brim, que não cabe. Não existe parâmetro `margem` no modelo: a silhueta
+> é `CX_L` × `CX_A` em `gerar_modelo_3mf.py`.
 
 ---
 
