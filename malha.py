@@ -251,10 +251,9 @@ def _arco_cortado(r, meia_fenda, n, lado):
 
 def _corda(x, lado, ys, y_lim, y_min=0.0):
     """
-    Vertices extras sobre a corda, na ordem em que o contorno os percorre
-    depois de terminar o arco: de +y_lim para -y_lim quando lado = +1, e o
-    contrario quando lado = -1. So entram os que caem ESTRITAMENTE dentro da
-    faixa (y_min, y_lim).
+    Vertices extras sobre a corda, em DOIS trechos: o que sai do fim do arco
+    externo e o que chega no comeco dele. Separados porque em
+    'degrau_da_perna' o arco interno entra entre os dois.
 
     Existem por causa da junta em T. O pino da perfboard e uma pilha de secoes
     em D de raios diferentes e a corda de todas cai na mesma reta; se a secao
@@ -265,8 +264,8 @@ def _corda(x, lado, ys, y_lim, y_min=0.0):
     """
     e = sorted({abs(v) for v in ys
                 if y_min + TOL_VERT < abs(v) < y_lim - TOL_VERT})
-    return ([(x, lado * v) for v in reversed(e)]
-            + [(x, -lado * v) for v in e])
+    return ([(x, lado * v) for v in reversed(e)],
+            [(x, -lado * v) for v in e])
 
 
 def perna(r, meia_fenda, n=64, lado=1, ys=()):
@@ -282,8 +281,8 @@ def perna(r, meia_fenda, n=64, lado=1, ys=()):
     """
     x = lado * meia_fenda
     y_lim = math.sqrt(r * r - meia_fenda * meia_fenda)
-    return antihorario(_arco_cortado(r, meia_fenda, n, lado)
-                       + _corda(x, lado, ys, y_lim))
+    a, b = _corda(x, lado, ys, y_lim)
+    return antihorario(_arco_cortado(r, meia_fenda, n, lado) + a + b)
 
 
 def degrau_da_perna(r_int, r_ext, meia_fenda, n=64, lado=1, ys=()):
@@ -302,10 +301,8 @@ def degrau_da_perna(r_int, r_ext, meia_fenda, n=64, lado=1, ys=()):
     ye = math.sqrt(r_ext * r_ext - meia_fenda * meia_fenda)
     fora = _arco_cortado(r_ext, meia_fenda, n, lado)
     dentro = _arco_cortado(r_int, meia_fenda, n, lado)
-    meio = sorted({abs(v) for v in ys if yi + TOL_VERT < abs(v) < ye - TOL_VERT})
-    c1 = [(x, lado * v) for v in reversed(meio)]
-    c2 = [(x, -lado * v) for v in meio]
-    return antihorario(list(fora) + c1 + list(reversed(dentro)) + c2)
+    a, b = _corda(x, lado, ys, ye, yi)
+    return antihorario(list(fora) + a + list(reversed(dentro)) + b)
 
 
 def inserir_ponto(poly, p, tol=TOL_VERT):

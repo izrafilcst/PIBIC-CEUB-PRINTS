@@ -93,23 +93,29 @@ def test_degrau_da_perna_fecha_um_solido():
     O degrau farpa->haste e o teste real: e ali que 'face' com buraco
     encostado na borda quebraria o ear clipping, e e ali que a corda das duas
     secoes tem de casar vertice a vertice.
+
+    Os raios sao os do pino de verdade, e o 'ys' e a lista inteira deles. So
+    assim a corda da secao larga recebe QUATRO vertices extras - com dois
+    raios so, nenhum trecho passa de um ponto interno e a ordem relativa entre
+    pontos internos nunca e exercitada.
     """
     hf, n = 0.6, 64
-    r_int, r_ext, h_ext, h_int = 1.4, 1.8, 0.6, 1.0
-    ys = [math.sqrt(r * r - hf * hf) for r in (r_int, r_ext)]
+    h_ext, h_int = 0.6, 1.0
+    ys = [math.sqrt(r * r - hf * hf) for r in (3.0, 1.8, 1.5, 1.4, 1.2)]
 
-    for lado in (1, -1):
-        p_ext = M.perna(r_ext, hf, n, lado, ys)
-        p_int = M.perna(r_int, hf, n, lado, ys)
-        deg = M.degrau_da_perna(r_int, r_ext, hf, n, lado, ys)
+    for r_int, r_ext in ((1.4, 1.8), (1.4, 3.0), (1.2, 1.5)):
+        for lado in (1, -1):
+            p_ext = M.perna(r_ext, hf, n, lado, ys)
+            p_int = M.perna(r_int, hf, n, lado, ys)
+            deg = M.degrau_da_perna(r_int, r_ext, hf, n, lado, ys)
 
-        S = M.Solido(f"perna{lado}")
-        S.face(p_ext, [], 0.0, cima=False)
-        S.parede(p_ext, 0.0, h_ext, fora=True)
-        S.face(deg, [], h_ext, cima=True)
-        S.parede(p_int, h_ext, h_ext + h_int, fora=True)
-        S.face(p_int, [], h_ext + h_int, cima=True)
+            S = M.Solido(f"perna{r_ext}x{r_int}_{lado}")
+            S.face(p_ext, [], 0.0, cima=False)
+            S.parede(p_ext, 0.0, h_ext, fora=True)
+            S.face(deg, [], h_ext, cima=True)
+            S.parede(p_int, h_ext, h_ext + h_int, fora=True)
+            S.face(p_int, [], h_ext + h_int, cima=True)
 
-        A = M.area_assinada
-        esperado = abs(A(p_ext)) * h_ext + abs(A(p_int)) * h_int
-        assert abs(S.conferir(esperado, tol_rel=1e-9) - esperado) < 1e-6
+            A = M.area_assinada
+            esperado = abs(A(p_ext)) * h_ext + abs(A(p_int)) * h_int
+            assert abs(S.conferir(esperado, tol_rel=1e-9) - esperado) < 1e-6
