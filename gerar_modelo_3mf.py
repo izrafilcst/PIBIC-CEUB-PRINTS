@@ -520,25 +520,80 @@ def corpo():
 # =====================================================================
 
 def tampa():
-    """z = 0 encosta no corpo; z = TAMPA_ESP e a face de fora, com o rebaixo."""
+    """
+    z = 0 e a face EXTERNA (rebaixo dos parafusos), que vai na mesa; os pinos
+    da perfboard crescem para cima a partir de z = TAMPA_ESP.
+
+    Imprime com os pinos PARA CIMA. O rebaixo Ø6,50 sobre o furo Ø3,40 fica
+    voltado para baixo, mas sao 1,55 mm radiais sobre um vao de 6,50 - nao
+    pede suporte.
+    """
     S = M.Solido("tampa")
     ext = silhueta()
     fix = pontos_fixacao()
+    pl, pn = PLACA, pinos_placa()
+
     pas = [M.circulo(x, y, D_PASSAGEM / 2, SEG_PEQ) for x, y in fix]
     cbo = [M.circulo(x, y, D_REBAIXO / 2, SEG_PEQ) for x, y in fix]
-    z_cb = TAMPA_ESP - REB_TAMPA
 
-    S.face(ext, cbo, TAMPA_ESP, cima=True)
-    S.face(ext, pas, 0.0, cima=False)
+    # perfil do pino, de baixo para cima: (raio, z base, z topo)
+    hf = pl["rasgo_w"] / 2
+    raios = ([(pl["ombro_d"] / 2, pn["z"][0], pn["z"][1]),
+              (pl["haste_d"] / 2, pn["z"][1], pn["z"][2]),
+              (pl["farpa_d"] / 2, pn["z"][2], pn["z"][3])]
+             + [(d / 2, pn["z"][3 + i], pn["z"][4 + i])
+                for i, (d, _) in enumerate(pl["guia"])])
+
+    # A corda de TODAS as secoes cai na mesma reta. Sem estes vertices extras
+    # a secao larga teria uma aresta unica ali onde a estreita tem tres, e a
+    # malha abriria na emenda. Derivar a lista dos proprios raios mantem as
+    # duas coisas casadas se o perfil mudar.
+    ys = [math.sqrt(r * r - hf * hf) for r, _, _ in raios]
+
+    def perna_em(cx, cy, r, lado):
+        return [(x + cx, y + cy)
+                for x, y in M.perna(r, hf, SEG_PEQ, lado, ys)]
+
+    def degrau_em(cx, cy, r_int, r_ext, lado):
+        return [(x + cx, y + cy)
+                for x, y in M.degrau_da_perna(r_int, r_ext, hf, SEG_PEQ,
+                                              lado, ys)]
+
+    bases = [perna_em(cx, cy, raios[0][0], lado)
+             for cx, cy in pn["centros"] for lado in (1, -1)]
+
+    # ---- chapa ----
+    S.face(ext, cbo, 0.0, cima=False)
     for p, c in zip(pas, cbo):
-        S.coroa(p, c, z_cb, cima=True)
-        S.parede(c, z_cb, TAMPA_ESP, fora=False)
-        S.parede(p, 0.0, z_cb, fora=False)
+        S.coroa(p, c, REB_TAMPA, cima=False)
+        S.parede(c, 0.0, REB_TAMPA, fora=False)
+        S.parede(p, REB_TAMPA, TAMPA_ESP, fora=False)
+    S.face(ext, pas + bases, TAMPA_ESP, cima=True)
     S.parede(ext, 0.0, TAMPA_ESP, fora=True)
 
+    # ---- pinos ----
+    for cx, cy in pn["centros"]:
+        for lado in (1, -1):
+            for i, (r, z0, z1) in enumerate(raios):
+                S.parede(perna_em(cx, cy, r, lado),
+                         TAMPA_ESP + z0, TAMPA_ESP + z1, fora=True)
+                if i + 1 < len(raios):
+                    r_prox = raios[i + 1][0]
+                    if r_prox < r:          # afina: face exposta para cima
+                        S.face(degrau_em(cx, cy, r_prox, r, lado), [],
+                               TAMPA_ESP + z1, cima=True)
+                    else:                   # engorda: face exposta para baixo
+                        S.face(degrau_em(cx, cy, r, r_prox, lado), [],
+                               TAMPA_ESP + z1, cima=False)
+            S.face(perna_em(cx, cy, raios[-1][0], lado), [],
+                   TAMPA_ESP + raios[-1][2], cima=True)
+
     A = M.area_assinada
-    esperado = ((A(ext) - 6 * A(pas[0])) * z_cb
-                + (A(ext) - 6 * A(cbo[0])) * REB_TAMPA)
+    v_meia = sum(abs(A(M.perna(r, hf, SEG_PEQ, 1, ys))) * (z1 - z0)
+                 for r, z0, z1 in raios)
+    esperado = ((A(ext) - 6 * A(cbo[0])) * REB_TAMPA
+                + (A(ext) - 6 * A(pas[0])) * (TAMPA_ESP - REB_TAMPA)
+                + 8 * v_meia)
     return S, esperado
 
 

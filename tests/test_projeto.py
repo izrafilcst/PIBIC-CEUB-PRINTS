@@ -104,3 +104,20 @@ def test_o_rebaixo_da_chave_tem_o_diametro_certo():
     larg, centro = V.largura_do_vao(segs, k["y_cav"])
     assert abs(larg - k["d_rebaixo"]) < 0.05, f"boca do rebaixo {larg:.3f}"
     assert abs(centro - k["x"]) < 0.01
+
+
+def test_tampa_com_pinos_fecha_e_bate_o_volume():
+    S, esperado = P.tampa()
+    vol = S.conferir(esperado, tol_rel=1e-9)
+    pn = P.pinos_placa()
+    zs = [v[2] for v in S.v]
+    assert abs(max(zs) - (P.TAMPA_ESP + pn["topo"])) < 1e-9, \
+        "o pino nao tem a altura do perfil"
+    assert abs(min(zs)) < 1e-9
+
+
+def test_a_farpa_retem_a_placa():
+    """A face de baixo da farpa tem de cair 0,20 acima da placa assentada."""
+    pl, pn = P.PLACA, P.pinos_placa()
+    topo_da_placa = pn["z"][1] + pl["esp"]
+    assert abs(pn["z"][2] - topo_da_placa - pl["folga_placa"]) < 1e-9
