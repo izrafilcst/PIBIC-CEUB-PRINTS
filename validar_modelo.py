@@ -182,97 +182,95 @@ def conferir(nome, arquivo, altura, furos_esperados):
         ok(d is not None and abs(d - d_esp) < 0.02, rotulo,
            f"esperado {d_esp:.2f}  medido {d:.3f}" if d else "furo nao achado")
 
+    return V, T
 
-def conferir_interruptor(V, T):
+
+def conferir_chave(V, T):
     """
-    A estacao do interruptor, lida do arquivo.
+    A estacao da chave, lida do arquivo.
 
-    Nao da para conferir por diametro nem por bounding box: o berco esta
-    inteiro DENTRO da silhueta, e o unico furo que ele abre para fora tem
-    6 x 3 mm. Confere-se por travessia - a lista de onde comeca e onde acaba
-    o material ao longo da espessura da parede, em pontos escolhidos para
-    passar um por cada feicao.
+    Duas medidas bastam e sao independentes: a travessia no eixo prova que a
+    parede esta VAZADA de lado a lado (se o furo nao abrisse, a chave nao
+    entraria e ninguem descobriria antes de imprimir), e a largura do vao na
+    face da cavidade prova o diametro do rebaixo.
     """
-    e = P.estacao()
-    print("\ncaixa-corpo.3mf - estacao do interruptor")
+    k = P.estacao_chave()
+    print("\ncaixa-corpo.3mf - estacao da chave KCD1")
 
-    yf, yb, yr, yc = e["y_face"], e["y_bolsa"], e["y_res"], e["y_cav"]
-    xr0, xr1 = e["x_res"]
-    xb0, xb1 = e["x_bolsa"]
-    zb0, zb1 = e["z_bolsa"]
+    segs = secao(V, T, k["z"])
+    ys = travessia(segs, k["x"], y_min=k["y_cav"] - 1.0)
+    ok(ys == [], "no eixo da chave a parede esta vazada de lado a lado",
+       "material em y " + ", ".join(f"{v:.2f}" for v in ys) if ys else "")
 
-    sondas = [
-        # x, z, y esperados, o que a sonda prova
-        # no eixo da haste nao sobra material NENHUM: bolsa por dentro e
-        # rasgo por fora se encontram, e e por ai que a haste sai
-        (e["x"], e["z"], [], "no eixo da haste a parede esta vazada de lado a lado"),
-        (e["x"], zb0 / 2, [yr, yf], "abaixo da bolsa o ressalto e macico"),
-        (e["x"], (zb1 + e["z_topo"]) / 2, [yr, yf],
-         "acima da bolsa o ressalto e macico"),
-        (e["x"], e["z_topo"] + 3.0, [yc, yf],
-         "acima do ressalto volta a parede de {:.2f}".format(P.CORPO_PAR)),
-        ((xb0 + e["x_rasgo"][0]) / 2, e["z"], [yb, yf],
-         "ao lado do rasgo sobra o fundo de {:.2f}".format(e["fundo"])),
-        ((xr0 + xb0) / 2, e["z"], [yr, yf], "flanco da bolsa e macico"),
-        ((xb1 + xr1) / 2, e["z"], [yr, yf], "flanco oposto tambem"),
-        (xr1 + 1.0, e["z"], [yc, yf], "fora do ressalto a parede e a normal"),
-    ]
-    for x, z, esp, texto in sondas:
-        m = travessia(secao(V, T, z), x, y_min=yr - 1.0)
-        bate = len(m) == len(esp) and all(abs(a - b) < 0.01 for a, b in zip(m, esp))
-        ok(bate, f"x={x:.2f} z={z:.2f}: {texto}",
-           "esperado y " + " e ".join(f"{v:.2f}" for v in esp) +
-           "   medido " + (" e ".join(f"{v:.2f}" for v in m) if m else "nada"))
-
-    segs = secao(V, T, e["z"])
-    larg, centro = largura_do_vao(segs, yf)
-    ok(larg is not None and abs(larg - e["rasgo_l"]) < 0.01
-       and abs(centro - e["x"]) < 0.01,
-       f"rasgo na face externa: {e['rasgo_l']:.2f} centrado em {e['x']:.2f}",
-       f"medido {larg:.3f} centrado em {centro:.3f}" if larg else "nao achado")
-
-    larg, centro = largura_do_vao(secao(V, T, (zb0 + P.INTERRUPTOR['z']) / 2), yr)
-    ok(larg is not None and abs(larg - e["bolsa_l"]) < 0.01
-       and abs(centro - e["x"]) < 0.01,
-       f"boca da bolsa: {e['bolsa_l']:.2f} centrada em {e['x']:.2f}",
+    larg, centro = largura_do_vao(segs, k["y_cav"])
+    ok(larg is not None and abs(larg - k["d_rebaixo"]) < 0.05
+       and abs(centro - k["x"]) < 0.01,
+       f"boca do rebaixo: Ø{k['d_rebaixo']:.2f} centrada em {k['x']:.2f}",
        f"medida {larg:.3f} centrada em {centro:.3f}" if larg else "nao achada")
 
-    # o ressalto nao pode encostar em coluna nenhuma
-    g = min(math.hypot(max(xr0 - cx, 0.0, cx - xr1), max(yr - cy, 0.0, cy - yf))
-            - P.COL_D / 2 for cx, cy in P.pontos_fixacao())
-    ok(g >= 2.0, "ressalto livre das 6 colunas", f"folga minima {g:.2f} mm")
+    larg, centro = largura_do_vao(segs, k["y_face"])
+    ok(larg is not None and abs(larg - k["d_furo"]) < 0.05,
+       f"furo na face externa: Ø{k['d_furo']:.2f}",
+       f"medido {larg:.3f}" if larg else "nao achado")
 
-    # e tem de caber no trecho reto da parede, senao sai obliquo
-    ok(xr0 >= P.CX_R and xr1 <= P.CX_L - P.CX_R,
-       f"ressalto no trecho reto da parede [{P.CX_R:.2f}, {P.CX_L-P.CX_R:.2f}]",
-       f"ocupa [{xr0:.2f}, {xr1:.2f}]")
+    # fora do rebaixo a parede volta a ser a normal. +1.0 e nao +2.0: a soma
+    # de d_rebaixo/2 + 2.0 cai exatamente sobre o vertice de borda do trecho
+    # da face_vertical (x = 84), e sondar em cima de um vertice e fragil.
+    m = travessia(secao(V, T, k["z"]), k["x"] + k["d_rebaixo"] / 2 + 1.0,
+                  y_min=k["y_cav"] - 1.0)
+    ok(len(m) == 2 and abs(m[0] - k["y_cav"]) < 0.01
+       and abs(m[1] - k["y_face"]) < 0.01,
+       f"fora do rebaixo a parede volta a {P.CORPO_PAR:.2f}",
+       "medido y " + " e ".join(f"{v:.2f}" for v in m) if m else "nada")
+
+
+def conferir_pinos(V, T):
+    """
+    Os 4 pinos da perfboard, medidos na secao horizontal.
+
+    Duas sondas por altura, e as duas sao necessarias: 'diametro' prova que a
+    perna esta no lugar e com o raio certo, e 'travessia' no eixo prova que o
+    RASGO atravessa. Sem o rasgo as duas metades nao fletem, e a farpa nao
+    entra no furo da placa sem trincar o PLA.
+
+    Nao da para medir o rasgo com 'largura_do_vao': na altura da haste so
+    existem as 8 pernas, entao o maior vao ao longo de y = cy vai de um pino
+    ao seguinte - 80 mm - e nao de uma perna a outra do mesmo pino.
+    """
+    pl, pn = P.PLACA, P.pinos_placa()
+    print("\ncaixa-tampa.3mf - pinos da perfboard")
+    alturas = (
+        (P.TAMPA_ESP + (pn["z"][1] + pn["z"][2]) / 2, pl["haste_d"], "haste"),
+        (P.TAMPA_ESP + (pn["z"][2] + pn["z"][3]) / 2, pl["farpa_d"], "farpa"),
+    )
+    for i, (cx, cy) in enumerate(pn["centros"], 1):
+        for z, d_esp, nome in alturas:
+            segs = secao(V, T, z)
+            d = diametro(segs, cx, cy, d_esp)
+            ok(d is not None and abs(d - d_esp) < 0.02,
+               f"pino {i}: {nome} Ø{d_esp:.2f}",
+               f"medido {d:.3f}" if d else "nao achada")
+            m = travessia(segs, cx)
+            ok(m == [], f"pino {i}: rasgo atravessa na altura da {nome}",
+               "material em y " + ", ".join(f"{v:.2f}" for v in m) if m else "")
 
 
 def main():
     fix = P.pontos_fixacao()
-    bv, bg = P.BOTOES
 
-    # --- painel ---
-    f = []
-    for b in (bv, bg):
-        z_meio = (P.PAIN_ESP - b["rebaixo"]) / 2
-        f.append((z_meio, b["x"], b["y"], P.D_BARRIL,
-                  f"barril M24 do botao {b['nome']}: Ø{P.D_BARRIL:.2f}"))
-        f.append((P.PAIN_ESP - b["rebaixo"] / 2, b["x"], b["y"],
-                  b["capa"] + P.FOLGA_CAPA,
-                  f"rebaixo da capa {b['nome']}: Ø{b['capa']+P.FOLGA_CAPA:.2f}"))
-        f.append((z_meio, *P.leds(b)[0], P.D_LED,
-                  f"furo de LED do botao {b['nome']}: Ø{P.D_LED:.2f}"))
-    f.append((1.0, *fix[0], P.D_PASSAGEM, f"passagem M3: Ø{P.D_PASSAGEM:.2f}"))
-    f.append((P.PAIN_ESP - 1.0, *fix[0], P.D_REBAIXO,
-              f"rebaixo da cabeca: Ø{P.D_REBAIXO:.2f}"))
-    conferir("painel", "caixa-painel.3mf", P.PAIN_ESP, f)
-
-    # --- corpo ---
+    # --- corpo (painel + corpo fundidos) ---
+    k = P.estacao_chave()
     f = [(P.CORPO_H - 1.0, *fix[0], P.D_INSERTO,
-          f"inserto no topo: Ø{P.D_INSERTO:.2f}"),
-         (1.0, *fix[0], P.D_INSERTO, f"inserto na base: Ø{P.D_INSERTO:.2f}")]
-    conferir("corpo", "caixa-corpo.3mf", P.CORPO_H, f)
+          f"inserto no topo: Ø{P.D_INSERTO:.2f}")]
+    for b in P.BOTOES:
+        f.append((P.PAIN_ESP / 2, b["x"], b["y"], P.D_BARRIL,
+                  f"barril M24 do botao {b['nome']}: Ø{P.D_BARRIL:.2f}"))
+        f.append((P.REB_ALIVIO / 2, b["x"], b["y"],
+                  P.D_BARRIL + P.FOLGA_ALIVIO,
+                  f"alivio da boca {b['nome']}: Ø{P.D_BARRIL+P.FOLGA_ALIVIO:.2f}"))
+        f.append((P.PAIN_ESP / 2, *P.leds(b)[0], P.D_LED,
+                  f"furo de LED do botao {b['nome']}: Ø{P.D_LED:.2f}"))
+    V, T = conferir("corpo", "caixa-corpo.3mf", P.CORPO_H, f)
 
     # Parede do corpo no plano medio: menor distancia entre o contorno da
     # cavidade e o contorno externo. Nao da para medir num x escolhido a dedo -
@@ -280,9 +278,16 @@ def main():
     # "parede" tem 11 mm. As colunas so ACRESCENTAM material, entao o minimo
     # sobre todo o perimetro e a parede nominal, e e o numero que decide se um
     # interruptor de encaixe (2 a 5 mm de painel) serve na face frontal.
-    V, T = ler_3mf("caixa-corpo.3mf")
+    #
+    # A sonda NAO pode cortar em CORPO_H/2: a estacao da chave ocupa a faixa
+    # do meio, e ali o corte atravessa o tunel do furo. A heuristica de
+    # "cavidade = a mais de 1 mm do contorno externo" pegaria um ponto da
+    # borda do furo e chamaria de parede - mediria distancia ate um buraco,
+    # nao espessura de material. Corta entre o painel e a estacao, onde a
+    # parede e a nominal em todo o perimetro.
+    z_parede = (P.PAIN_ESP + (k["z"] - k["d_rebaixo"] / 2)) / 2
     ext = P.silhueta()
-    pts = {p for s in secao(V, T, P.CORPO_H / 2) for p in s}
+    pts = {p for s in secao(V, T, z_parede) for p in s}
     # o corte separa em dois lacos: o externo cai sobre 'ext' (distancia ~0) e
     # o da cavidade fica a 4 mm ou mais. 1,0 mm separa os dois com folga de
     # sobra para os dois lados, sem depender da precisao do arquivo.
@@ -292,13 +297,19 @@ def main():
        f"parede do corpo {P.CORPO_PAR:.2f} mm (minimo do perimetro)",
        f"medida {par:.3f} em {len(cav)} pontos da cavidade" if par else "nao medida")
 
-    conferir_interruptor(V, T)
+    conferir_chave(V, T)
 
     # --- tampa ---
-    f = [(1.0, *fix[0], P.D_PASSAGEM, f"passagem M3: Ø{P.D_PASSAGEM:.2f}"),
-         (P.TAMPA_ESP - 1.0, *fix[0], P.D_REBAIXO,
-          f"rebaixo da cabeca: Ø{P.D_REBAIXO:.2f}")]
-    conferir("tampa", "caixa-tampa.3mf", P.TAMPA_ESP, f)
+    # z invertido pela Task 7: z = 0 e a face externa, com o rebaixo dos
+    # parafusos - por isso as sondas ficam perto de z = 0, nao de TAMPA_ESP.
+    REB_TAMPA_MEIO = P.REB_TAMPA / 2
+    f = [(REB_TAMPA_MEIO, *fix[0], P.D_REBAIXO,
+          f"rebaixo da cabeca: Ø{P.D_REBAIXO:.2f}"),
+         (P.TAMPA_ESP - 1.0, *fix[0], P.D_PASSAGEM,
+          f"passagem M3: Ø{P.D_PASSAGEM:.2f}")]
+    pn = P.pinos_placa()
+    V, T = conferir("tampa", "caixa-tampa.3mf", P.TAMPA_ESP + pn["topo"], f)
+    conferir_pinos(V, T)
 
     print()
     if falhas:

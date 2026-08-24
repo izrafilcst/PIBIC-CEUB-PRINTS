@@ -40,22 +40,19 @@ e muito mais barato.
 
 PECA QUE NAO E PRISMA INTEIRA
 -----------------------------
-O berco do interruptor quebrou a hipotese de que a secao nao muda com z.
-Tres primitivas resolvem o caso sem abandonar o resto:
+O furo da chave KCD1 tem eixo HORIZONTAL: nem a face nem a parede dele cabem
+na hipotese de contorno extrudado em z. Duas primitivas resolvem sem abandonar
+o resto:
 
-  'entalhar'         troca um trecho de aresta reta de um contorno por
-                     outro perfil - e assim que a mesma cavidade ganha, ou
-                     nao, o ressalto, conforme a faixa de z
-  'Solido.faixa'     parede sobre polilinha ABERTA, porque um rasgo
-                     INTERROMPE a parede e um contorno fechado nao sabe
-                     pular pedaco ('parede' virou um caso particular dela)
-  'Solido.costura'   fecha a emenda entre um trecho que vale a altura toda
-                     e um que muda de perfil, sem propagar a subdivisao
-                     pelo contorno inteiro
+  'Solido.face_vertical'  face plana a y constante, descrita em (x, z) - e a
+                          mesma triangulacao de 'face', so troca de eixos
+  'Solido.tubo'           casca entre dois aneis em planos paralelos
+                          quaisquer, que e o que 'faixa' nao sabe fazer
 
-A alternativa - emitir o contorno completo uma vez por faixa de z - e
-correta e foi o primeiro rascunho, mas dobrava a contagem de triangulos do
-corpo por causa de 17 mm de parede.
+E o pino fendido da perfboard pede um recorte de poligono por faixa: 'perna'
+da a secao em D de cada perna e 'degrau_da_perna' da o poligono SIMPLES da
+coroa entre dois diametros - que nao da para pedir a 'face' como poligono com
+buraco, porque o buraco encosta na borda.
 """
 
 import math
@@ -635,38 +632,6 @@ class Solido:
             else:
                 self.tri(a0, a1, b0)
                 self.tri(a1, b1, b0)
-
-    def costura(self, a, b, za, zb):
-        """
-        Parede sobre o segmento a-b quando as duas arestas VERTICAIS estao
-        divididas de formas diferentes: 'za' e 'zb' sao as listas crescentes
-        de z de cada ponta, com o mesmo primeiro e o mesmo ultimo valor.
-
-        Existe por causa da junta em T. Uma parede que vale a altura inteira
-        encontra, na emenda, uma parede que muda de perfil com z: de um lado
-        ha uma aresta longa, do outro varias curtas, e 'conferir' acusa malha
-        aberta - com razao, porque os triangulos nao compartilham vertice.
-        O ziper abaixo consome as duas listas ao mesmo tempo e fecha a emenda
-        sem exigir que a subdivisao se propague pelo contorno todo, que era o
-        que dobrava o tamanho da peca.
-
-        Com za == zb de dois valores, produz exatamente os dois triangulos de
-        'faixa' - e o caso geral, nao um caso a parte.
-        """
-        assert za[0] == zb[0] and za[-1] == zb[-1], \
-            "as duas pontas da costura tem de comecar e terminar no mesmo z"
-        A = lambda z: (a[0], a[1], z)
-        B = lambda z: (b[0], b[1], z)
-        i = j = 0
-        while i < len(za) - 1 or j < len(zb) - 1:
-            pa = za[i + 1] if i < len(za) - 1 else float("inf")
-            pb = zb[j + 1] if j < len(zb) - 1 else float("inf")
-            if pb <= pa:
-                self.tri(A(za[i]), B(zb[j]), B(pb))
-                j += 1
-            else:
-                self.tri(A(za[i]), B(zb[j]), A(pa))
-                i += 1
 
     # ---------- conferencia ----------
 
