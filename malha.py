@@ -470,6 +470,28 @@ class Solido:
             else:
                 self.tri((a[0], a[1], z), (c[0], c[1], z), (b[0], b[1], z))
 
+    def face_vertical(self, externo, buracos=(), y=0.0, frente=True):
+        """
+        Face plana no plano y = constante, descrita em (x, z).
+
+        'frente=True' -> normal +y; 'frente=False' -> normal -y.
+
+        Existe porque a parede de tras deixou de ser uma parede: no trecho da
+        chave ela e uma chapa plana com um furo, e furo em parede nao e
+        expressavel como contorno extrudado em z.
+
+        'triangular' nao sabe que eixos sao esses - so precisa de um plano -
+        entao o motor de triangulacao e o mesmo de 'face'. A unica sutileza e
+        o sinal: um triangulo anti-horario em (x, z) tem normal x^ X z^ = -y^,
+        entao e 'frente=False' que preserva a ordem.
+        """
+        for a, b, c in triangular(externo, buracos):
+            P = lambda p: (p[0], y, p[1])
+            if frente:
+                self.tri(P(a), P(c), P(b))
+            else:
+                self.tri(P(a), P(b), P(c))
+
     def coroa(self, interno, externo, z, cima=True):
         """
         Anel plano entre dois circulos concentricos de MESMA contagem de
