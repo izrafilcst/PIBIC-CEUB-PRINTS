@@ -75,3 +75,41 @@ def test_face_vertical_triangula_no_plano_xz():
         w = (cc[0] - a[0], cc[1] - a[1], cc[2] - a[2])
         ny = u[2] * w[0] - u[0] * w[2]
         assert ny > 0, "normal da face_vertical nao esta em +y"
+
+
+def test_perna_e_meia_secao_menos_a_fenda():
+    """Duas pernas + a fenda tem de reconstituir o poligono inteiro."""
+    r, hf, n = 1.4, 0.6, 64
+    inteiro = abs(M.area_assinada(M.circulo(0.0, 0.0, r, n)))
+    a = abs(M.area_assinada(M.perna(r, hf, n, lado=1)))
+    b = abs(M.area_assinada(M.perna(r, hf, n, lado=-1)))
+    # a fenda e a faixa |x| <= hf dentro do poligono; sobra = inteiro - fenda
+    assert a > 0 and abs(a - b) < 1e-9, "as duas pernas tem de ser simetricas"
+    assert a + b < inteiro, "as pernas nao podem somar mais que o circulo"
+
+
+def test_degrau_da_perna_fecha_um_solido():
+    """
+    O degrau farpa->haste e o teste real: e ali que 'face' com buraco
+    encostado na borda quebraria o ear clipping, e e ali que a corda das duas
+    secoes tem de casar vertice a vertice.
+    """
+    hf, n = 0.6, 64
+    r_int, r_ext, h_ext, h_int = 1.4, 1.8, 0.6, 1.0
+    ys = [math.sqrt(r * r - hf * hf) for r in (r_int, r_ext)]
+
+    for lado in (1, -1):
+        p_ext = M.perna(r_ext, hf, n, lado, ys)
+        p_int = M.perna(r_int, hf, n, lado, ys)
+        deg = M.degrau_da_perna(r_int, r_ext, hf, n, lado, ys)
+
+        S = M.Solido(f"perna{lado}")
+        S.face(p_ext, [], 0.0, cima=False)
+        S.parede(p_ext, 0.0, h_ext, fora=True)
+        S.face(deg, [], h_ext, cima=True)
+        S.parede(p_int, h_ext, h_ext + h_int, fora=True)
+        S.face(p_int, [], h_ext + h_int, cima=True)
+
+        A = M.area_assinada
+        esperado = abs(A(p_ext)) * h_ext + abs(A(p_int)) * h_int
+        assert abs(S.conferir(esperado, tol_rel=1e-9) - esperado) < 1e-6

@@ -234,6 +234,80 @@ def subtrair_discos(poly, discos):
     return pts
 
 
+def _arco_cortado(r, meia_fenda, n, lado):
+    """
+    Arco do circulo de raio 'r' que sobra do lado 'lado' (+1 = x positivo) da
+    fenda central de largura 2*meia_fenda, do ponto de corte de baixo ate o de
+    cima, PONTAS INCLUIDAS.
+    """
+    assert 0 < meia_fenda < r, "a fenda nao corta o circulo"
+    th = math.acos(meia_fenda / r)
+    a0 = -th if lado > 0 else math.pi - th
+    d = 2 * th
+    k = max(2, int(d / (2 * math.pi) * n) + 1)
+    return [(r * math.cos(a0 + d * i / k), r * math.sin(a0 + d * i / k))
+            for i in range(k + 1)]
+
+
+def _corda(x, lado, ys, y_lim, y_min=0.0):
+    """
+    Vertices extras sobre a corda, na ordem em que o contorno os percorre
+    depois de terminar o arco: de +y_lim para -y_lim quando lado = +1, e o
+    contrario quando lado = -1. So entram os que caem ESTRITAMENTE dentro da
+    faixa (y_min, y_lim).
+
+    Existem por causa da junta em T. O pino da perfboard e uma pilha de secoes
+    em D de raios diferentes e a corda de todas cai na mesma reta; se a secao
+    larga tiver uma aresta unica ali onde a estreita tem tres, 'conferir'
+    acusa aresta fora de dois triangulos. Passando a MESMA lista de |y| a
+    todas as secoes, as cordas saem subdivididas igual e as emendas fecham.
+    Vertice colinear nao muda area, entao o volume analitico continua exato.
+    """
+    e = sorted({abs(v) for v in ys
+                if y_min + TOL_VERT < abs(v) < y_lim - TOL_VERT})
+    return ([(x, lado * v) for v in reversed(e)]
+            + [(x, -lado * v) for v in e])
+
+
+def perna(r, meia_fenda, n=64, lado=1, ys=()):
+    """
+    Secao em D de UMA perna do pino da perfboard: o circulo de raio 'r'
+    cortado pela fenda central, ficando com o lado 'lado'.
+
+    O pino e fendido para que as duas pernas possam fletir - sem isso a farpa
+    nao entra no furo da placa sem trincar o PLA. A fenda obriga a secao a ser
+    esta, e nao um circulo: a MESMA lista alimenta a face e a parede, e a area
+    dela entra na conta do volume esperado da tampa. E o que mantem 'conferir'
+    fechando em 1e-9 com a fenda no meio.
+    """
+    x = lado * meia_fenda
+    y_lim = math.sqrt(r * r - meia_fenda * meia_fenda)
+    return antihorario(_arco_cortado(r, meia_fenda, n, lado)
+                       + _corda(x, lado, ys, y_lim))
+
+
+def degrau_da_perna(r_int, r_ext, meia_fenda, n=64, lado=1, ys=()):
+    """
+    Coroa de UMA perna entre 'r_int' e 'r_ext', como poligono SIMPLES.
+
+    Nao da para pedir isso a 'face' como poligono com buraco: os dois
+    contornos compartilham a reta da fenda, o "buraco" encosta na borda do
+    externo e o ear clipping nao encontra ponte. Aqui os dois arcos sao
+    costurados pelos dois trechos de corda que sobram, e sai um poligono
+    simples de verdade.
+    """
+    assert 0 < meia_fenda < r_int < r_ext, "raios fora de ordem no degrau"
+    x = lado * meia_fenda
+    yi = math.sqrt(r_int * r_int - meia_fenda * meia_fenda)
+    ye = math.sqrt(r_ext * r_ext - meia_fenda * meia_fenda)
+    fora = _arco_cortado(r_ext, meia_fenda, n, lado)
+    dentro = _arco_cortado(r_int, meia_fenda, n, lado)
+    meio = sorted({abs(v) for v in ys if yi + TOL_VERT < abs(v) < ye - TOL_VERT})
+    c1 = [(x, lado * v) for v in reversed(meio)]
+    c2 = [(x, -lado * v) for v in meio]
+    return antihorario(list(fora) + c1 + list(reversed(dentro)) + c2)
+
+
 def inserir_ponto(poly, p, tol=TOL_VERT):
     """
     Devolve 'poly' com um vertice em 'p'; se 'p' ja e vertice, devolve como
