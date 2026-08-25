@@ -1,219 +1,219 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="594.0mm" height="420.0mm" viewBox="0 0 594.0 420.0">
-<rect width="594.0" height="420.0" fill="#fff"/>
-<rect x="90.000" y="70.000" width="120.000" height="80.000" fill="none" stroke="#555" stroke-width="0.16" stroke-dasharray="3,1.5"/>
-<text x="150.000" y="66.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="middle">trecho reto da parede de trás</text>
-<circle cx="150.000" cy="110.000" r="30.300" fill="none" stroke="#111" stroke-width="0.45"/>
-<circle cx="150.000" cy="110.000" r="34.500" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="7,1.5,1,1.5,1,1.5"/>
-<circle cx="150.000" cy="110.000" r="37.500" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
-<line x1="103.500" y1="110.000" x2="196.500" y2="110.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<line x1="150.000" y1="63.500" x2="150.000" y2="156.500" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
-<line x1="119.700" y1="110.000" x2="119.700" y2="168.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="180.300" y1="110.000" x2="180.300" y2="168.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="119.700" y1="166.000" x2="180.300" y2="166.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="119.700,166.000 122.100,165.550 122.100,166.450" fill="#111"/>
-<polygon points="180.300,166.000 177.900,166.450 177.900,165.550" fill="#111"/>
-<text x="150.000" y="164.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;20,20</text>
-<line x1="115.500" y1="110.000" x2="115.500" y2="180.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="184.500" y1="110.000" x2="184.500" y2="180.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="115.500" y1="178.000" x2="184.500" y2="178.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="115.500,178.000 117.900,177.550 117.900,178.450" fill="#111"/>
-<polygon points="184.500,178.000 182.100,178.450 182.100,177.550" fill="#111"/>
-<text x="150.000" y="176.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;23,00 aro</text>
-<line x1="112.500" y1="110.000" x2="112.500" y2="192.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="187.500" y1="110.000" x2="187.500" y2="192.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="112.500" y1="190.000" x2="187.500" y2="190.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="112.500,190.000 114.900,189.550 114.900,190.450" fill="#111"/>
-<polygon points="187.500,190.000 185.100,190.450 185.100,189.550" fill="#111"/>
-<text x="150.000" y="188.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;25,00 rebaixo</text>
-<line x1="171.210" y1="88.790" x2="185.352" y2="74.648" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="171.210,88.790 172.589,86.775 173.225,87.411" fill="#111"/>
-<circle cx="185.352" cy="74.648" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="185.352" y="75.548" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">1</text>
-<text x="150.000" y="204.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">ELEVAÇÃO - parede vista de fora    escala 3:1</text>
-<line x1="107.250" y1="205.500" x2="192.750" y2="205.500" stroke="#333" stroke-width="0.25"/>
-<defs><pattern id="hp31" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="60.000,250.000 87.500,250.000 87.500,260.000 99.500,260.000 99.500,270.000 60.000,270.000" fill="url(#hp31)" stroke="#111" stroke-width="0.45"/>
-<defs><pattern id="hp32" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="240.000,250.000 212.500,250.000 212.500,260.000 200.500,260.000 200.500,270.000 240.000,270.000" fill="url(#hp32)" stroke="#111" stroke-width="0.45"/>
-<rect x="92.500" y="270.000" width="115.000" height="13.500" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="7,1.5,1,1.5,1,1.5"/>
-<rect x="101.750" y="171.000" width="96.500" height="89.000" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="7,1.5,1,1.5,1,1.5"/>
-<rect x="115.000" y="131.500" width="70.000" height="39.500" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="7,1.5,1,1.5,1,1.5"/>
-<text x="204.250" y="215.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="start">corpo da chave (ref.)</text>
-<text x="191.000" y="151.250" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="start">terminais faston 4,80 (ref.)</text>
-<text x="150.000" y="291.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FORA</text>
-<text x="150.000" y="244.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">DENTRO (cavidade)</text>
-<line x1="60.000" y1="250.000" x2="48.000" y2="250.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="60.000" y1="260.000" x2="48.000" y2="260.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="50.000" y1="250.000" x2="50.000" y2="260.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="50.000,250.000 50.450,252.400 49.550,252.400" fill="#111"/>
-<polygon points="50.000,260.000 49.550,257.600 50.450,257.600" fill="#111"/>
-<text x="48.400" y="255.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 48.400 255.000)">2,00</text>
-<line x1="60.000" y1="260.000" x2="48.000" y2="260.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="60.000" y1="270.000" x2="48.000" y2="270.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="50.000" y1="260.000" x2="50.000" y2="270.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="50.000,260.000 50.450,262.400 49.550,262.400" fill="#111"/>
-<polygon points="50.000,270.000 49.550,267.600 50.450,267.600" fill="#111"/>
-<text x="48.400" y="265.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 48.400 265.000)">2,00</text>
-<line x1="60.000" y1="250.000" x2="32.000" y2="250.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="60.000" y1="270.000" x2="32.000" y2="270.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="34.000" y1="250.000" x2="34.000" y2="270.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="34.000,250.000 34.450,252.400 33.550,252.400" fill="#111"/>
-<polygon points="34.000,270.000 33.550,267.600 34.450,267.600" fill="#111"/>
-<text x="32.400" y="260.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 32.400 260.000)">4,00</text>
-<line x1="240.000" y1="131.500" x2="254.000" y2="131.500" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="240.000" y1="260.000" x2="254.000" y2="260.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="252.000" y1="131.500" x2="252.000" y2="260.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="252.000,131.500 252.450,133.900 251.550,133.900" fill="#111"/>
-<polygon points="252.000,260.000 251.550,257.600 252.450,257.600" fill="#111"/>
-<text x="250.400" y="195.750" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 250.400 195.750)">25,70</text>
-<line x1="87.500" y1="250.000" x2="87.500" y2="232.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="212.500" y1="250.000" x2="212.500" y2="232.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="87.500" y1="234.000" x2="212.500" y2="234.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="87.500,234.000 89.900,233.550 89.900,234.450" fill="#111"/>
-<polygon points="212.500,234.000 210.100,234.450 210.100,233.550" fill="#111"/>
-<text x="150.000" y="232.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;25,00</text>
-<line x1="99.500" y1="270.000" x2="99.500" y2="306.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="200.500" y1="270.000" x2="200.500" y2="306.000" stroke="#1a5276" stroke-width="0.16"/>
-<line x1="99.500" y1="304.000" x2="200.500" y2="304.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="99.500,304.000 101.900,303.550 101.900,304.450" fill="#111"/>
-<polygon points="200.500,304.000 198.100,304.450 198.100,303.550" fill="#111"/>
-<text x="150.000" y="302.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;20,20</text>
-<line x1="212.500" y1="255.000" x2="240.000" y2="255.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="212.500,255.000 214.900,254.550 214.900,255.450" fill="#111"/>
-<circle cx="240.000" cy="255.000" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="240.000" y="255.900" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">2</text>
-<line x1="200.500" y1="265.000" x2="240.000" y2="265.000" stroke="#1a5276" stroke-width="0.16"/>
-<polygon points="200.500,265.000 202.900,264.550 202.900,265.450" fill="#111"/>
-<circle cx="240.000" cy="265.000" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="240.000" y="265.900" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">3</text>
-<text x="150.000" y="322.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">CORTE A-A - no eixo da chave    escala 5:1</text>
-<line x1="110.100" y1="323.500" x2="189.900" y2="323.500" stroke="#333" stroke-width="0.25"/>
-<text x="330.000" y="40.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="bold" fill="#333" text-anchor="start">NOTAS DE FABRICAÇÃO</text>
-<line x1="330.000" y1="41.500" x2="580.000" y2="41.500" stroke="#333" stroke-width="0.25"/>
-<circle cx="332.400" cy="46.100" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="332.400" y="47.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">1</text>
-<text x="337.200" y="47.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Furo &#216;20,20 = corpo &#216;19,80 + 0,40 de folga. Furo de eixo HORIZONTAL fecha mais que furo em pé em PLA.</text>
-<text x="337.200" y="51.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">O aro &#216;23,00 cobre 1,40 mm radiais - a folga não aparece por fora.</text>
-<circle cx="332.400" cy="55.300" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="332.400" y="56.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">2</text>
-<text x="337.200" y="56.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Rebaixo &#216;25,00 x 2,00 abre SÓ PARA DENTRO. A face externa é lisa.</text>
-<circle cx="332.400" cy="59.900" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="332.400" y="60.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">3</text>
-<text x="337.200" y="60.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Parede local de 2,00 mm: a chave é snap-in e as garras querem painel fino. A parede cheia de 4,00 não entraria na faixa.</text>
-<text x="337.200" y="65.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">A faixa de espessura que as garras aceitam NÃO consta do desenho do fabricante - conferir antes de imprimir.</text>
-<circle cx="332.400" cy="69.100" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="332.400" y="70.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">4</text>
-<text x="337.200" y="70.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Sem chanfro no furo: por dentro é onde as garras mordem, e por fora seria cone.</text>
-<circle cx="332.400" cy="73.700" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
-<text x="332.400" y="74.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">5</text>
-<text x="337.200" y="74.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Posição: parede y = 130,00, x = 69,50, z = 35,00. x é o meio do único trecho reto livre, entre a tangência do R55,00</text>
-<text x="337.200" y="79.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">e a coluna central. Reserva de 25,70 mm atrás da parede, ocupando até y = 102,30.</text>
-<text x="330.000" y="87.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="bold" fill="#333" text-anchor="start">MONTAGEM</text>
-<line x1="330.000" y1="89.300" x2="580.000" y2="89.300" stroke="#333" stroke-width="0.25"/>
-<text x="337.200" y="94.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">A chave entra POR FORA e trava sozinha nas garras. Não há cola nem parafuso - o berço colado da revisão anterior, para a chave deslizante SS12D00G4, foi</text>
-<text x="337.200" y="99.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">abandonado junto com aquele componente.</text>
-<text x="337.200" y="104.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">As pontes de impressão são o topo do furo (14,28 mm) e o topo do rebaixo (17,68 mm), as duas apoiadas dos dois lados e com só</text>
-<text x="337.200" y="108.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">2,00 mm de profundidade. PLA faz sem suporte.</text>
-<text x="330.000" y="125.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="bold" fill="#333" text-anchor="start">COTAS DO COMPONENTE E DA ESTAÇÃO</text>
-<rect x="330.000" y="127.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="360.000" y="131.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">COTA</text>
-<rect x="390.000" y="127.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="420.000" y="131.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">VALOR [mm]</text>
-<rect x="450.000" y="127.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="480.000" y="131.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">ORIGEM</text>
-<rect x="330.000" y="132.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="360.000" y="136.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">corpo no painel</text>
-<rect x="390.000" y="132.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="420.000" y="136.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;19,80 ± 0,20</text>
-<rect x="450.000" y="132.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="480.000" y="136.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
-<rect x="330.000" y="138.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="360.000" y="142.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">aro visível</text>
-<rect x="390.000" y="138.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="420.000" y="142.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;23,00 ± 0,20</text>
-<rect x="450.000" y="138.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="480.000" y="142.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
-<rect x="330.000" y="144.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="360.000" y="147.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">corpo atrás</text>
-<rect x="390.000" y="144.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="420.000" y="147.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;19,30</text>
-<rect x="450.000" y="144.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="480.000" y="147.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
-<rect x="330.000" y="149.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="360.000" y="153.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">profundidade do corpo</text>
-<rect x="390.000" y="149.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="420.000" y="153.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">17,80 ± 0,30</text>
-<rect x="450.000" y="149.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="480.000" y="153.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
-<rect x="330.000" y="155.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="360.000" y="159.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">total atrás do painel</text>
-<rect x="390.000" y="155.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="420.000" y="159.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">25,70 ± 0,30</text>
-<rect x="450.000" y="155.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="480.000" y="159.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
-<rect x="330.000" y="160.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="360.000" y="164.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">terminais</text>
-<rect x="390.000" y="160.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="420.000" y="164.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">3, passo 7,00, vão 14,00</text>
-<rect x="450.000" y="160.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="480.000" y="164.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
-<rect x="330.000" y="166.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="360.000" y="170.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">lâmina faston</text>
-<rect x="390.000" y="166.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="420.000" y="170.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">4,80 x 0,80</text>
-<rect x="450.000" y="166.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="480.000" y="170.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
-<rect x="330.000" y="172.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="360.000" y="175.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">furo do painel</text>
-<rect x="390.000" y="172.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="420.000" y="175.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;20,20</text>
-<rect x="450.000" y="172.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="480.000" y="175.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">medido na malha</text>
-<rect x="330.000" y="177.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="360.000" y="181.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">rebaixo</text>
-<rect x="390.000" y="177.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="420.000" y="181.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;25,00 x 2,00</text>
-<rect x="450.000" y="177.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="480.000" y="181.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">medido na malha</text>
-<rect x="330.000" y="183.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="360.000" y="187.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">parede local</text>
-<rect x="390.000" y="183.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="420.000" y="187.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">2,00</text>
-<rect x="450.000" y="183.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="480.000" y="187.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">medido na malha</text>
-<rect x="8.000" y="8.000" width="578.000" height="404.000" fill="none" stroke="#111" stroke-width="0.35"/>
-<rect x="8.000" y="384.000" width="578.000" height="28.000" fill="none" stroke="#111" stroke-width="0.35"/>
-<rect x="8.000" y="384.000" width="254.320" height="17.000" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="10.600" y="387.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">PEÇA</text>
-<text x="10.600" y="394.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="5.0" font-weight="bold" fill="#111" text-anchor="start">CAIXA - ESTAÇÃO DA CHAVE KCD1</text>
-<text x="10.600" y="398.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">Elevação da parede de trás e corte no eixo da chave</text>
-<rect x="8.000" y="401.000" width="84.773" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="9.800" y="404.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">MATERIAL</text>
-<text x="9.800" y="409.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">PETG</text>
-<rect x="92.773" y="401.000" width="84.773" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="94.573" y="404.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">ESCALA</text>
-<text x="94.573" y="409.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">ver ampliações</text>
-<rect x="177.547" y="401.000" width="84.773" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="179.347" y="404.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">COTAS</text>
-<text x="179.347" y="409.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">milímetros</text>
-<rect x="262.320" y="384.000" width="173.400" height="9.333" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="264.120" y="387.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">PROJETO</text>
-<text x="264.120" y="390.933" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">PIBIC UniCEUB</text>
-<rect x="262.320" y="393.333" width="173.400" height="9.333" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="264.120" y="396.533" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">AUTOR</text>
-<text x="264.120" y="400.267" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">Rafael Alves de Sousa Costa</text>
-<rect x="262.320" y="402.667" width="173.400" height="9.333" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="264.120" y="405.867" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">DATA</text>
-<text x="264.120" y="409.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">24/08/2026</text>
-<rect x="435.720" y="384.000" width="150.280" height="10.000" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="437.520" y="387.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">DESENHO Nº</text>
-<text x="437.520" y="391.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="bold" fill="#111" text-anchor="start">PIBIC-CX-04</text>
-<rect x="435.720" y="394.000" width="150.280" height="8.000" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="437.520" y="397.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">FOLHA</text>
-<text x="437.520" y="399.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">1/1</text>
-<rect x="435.720" y="402.000" width="150.280" height="10.000" fill="none" stroke="#888" stroke-width="0.16"/>
-<text x="437.520" y="405.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">PROJEÇÃO</text>
-<text x="437.520" y="409.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">1º diedro</text>
-<polygon points="561.000,406.700 567.760,405.400 567.760,410.600 561.000,409.300" fill="none" stroke="#111" stroke-width="0.2"/>
-<circle cx="574.000" cy="408.000" r="2.600" fill="none" stroke="#111" stroke-width="0.2"/>
-<circle cx="574.000" cy="408.000" r="1.300" fill="none" stroke="#111" stroke-width="0.2"/>
-<line x1="558.920" y1="408.000" x2="578.680" y2="408.000" stroke="#111" stroke-width="0.16" stroke-dasharray="4,1.2,0.6,1.2"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="420.0mm" height="594.0mm" viewBox="0 0 420.0 594.0">
+<rect width="420.0" height="594.0" fill="#fff"/>
+<rect x="18.000" y="105.000" width="120.000" height="80.000" fill="none" stroke="#555" stroke-width="0.16" stroke-dasharray="3,1.5"/>
+<text x="78.000" y="101.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="middle">trecho reto da parede de trás</text>
+<circle cx="78.000" cy="145.000" r="30.300" fill="none" stroke="#111" stroke-width="0.45"/>
+<circle cx="78.000" cy="145.000" r="34.500" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="7,1.5,1,1.5,1,1.5"/>
+<circle cx="78.000" cy="145.000" r="37.500" fill="none" stroke="#555" stroke-width="0.2" stroke-dasharray="3,1.5"/>
+<line x1="31.500" y1="145.000" x2="124.500" y2="145.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="78.000" y1="98.500" x2="78.000" y2="191.500" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
+<line x1="47.700" y1="145.000" x2="47.700" y2="203.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="108.300" y1="145.000" x2="108.300" y2="203.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="47.700" y1="201.000" x2="108.300" y2="201.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="47.700,201.000 50.100,200.550 50.100,201.450" fill="#111"/>
+<polygon points="108.300,201.000 105.900,201.450 105.900,200.550" fill="#111"/>
+<text x="78.000" y="199.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;20,20</text>
+<line x1="43.500" y1="145.000" x2="43.500" y2="215.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="112.500" y1="145.000" x2="112.500" y2="215.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="43.500" y1="213.000" x2="112.500" y2="213.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="43.500,213.000 45.900,212.550 45.900,213.450" fill="#111"/>
+<polygon points="112.500,213.000 110.100,213.450 110.100,212.550" fill="#111"/>
+<text x="78.000" y="211.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;23,00 aro</text>
+<line x1="40.500" y1="145.000" x2="40.500" y2="227.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="115.500" y1="145.000" x2="115.500" y2="227.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="40.500" y1="225.000" x2="115.500" y2="225.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="40.500,225.000 42.900,224.550 42.900,225.450" fill="#111"/>
+<polygon points="115.500,225.000 113.100,225.450 113.100,224.550" fill="#111"/>
+<text x="78.000" y="223.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;25,00 rebaixo</text>
+<line x1="99.210" y1="123.790" x2="113.352" y2="109.648" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="99.210,123.790 100.589,121.775 101.225,122.411" fill="#111"/>
+<circle cx="113.352" cy="109.648" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="113.352" y="110.548" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">1</text>
+<text x="78.000" y="239.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">ELEVAÇÃO - parede vista de fora    escala 3:1</text>
+<line x1="35.250" y1="240.500" x2="120.750" y2="240.500" stroke="#333" stroke-width="0.25"/>
+<defs><pattern id="hp31" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="192.000,258.000 219.500,258.000 219.500,268.000 231.500,268.000 231.500,278.000 192.000,278.000" fill="url(#hp31)" stroke="#111" stroke-width="0.45"/>
+<defs><pattern id="hp32" width="2.0" height="2.0" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="2.0" stroke="#111" stroke-width="0.18"/></pattern></defs><polygon points="372.000,258.000 344.500,258.000 344.500,268.000 332.500,268.000 332.500,278.000 372.000,278.000" fill="url(#hp32)" stroke="#111" stroke-width="0.45"/>
+<rect x="224.500" y="278.000" width="115.000" height="13.500" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="7,1.5,1,1.5,1,1.5"/>
+<rect x="233.750" y="179.000" width="96.500" height="89.000" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="7,1.5,1,1.5,1,1.5"/>
+<rect x="247.000" y="139.500" width="70.000" height="39.500" fill="none" stroke="#7f8c8d" stroke-width="0.2" stroke-dasharray="7,1.5,1,1.5,1,1.5"/>
+<text x="336.250" y="223.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="start">corpo da chave (ref.)</text>
+<text x="323.000" y="159.250" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#7f8c8d" text-anchor="start">terminais faston 4,80 (ref.)</text>
+<text x="282.000" y="299.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">FORA</text>
+<text x="282.000" y="252.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">DENTRO (cavidade)</text>
+<line x1="192.000" y1="258.000" x2="180.000" y2="258.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="192.000" y1="268.000" x2="180.000" y2="268.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="182.000" y1="258.000" x2="182.000" y2="268.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="182.000,258.000 182.450,260.400 181.550,260.400" fill="#111"/>
+<polygon points="182.000,268.000 181.550,265.600 182.450,265.600" fill="#111"/>
+<text x="180.400" y="263.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 180.400 263.000)">2,00</text>
+<line x1="192.000" y1="268.000" x2="180.000" y2="268.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="192.000" y1="278.000" x2="180.000" y2="278.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="182.000" y1="268.000" x2="182.000" y2="278.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="182.000,268.000 182.450,270.400 181.550,270.400" fill="#111"/>
+<polygon points="182.000,278.000 181.550,275.600 182.450,275.600" fill="#111"/>
+<text x="180.400" y="273.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 180.400 273.000)">2,00</text>
+<line x1="192.000" y1="258.000" x2="164.000" y2="258.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="192.000" y1="278.000" x2="164.000" y2="278.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="166.000" y1="258.000" x2="166.000" y2="278.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="166.000,258.000 166.450,260.400 165.550,260.400" fill="#111"/>
+<polygon points="166.000,278.000 165.550,275.600 166.450,275.600" fill="#111"/>
+<text x="164.400" y="268.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 164.400 268.000)">4,00</text>
+<line x1="372.000" y1="139.500" x2="386.000" y2="139.500" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="372.000" y1="268.000" x2="386.000" y2="268.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="384.000" y1="139.500" x2="384.000" y2="268.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="384.000,139.500 384.450,141.900 383.550,141.900" fill="#111"/>
+<polygon points="384.000,268.000 383.550,265.600 384.450,265.600" fill="#111"/>
+<text x="382.400" y="203.750" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle" transform="rotate(-90 382.400 203.750)">25,70</text>
+<line x1="219.500" y1="258.000" x2="219.500" y2="240.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="344.500" y1="258.000" x2="344.500" y2="240.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="219.500" y1="242.000" x2="344.500" y2="242.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="219.500,242.000 221.900,241.550 221.900,242.450" fill="#111"/>
+<polygon points="344.500,242.000 342.100,242.450 342.100,241.550" fill="#111"/>
+<text x="282.000" y="240.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;25,00</text>
+<line x1="231.500" y1="278.000" x2="231.500" y2="314.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="332.500" y1="278.000" x2="332.500" y2="314.000" stroke="#1a5276" stroke-width="0.16"/>
+<line x1="231.500" y1="312.000" x2="332.500" y2="312.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="231.500,312.000 233.900,311.550 233.900,312.450" fill="#111"/>
+<polygon points="332.500,312.000 330.100,312.450 330.100,311.550" fill="#111"/>
+<text x="282.000" y="310.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">&#216;20,20</text>
+<line x1="344.500" y1="263.000" x2="372.000" y2="263.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="344.500,263.000 346.900,262.550 346.900,263.450" fill="#111"/>
+<circle cx="372.000" cy="263.000" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="372.000" y="263.900" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">2</text>
+<line x1="332.500" y1="273.000" x2="372.000" y2="273.000" stroke="#1a5276" stroke-width="0.16"/>
+<polygon points="332.500,273.000 334.900,272.550 334.900,273.450" fill="#111"/>
+<circle cx="372.000" cy="273.000" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="372.000" y="273.900" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.6" font-weight="normal" fill="#1a5276" text-anchor="middle">3</text>
+<text x="282.000" y="330.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.2" font-weight="bold" fill="#333" text-anchor="middle">CORTE A-A - no eixo da chave    escala 5:1</text>
+<line x1="242.100" y1="331.500" x2="321.900" y2="331.500" stroke="#333" stroke-width="0.25"/>
+<text x="12.000" y="402.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="bold" fill="#333" text-anchor="start">NOTAS DE FABRICAÇÃO</text>
+<line x1="12.000" y1="403.500" x2="412.000" y2="403.500" stroke="#333" stroke-width="0.25"/>
+<circle cx="14.400" cy="408.100" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="14.400" y="409.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">1</text>
+<text x="19.200" y="409.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Furo &#216;20,20 = corpo &#216;19,80 + 0,40 de folga. Furo de eixo HORIZONTAL fecha mais que furo em pé em PLA.</text>
+<text x="19.200" y="413.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">O aro &#216;23,00 cobre 1,40 mm radiais - a folga não aparece por fora.</text>
+<circle cx="14.400" cy="417.300" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="14.400" y="418.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">2</text>
+<text x="19.200" y="418.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Rebaixo &#216;25,00 x 2,00 abre SÓ PARA DENTRO. A face externa é lisa.</text>
+<circle cx="14.400" cy="421.900" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="14.400" y="422.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">3</text>
+<text x="19.200" y="422.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Parede local de 2,00 mm: a chave é snap-in e as garras querem painel fino. A parede cheia de 4,00 não entraria na faixa.</text>
+<text x="19.200" y="427.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">A faixa de espessura que as garras aceitam NÃO consta do desenho do fabricante - conferir antes de imprimir.</text>
+<circle cx="14.400" cy="431.100" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="14.400" y="432.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">4</text>
+<text x="19.200" y="432.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Sem chanfro no furo: por dentro é onde as garras mordem, e por fora seria cone.</text>
+<circle cx="14.400" cy="435.700" r="2.400" fill="#fff" stroke="#1a5276" stroke-width="0.16"/>
+<text x="14.400" y="436.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#1a5276" text-anchor="middle">5</text>
+<text x="19.200" y="436.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">Posição: parede y = 130,00, x = 69,50, z = 35,00. x é o meio do único trecho reto livre, entre a tangência do R55,00</text>
+<text x="19.200" y="441.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">e a coluna central. Reserva de 25,70 mm atrás da parede, ocupando até y = 102,30.</text>
+<text x="12.000" y="449.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="bold" fill="#333" text-anchor="start">MONTAGEM</text>
+<line x1="12.000" y1="451.300" x2="412.000" y2="451.300" stroke="#333" stroke-width="0.25"/>
+<text x="19.200" y="456.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">A chave entra POR FORA e trava sozinha nas garras. Não há cola nem parafuso - o berço colado da revisão anterior, para a chave deslizante SS12D00G4, foi</text>
+<text x="19.200" y="461.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">abandonado junto com aquele componente.</text>
+<text x="19.200" y="466.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">As pontes de impressão são o topo do furo (14,28 mm) e o topo do rebaixo (17,68 mm), as duas apoiadas dos dois lados e com só</text>
+<text x="19.200" y="470.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="start">2,00 mm de profundidade. PLA faz sem suporte.</text>
+<text x="12.000" y="487.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="bold" fill="#333" text-anchor="start">COTAS DO COMPONENTE E DA ESTAÇÃO</text>
+<rect x="12.000" y="489.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="42.000" y="493.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">COTA</text>
+<rect x="72.000" y="489.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="102.000" y="493.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">VALOR [mm]</text>
+<rect x="132.000" y="489.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="162.000" y="493.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.3" font-weight="bold" fill="#333" text-anchor="middle">ORIGEM</text>
+<rect x="12.000" y="494.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="42.000" y="498.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">corpo no painel</text>
+<rect x="72.000" y="494.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="102.000" y="498.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;19,80 ± 0,20</text>
+<rect x="132.000" y="494.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="162.000" y="498.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
+<rect x="12.000" y="500.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="42.000" y="504.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">aro visível</text>
+<rect x="72.000" y="500.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="102.000" y="504.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;23,00 ± 0,20</text>
+<rect x="132.000" y="500.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="162.000" y="504.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
+<rect x="12.000" y="506.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="42.000" y="509.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">corpo atrás</text>
+<rect x="72.000" y="506.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="102.000" y="509.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;19,30</text>
+<rect x="132.000" y="506.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="162.000" y="509.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
+<rect x="12.000" y="511.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="42.000" y="515.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">profundidade do corpo</text>
+<rect x="72.000" y="511.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="102.000" y="515.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">17,80 ± 0,30</text>
+<rect x="132.000" y="511.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="162.000" y="515.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
+<rect x="12.000" y="517.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="42.000" y="521.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">total atrás do painel</text>
+<rect x="72.000" y="517.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="102.000" y="521.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">25,70 ± 0,30</text>
+<rect x="132.000" y="517.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="162.000" y="521.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
+<rect x="12.000" y="522.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="42.000" y="526.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">terminais</text>
+<rect x="72.000" y="522.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="102.000" y="526.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">3, passo 7,00, vão 14,00</text>
+<rect x="132.000" y="522.800" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="162.000" y="526.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
+<rect x="12.000" y="528.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="42.000" y="532.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">lâmina faston</text>
+<rect x="72.000" y="528.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="102.000" y="532.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">4,80 x 0,80</text>
+<rect x="132.000" y="528.400" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="162.000" y="532.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">fabricante</text>
+<rect x="12.000" y="534.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="42.000" y="537.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">furo do painel</text>
+<rect x="72.000" y="534.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="102.000" y="537.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;20,20</text>
+<rect x="132.000" y="534.000" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="162.000" y="537.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">medido na malha</text>
+<rect x="12.000" y="539.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="42.000" y="543.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">rebaixo</text>
+<rect x="72.000" y="539.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="102.000" y="543.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">&#216;25,00 x 2,00</text>
+<rect x="132.000" y="539.600" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="162.000" y="543.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">medido na malha</text>
+<rect x="12.000" y="545.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="42.000" y="549.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">parede local</text>
+<rect x="72.000" y="545.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="102.000" y="549.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">2,00</text>
+<rect x="132.000" y="545.200" width="60.000" height="5.600" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="162.000" y="549.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#333" text-anchor="middle">medido na malha</text>
+<rect x="8.000" y="8.000" width="404.000" height="578.000" fill="none" stroke="#111" stroke-width="0.35"/>
+<rect x="8.000" y="558.000" width="404.000" height="28.000" fill="none" stroke="#111" stroke-width="0.35"/>
+<rect x="8.000" y="558.000" width="177.760" height="17.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="10.600" y="561.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">PEÇA</text>
+<text x="10.600" y="568.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="5.0" font-weight="bold" fill="#111" text-anchor="start">CAIXA - ESTAÇÃO DA CHAVE KCD1</text>
+<text x="10.600" y="572.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">Elevação da parede de trás e corte no eixo da chave</text>
+<rect x="8.000" y="575.000" width="59.253" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="9.800" y="578.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">MATERIAL</text>
+<text x="9.800" y="583.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">PETG</text>
+<rect x="67.253" y="575.000" width="59.253" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="69.053" y="578.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">ESCALA</text>
+<text x="69.053" y="583.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">ver ampliações</text>
+<rect x="126.507" y="575.000" width="59.253" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="128.307" y="578.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">COTAS</text>
+<text x="128.307" y="583.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">milímetros</text>
+<rect x="185.760" y="558.000" width="121.200" height="9.333" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="187.560" y="561.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">PROJETO</text>
+<text x="187.560" y="564.933" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">PIBIC UniCEUB</text>
+<rect x="185.760" y="567.333" width="121.200" height="9.333" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="187.560" y="570.533" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">AUTOR</text>
+<text x="187.560" y="574.267" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">Rafael Alves de Sousa Costa</text>
+<rect x="185.760" y="576.667" width="121.200" height="9.333" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="187.560" y="579.867" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">DATA</text>
+<text x="187.560" y="583.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">24/08/2026</text>
+<rect x="306.960" y="558.000" width="105.040" height="10.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="308.760" y="561.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">DESENHO Nº</text>
+<text x="308.760" y="565.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="bold" fill="#111" text-anchor="start">PIBIC-CX-04</text>
+<rect x="306.960" y="568.000" width="105.040" height="8.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="308.760" y="571.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">FOLHA</text>
+<text x="308.760" y="573.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">1/1</text>
+<rect x="306.960" y="576.000" width="105.040" height="10.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="308.760" y="579.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">PROJEÇÃO</text>
+<text x="308.760" y="583.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">1º diedro</text>
+<polygon points="387.000,580.700 393.760,579.400 393.760,584.600 387.000,583.300" fill="none" stroke="#111" stroke-width="0.2"/>
+<circle cx="400.000" cy="582.000" r="2.600" fill="none" stroke="#111" stroke-width="0.2"/>
+<circle cx="400.000" cy="582.000" r="1.300" fill="none" stroke="#111" stroke-width="0.2"/>
+<line x1="384.920" y1="582.000" x2="404.680" y2="582.000" stroke="#111" stroke-width="0.16" stroke-dasharray="4,1.2,0.6,1.2"/>
 </svg>

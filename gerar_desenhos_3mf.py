@@ -24,27 +24,46 @@ duas fontes independentes - a malha gravada e os parametros de projeto - e a
 funcao 'bate' para tudo se as duas discordarem. Sem isso o desenho continuaria
 sendo gerado, bonito e errado, depois de uma edicao so no modelo.
 
-Pranchas em A2 paisagem (594 x 420 mm), projecao no 1o diedro: a vista
+Pranchas em A2 RETRATO (420 x 594 mm), projecao no 1o diedro: a vista
 superior fica ABAIXO da vista frontal e, nela, a face frontal da peca e a
-aresta de baixo.
+aresta de baixo. As vistas e as ampliacoes ficam na metade de cima da folha,
+o texto na de baixo com a largura inteira.
+
+Alem da conferencia de cota, o script confere o LAYOUT: mede no SVG emitido a
+caixa que cada bloco realmente ocupa e para se dois se sobrepuserem ou se um
+sair da moldura. Cota nenhuma enxerga onde o desenho CAI na folha - foi assim
+que as ampliacoes passaram a imprimir por cima das notas sem nada acusar.
 
 Uso:  python gerar_desenhos_3mf.py
 """
 
 import math
+import re
 import xml.etree.ElementTree as ET
 import zipfile
 from collections import defaultdict
 
 import gerar_modelo_3mf as P
-from gerar_desenhos import (Desenho, L_CONTORNO, L_FINA, L_TRACO,
+from gerar_desenhos import (Desenho, MARGEM, L_CONTORNO, L_FINA, L_TRACO,
                             D_OCULTA, D_CENTRO, D_FANTASMA,
                             FONTE, FONTE_P, C_COTA, C_REF, C_TXT, C_ATEN)
 
 NS = "{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}"
 
-FOLHA_W, FOLHA_H = 594.0, 420.0
-COL_DIR = 330.0
+# Prancha em A2 RETRATO. A folha girou porque a paisagem obrigava vista e
+# texto a dividirem a largura, e era dai que vinha a sobreposicao: as
+# ampliacoes cresciam para a direita ate entrar na coluna de notas, que
+# comeca sempre no mesmo x. Em retrato as vistas ocupam a metade de cima da
+# folha inteira e o texto a de baixo, cada um com a largura toda.
+FOLHA_W, FOLHA_H = 420.0, 594.0
+
+# MARGEM vem de gerar_desenhos, que e quem desenha a moldura. SELO_H repete
+# a altura da legenda declarada la em selo(); se uma mudar sem a outra, a
+# conferencia de layout acusa - a area util encolhe e algum bloco cai fora.
+SELO_H = 28.0
+COL_DIR = MARGEM + 4.0             # texto comeca na margem, nao a meia folha
+LARG_TEXTO = FOLHA_W - 2 * COL_DIR + 4.0
+Y_TEXTO = 402.0                    # topo da faixa de texto, abaixo das vistas
 
 
 # =====================================================================
@@ -215,6 +234,7 @@ def dist_ate(p, loop):
 # =====================================================================
 
 _divergencias = []
+_desarranjos = []
 
 
 def bate(rotulo, medido, nominal, tol=0.02):
@@ -231,6 +251,141 @@ def encerrar_conferencia():
             "desenho e modelo divergem - corrija gerar_modelo_3mf.py e "
             "regere os .3mf antes de emitir a prancha:\n  - "
             + "\n  - ".join(_divergencias))
+    if _desarranjos:
+        raise AssertionError(
+            "a prancha esta ilegivel - dois blocos ocupam o mesmo papel, ou "
+            "um deles saiu da moldura. Reposicione em gerar_desenhos_3mf.py; "
+            "o modelo nao tem nada a ver com isto:\n  - "
+            + "\n  - ".join(_desarranjos))
+
+
+# =====================================================================
+# Conferencia de LAYOUT: caixa envolvente medida no SVG emitido
+# =====================================================================
+#
+# As cotas ja sao conferidas contra o modelo, mas nenhuma delas enxerga onde
+# o desenho CAI na folha - foi assim que as ampliacoes passaram a imprimir
+# por cima das notas sem nada acusar. Estas funcoes leem de volta os
+# elementos que o Desenho acabou de emitir e medem a area que cada bloco
+# realmente ocupa. Nao ha valor digitado: a caixa sai da mesma string que vai
+# para o arquivo.
+
+_TAGS = re.compile(r"<(line|rect|circle|polygon|polyline|text|path)\s([^>]*?)/?>"
+                   r"(?:([^<]*)</text>)?")
+_ATR = re.compile(r'([\w:-]+)="([^"]*)"')
+_NUM = re.compile(r"-?\d+(?:\.\d+)?")
+
+# largura media de um caractere em DejaVu Sans, em fracao do corpo da fonte.
+# Serve para dar largura ao <text>, que em SVG nao tem caixa declarada.
+_LARG_CHAR = 0.60
+
+
+def _caixa_texto(a, conteudo):
+    x, y = float(a["x"]), float(a["y"])
+    tam = float(a.get("font-size", FONTE))
+    # entidades (&#216;) contam como um caractere so
+    n = len(re.sub(r"&#\d+;", "0", conteudo or ""))
+    w = n * tam * _LARG_CHAR
+    anc = a.get("text-anchor", "start")
+    x0 = x if anc == "start" else (x - w if anc == "end" else x - w / 2)
+    if a.get("transform"):                      # texto girado (cotas verticais)
+        return (x - tam, y - w / 2, x + tam * 0.3, y + w / 2)
+    return (x0, y - tam * 0.8, x0 + w, y + tam * 0.25)
+
+
+def caixa(elementos):
+    """
+    Uniao das caixas envolventes de uma fatia de Desenho.el.
+
+    O conteudo de <defs> e descartado: a hachura declara ali um padrao de
+    2 x 2 mm que NAO esta em coordenadas de folha, e some-lo puxaria toda
+    caixa para a origem.
+    """
+    x0 = y0 = float("inf")
+    x1 = y1 = float("-inf")
+    for el in elementos:
+        for m in _TAGS.finditer(re.sub(r"<defs>.*?</defs>", "", el, flags=re.S)):
+            tag, atrs, conteudo = m.group(1), m.group(2), m.group(3)
+            a = dict(_ATR.findall(atrs))
+            if tag == "line":
+                pts = [(float(a["x1"]), float(a["y1"])),
+                       (float(a["x2"]), float(a["y2"]))]
+            elif tag == "rect":
+                x, y = float(a["x"]), float(a["y"])
+                pts = [(x, y), (x + float(a["width"]), y + float(a["height"]))]
+            elif tag == "circle":
+                cx, cy, r = float(a["cx"]), float(a["cy"]), float(a["r"])
+                pts = [(cx - r, cy - r), (cx + r, cy + r)]
+            elif tag in ("polygon", "polyline"):
+                pts = [tuple(map(float, par.split(",")))
+                       for par in a["points"].split()]
+            elif tag == "path":
+                v = [float(t) for t in _NUM.findall(a["d"])]
+                pts = list(zip(v[0::2], v[1::2]))
+            else:
+                bx = _caixa_texto(a, conteudo)
+                pts = [(bx[0], bx[1]), (bx[2], bx[3])]
+            for px, py in pts:
+                x0, y0 = min(x0, px), min(y0, py)
+                x1, y1 = max(x1, px), max(y1, py)
+    return None if x0 == float("inf") else (x0, y0, x1, y1)
+
+
+class Blocos:
+    """
+    Registra a caixa de cada bloco da prancha conforme ele e desenhado.
+
+    Uso:  with B("vista superior"): ...desenha...
+    """
+
+    def __init__(self, D, prancha):
+        self.D, self.prancha, self.cx = D, prancha, {}
+
+    def __call__(self, nome):
+        pai = self
+
+        class _Ctx:
+            def __enter__(s):
+                s.i = len(pai.D.el)
+                return s
+
+            def __exit__(s, *_):
+                b = caixa(pai.D.el[s.i:])
+                if b is not None:
+                    pai.cx[nome] = b
+                return False
+
+        return _Ctx()
+
+    def abre(self, nome):
+        """Para blocos longos demais para caber num 'with' sem reindentar."""
+        self._aberto = (nome, len(self.D.el))
+
+    def fecha(self):
+        nome, i = self._aberto
+        b = caixa(self.D.el[i:])
+        if b is not None:
+            self.cx[nome] = b
+
+    def conferir(self, folga=1.0):
+        util = (MARGEM, MARGEM, self.D.w - MARGEM,
+                self.D.h - MARGEM - SELO_H)
+        for nome, (x0, y0, x1, y1) in sorted(self.cx.items()):
+            if (x0 < util[0] - folga or y0 < util[1] - folga
+                    or x1 > util[2] + folga or y1 > util[3] + folga):
+                _desarranjos.append(
+                    f"{self.prancha}: '{nome}' sai da area util - ocupa "
+                    f"({x0:.1f}, {y0:.1f}) a ({x1:.1f}, {y1:.1f}), util vai "
+                    f"ate ({util[2]:.1f}, {util[3]:.1f})")
+        itens = sorted(self.cx.items())
+        for i, (na, ca) in enumerate(itens):
+            for nb, cb in itens[i + 1:]:
+                w = min(ca[2], cb[2]) - max(ca[0], cb[0])
+                h = min(ca[3], cb[3]) - max(ca[1], cb[1])
+                if w > folga and h > folga:
+                    _desarranjos.append(
+                        f"{self.prancha}: '{na}' e '{nb}' se sobrepoem em "
+                        f"{w:.1f} x {h:.1f} mm")
 
 
 # =====================================================================
@@ -503,14 +658,26 @@ def desenho_corpo():
                 "Peça única. Vista frontal, vista superior e detalhes",
                 escala="1:1 (ver ampliações)", codigo="PIBIC-CX-02")
 
+    B = Blocos(D, "CX-02")
+
     # ---------------- vista frontal ----------------
-    OX = 60.0
-    _vista_frontal(D, OX, 40.0, m["larg"], hh, par, P.TAMPA_ESP,
-                   sorted({round(f[0], 3) for f in ins}), dins,
-                   m["prof_ins"], sw, P.PAIN_ESP)
+    OX = 56.0
+    with B("vista frontal"):
+        _vista_frontal(D, OX, 30.0, m["larg"], hh, par, P.TAMPA_ESP,
+                       sorted({round(f[0], 3) for f in ins}), dins,
+                       m["prof_ins"], sw, P.PAIN_ESP)
+
+    # A coluna cabe ao lado da elevacao. O alivio desce para o lado da vista
+    # superior e vai a 4:1, nao 8:1: ampliado 8x, um furo de barril M24 da
+    # 202 mm de papel - mais largo que a folha util inteira menos a vista.
+    # A 4:1 o rebaixo de 0,50 ainda sai com 2 mm, que e o que o detalhe
+    # precisa mostrar - que ele e degrau reto e abre para a face da mesa.
+    with B("detalhe da coluna"):
+        _detalhe_coluna(D, 312, 44, par, m["col"], m["prof_ins"], dins, hh)
 
     # ---------------- vista superior ----------------
-    W = Vista(OX, 172, m["larg"], m["alt"])
+    B.abre("vista superior")
+    W = Vista(OX, 175, m["larg"], m["alt"])
     contorno(D, m["ext"], W)
     contorno(D, m["cav"], W, lw=L_TRACO, cor="#555", dash=D_OCULTA)
     for f in m["al_bar"] + m["al_led"]:
@@ -564,13 +731,14 @@ def desenho_corpo():
     D.bandeira(*W.p(sw["x"], m["alt"]), 5, ang=-135, comp=20)
     D.bandeira(*W.p(xs[0], ys[0] - dins / 2), 6, ang=-135, comp=18)
     D.rotulo_vista(W.px(m["larg"] / 2), yb + 38, "VISTA SUPERIOR", "1:1")
+    B.fecha()
 
-    # ---------------- detalhes ----------------
-    _detalhe_alivio(D, 468, 92, m)
-    _detalhe_coluna(D, 468, 214, par, m["col"], m["prof_ins"], dins, hh)
+    with B("detalhe do alivio"):
+        _detalhe_alivio(D, 324, 262, m, S=4.0)
 
-    # ---------------- notas ----------------
-    y = D.notas(COL_DIR, 40, [
+    # ---------------- notas, na faixa de baixo, com a folha inteira -------
+    B.abre("notas")
+    y = D.notas(COL_DIR, Y_TEXTO, [
         (1, f"PEÇA ÚNICA: painel e corpo fundidos. O painel tem "
             f"{vg(P.PAIN_ESP)} mm maciços e é LISO - não há mais rebaixo de "
             f"capa, e não há furo de fixação nele."),
@@ -589,7 +757,7 @@ def desenho_corpo():
             f"É rebaixo reto, não chanfro."),
         (5, f"Estação da chave KCD1 na parede de trás - ver PIBIC-CX-04."),
         (6, f"Fixação da tampa: {len(ins)}x M3 x {L_tampa:.0f} ISO 7380."),
-    ], titulo="NOTAS DE FABRICAÇÃO", larg=250)
+    ], titulo="NOTAS DE FABRICAÇÃO", larg=LARG_TEXTO)
 
     y = D.notas(COL_DIR, y + 4, [
         (None, f"Altura da caixa montada = {vg(hh)} (peça única) + "
@@ -607,7 +775,7 @@ def desenho_corpo():
                "botões na bancada."),
         (None, "NÃO há passagem de cabo. Definir com o microcontrolador - de "
                "preferência nesta mesma parede, entre x = 94 e x = 123."),
-    ], titulo="OBSERVAÇÕES DE PROJETO", larg=250)
+    ], titulo="OBSERVAÇÕES DE PROJETO", larg=LARG_TEXTO)
 
     itens = ([(f"BARRIL {i}", f[0], f[1], 2 * f[2])
               for i, f in enumerate(m["barril"], 1)]
@@ -616,7 +784,10 @@ def desenho_corpo():
              + [(f"COLUNA {i}", f[0], f[1], dins)
                 for i, f in enumerate(ins, 1)])
     tabela_furos(D, COL_DIR, y + 14, itens,
-                 "FUROS - origem no canto inferior esquerdo", por_coluna=8)
+                 "FUROS - origem no canto inferior esquerdo", por_coluna=9)
+    B.fecha()
+
+    B.conferir()
     D.salvar("desenho-caixa-corpo.svg")
 
 
@@ -861,7 +1032,18 @@ def desenho_tampa():
     D = Desenho(FOLHA_W, FOLHA_H, "CAIXA - TAMPA DE SERVIÇO",
                 "Vista superior, corte, furo de fixação e pino da perfboard",
                 escala="1:1 (ver ampliações)", codigo="PIBIC-CX-03")
-    W = Vista(60, 56, larg, alt)
+    B = Blocos(D, "CX-03")
+
+    # As duas ampliacoes tem ~146 mm cada e a vista superior ~230: em retrato
+    # elas empilham na faixa livre a direita da vista, e o texto fica com a
+    # folha inteira embaixo.
+    with B("detalhe do furo"):
+        _detalhe_furo(D, 334, 110, esp, hreb, dp, dr, L)
+    with B("detalhe do pino"):
+        _detalhe_pino(D, 334, 330, pn, pl, esp)
+
+    B.abre("vista superior")
+    W = Vista(46, 110, larg, alt)
 
     contorno(D, lo, W)
     for f in rebaixos:
@@ -902,11 +1084,10 @@ def desenho_tampa():
     D.bandeira(*W.p(xs[0], ys[0] - dr / 2), 4, ang=-135, comp=18)
     D.bandeira(W.px(R * 0.293), W.py(alt - R * 0.293), 6, ang=-150, comp=18)
     D.rotulo_vista(W.px(larg / 2), yb + 62, "VISTA SUPERIOR", "1:1")
+    B.fecha()
 
-    _detalhe_furo(D, 468, 84, esp, hreb, dp, dr, L)
-    _detalhe_pino(D, 468, 236, pn, pl, esp)
-
-    y = D.notas(COL_DIR, 40, [
+    B.abre("notas")
+    y = D.notas(COL_DIR, Y_TEXTO, [
         (1, f"{len(rebaixos)}x {dm(dp)} passante com rebaixo {dm(dr)} x "
             f"{vg(hreb)} para a cabeça do parafuso M3 ISO 7380."),
         (2, f"Silhueta idêntica à do corpo: {vg(larg)} x {vg(alt)}, cantos "
@@ -921,7 +1102,7 @@ def desenho_tampa():
         (6, "Imprimir com os PINOS PARA CIMA. O rebaixo dos parafusos fica "
             "então voltado para baixo, mas são 1,55 mm radiais sobre um vão "
             "de 6,50 - não pede suporte."),
-    ], titulo="NOTAS DE FABRICAÇÃO", larg=250)
+    ], titulo="NOTAS DE FABRICAÇÃO", larg=LARG_TEXTO)
 
     y = D.notas(COL_DIR, y + 4, [
         (None, f"{dm(pl['furo_d'])} do furo da placa e recuo de "
@@ -937,7 +1118,7 @@ def desenho_tampa():
                f"abaixo do escoamento do PLA."),
         (None, "Este é o ponto de desgaste da caixa: encaixar e desencaixar a "
                "placa muitas vezes cansa as farpas."),
-    ], titulo="OBSERVAÇÕES DE PROJETO", larg=250)
+    ], titulo="OBSERVAÇÕES DE PROJETO", larg=LARG_TEXTO)
 
     itens = (rotulos("FIX ", rebaixos)
              + [(f"PINO {i}", cx, cy, pl["ombro_d"])
@@ -945,6 +1126,9 @@ def desenho_tampa():
     tabela_furos(D, COL_DIR, y + 14, itens,
                  "COORDENADAS - origem no canto inferior esquerdo",
                  por_coluna=6)
+    B.fecha()
+
+    B.conferir()
     D.salvar("desenho-caixa-tampa.svg")
 
 
@@ -1059,10 +1243,17 @@ def desenho_chave():
                 "Elevação da parede de trás e corte no eixo da chave",
                 escala="ver ampliações", codigo="PIBIC-CX-04")
 
-    _chave_elevacao(D, 150, 70, sw, m)
-    _chave_corte(D, 150, 250, sw, C)
+    B = Blocos(D, "CX-04")
 
-    y = D.notas(COL_DIR, 40, [
+    # Elevacao (120 mm) e corte (224 mm) cabem lado a lado na largura util do
+    # retrato; o texto fica com a folha inteira embaixo.
+    with B("elevação"):
+        _chave_elevacao(D, 78, 105, sw, m)
+    with B("corte A-A"):
+        _chave_corte(D, 282, 258, sw, C)
+
+    B.abre("notas")
+    y = D.notas(COL_DIR, Y_TEXTO, [
         (1, f"Furo {dm(sw['d_furo'])} = corpo {dm(C['d_corpo'])} + "
             f"{vg(C['folga'])} de folga. Furo de eixo HORIZONTAL fecha mais "
             f"que furo em pé em PLA."),
@@ -1083,7 +1274,7 @@ def desenho_chave():
             f"a tangência do R{vg(m['R'])}"),
         (None, f"e a coluna central. Reserva de {vg(C['atras'])} mm atrás da "
                f"parede, ocupando até y = {vg(sw['y_reb'] - C['atras'])}."),
-    ], titulo="NOTAS DE FABRICAÇÃO", larg=250)
+    ], titulo="NOTAS DE FABRICAÇÃO", larg=LARG_TEXTO)
 
     y = D.notas(COL_DIR, y + 4, [
         (None, "A chave entra POR FORA e trava sozinha nas garras. Não há "
@@ -1095,7 +1286,7 @@ def desenho_chave():
                f"as duas apoiadas dos dois lados e com só"),
         (None, f"{vg(sw['prof_reb'])} mm de profundidade. PLA faz sem "
                f"suporte."),
-    ], titulo="MONTAGEM", larg=250)
+    ], titulo="MONTAGEM", larg=LARG_TEXTO)
 
     cab = ("COTA", "VALOR [mm]", "ORIGEM")
     linhas = [
@@ -1116,6 +1307,9 @@ def desenho_chave():
     D.txt(COL_DIR, y + 12, "COTAS DO COMPONENTE E DA ESTAÇÃO", 2.8,
           anc="start", peso="bold", cor=C_TXT)
     D.tabela(COL_DIR, y + 14, cab, linhas, (60, 60, 60))
+    B.fecha()
+
+    B.conferir()
     D.salvar("desenho-caixa-chave.svg")
 
 
