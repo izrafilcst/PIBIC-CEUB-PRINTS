@@ -74,6 +74,12 @@ def circulo(cx, cy, r, n=64):
              cy + r * math.sin(2 * math.pi * i / n)) for i in range(n)]
 
 
+def retangulo(cx, cy, lx, ly):
+    """Retangulo lx (em x) por ly (em y) centrado em (cx, cy), anti-horario."""
+    return [(cx - lx / 2, cy - ly / 2), (cx + lx / 2, cy - ly / 2),
+            (cx + lx / 2, cy + ly / 2), (cx - lx / 2, cy + ly / 2)]
+
+
 def retangulo_arredondado(larg, alt, raio, seg=24):
     """
     Retangulo larg x alt com os quatro cantos em 'raio', anti-horario,

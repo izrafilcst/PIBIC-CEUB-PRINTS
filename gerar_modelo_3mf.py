@@ -226,6 +226,136 @@ def estacao_chave():
     return k
 
 
+# =====================================================================
+# Carregador TP4056 tipo C - berco de encaixe na tampa
+# =====================================================================
+# ATENCAO: as cotas do modulo sao PRESUMIDAS - valores tipicos da placa com
+# protecao (DW01 + 8205A), que variam de vendedor para vendedor. Meca antes de
+# imprimir: 'comp' decide a folga sob a garra e 'larg' a folga do canal.
+#
+# O modulo fica EM PE: o USB-C e paralelo a placa, entao para o plugue subir
+# de baixo para cima a placa tem de ficar perpendicular a tampa. Deitado, o
+# conector apontaria para a parede do corpo, que nao pode ser reimpresso.
+#
+# Borda direita, entre o envelope do botao verde e a parede: e o unico bolsao
+# longe do centro com 28 mm livres em z. Lado dos componentes para -x, a
+# cavidade: o CI chega a 70-90 C carregando a 1 A e o PLA amolece a 55-60.
+#
+# 'y' e parametro, e nao CX_A/2, de proposito. A tampa e modelada espelhada
+# (z invertido com o x, y do corpo), entao tudo nela tem de ser simetrico em
+# y = CX_A/2 - e so um parametro livre deixa a conferencia provar isso.
+
+CARREGADOR = dict(
+    modelo="TP4056 tipo C, com protecao",
+    comp=28.0, larg=17.0, esp=1.6,     # placa - PRESUMIDOS
+    usb_l=9.0, usb_h=3.3,              # conector: largura e altura - PRESUMIDOS
+    alt_comp=1.8,                      # mais alto alem do USB - PRESUMIDO
+    capa=(12.35, 6.5),                 # capa do plugue, maximo da norma USB-C
+    x=168.0, y=65.0,                   # plano medio da placa e centro dela
+    folga=0.2,                         # encaixe em PLA, por lado
+    prof_canal=1.2, aba=1.2, alma=2.0,
+    garra_h=1.2,
+    degraus=((0.4, 0.4), (0.8, 0.4)),  # entrada: (fundo do canal, altura)
+    janela=(13.0, 7.2),                # (ao longo de y, ao longo de x)
+)
+
+
+def estacao_carregador():
+    """
+    Cotas derivadas do berco. x, y da peca; z da TAMPA (0 na face externa).
+
+    Em planta cada coluna e um retangulo 2*u_meia (x) por w_fora - w_ponta
+    (y), com um canal de largura canal_w aberto para o centro. 'w' e a
+    distancia a y = yc: a ponta das abas fica em w_ponta, o fundo do canal em
+    w_ponta + g. O perfil em z e a lista (z0, z1, g), de baixo para cima; na
+    garra g = 0 e o canal fecha.
+    """
+    c = dict(CARREGADOR)
+    c["yc"] = c["y"]
+    c["canal_w"] = c["esp"] + 2 * c["folga"]                  # 2,00
+    c["w_fundo"] = c["larg"] / 2 + c["folga"]                 # 8,70
+    c["w_ponta"] = c["w_fundo"] - c["prof_canal"]             # 7,50
+    c["w_fora"] = c["w_fundo"] + c["alma"]                    # 10,70
+    c["u_meia"] = c["canal_w"] / 2 + c["aba"]                 # 2,20
+    c["x_usb"] = c["x"] - c["esp"] / 2 - c["usb_h"] / 2       # 165,55
+    c["x_mod"] = (c["x"] - c["esp"] / 2 - max(c["usb_h"], c["alt_comp"]),
+                  c["x"] + c["esp"] / 2)
+    c["z_garra"] = TAMPA_ESP + c["comp"] + c["folga"]         # 32,20
+    perfil = [(TAMPA_ESP, c["z_garra"], c["prof_canal"]),
+              (c["z_garra"], c["z_garra"] + c["garra_h"], 0.0)]
+    z = c["z_garra"] + c["garra_h"]
+    for g, h in c["degraus"]:
+        perfil.append((z, z + h, g))
+        z += h
+    c["perfil"], c["topo"] = perfil, z                        # topo 34,20
+    c["niveis"] = sorted({g for _, _, g in perfil if g > 0})
+    c["cobre"] = c["prof_canal"] - c["folga"]                 # 1,00
+    c["alivio"] = (c["janela"][0] + FOLGA_ALIVIO,
+                   c["janela"][1] + FOLGA_ALIVIO)
+    c["envelope"] = (min(c["x_mod"][0], c["x"] - c["u_meia"]),
+                     c["yc"] - c["w_fora"],
+                     max(c["x_mod"][1], c["x"] + c["u_meia"]),
+                     c["yc"] + c["w_fora"])
+    # topo do berco em z do CORPO: a face interna da tampa encosta em CORPO_H
+    c["z_topo_corpo"] = CORPO_H + TAMPA_ESP - c["topo"]       # 32,80
+
+    # Deformacao ao encaixar: a coluna inteira flete em y, engastada na
+    # chapa. Secao U - alma de 'alma' mais duas abas de 'aba' x 'prof_canal'
+    # - com a linha neutra calculada; c e a fibra mais distante dela. A
+    # deflexao e a garra inteira (placa encostada no fundo DESTE canal).
+    A_alma = 2 * c["u_meia"] * c["alma"]
+    A_aba = 2 * c["aba"] * c["prof_canal"]
+    ln = ((A_alma * c["alma"] / 2
+           + A_aba * (c["alma"] + c["prof_canal"] / 2)) / (A_alma + A_aba))
+    c["c_fibra"] = max(ln, c["alma"] + c["prof_canal"] - ln)
+    c["braco"] = c["z_garra"] + c["garra_h"] / 2 - TAMPA_ESP  # 28,80
+    c["eps"] = 3 * c["prof_canal"] * c["c_fibra"] / c["braco"] ** 2
+    return c
+
+
+def _coluna_local(e, g):
+    """
+    Contorno da coluna de cima em (u, w) locais: u = x - e['x'],
+    w = y - yc. Anti-horario.
+
+    O lado do canal recebe um vertice em CADA nivel mais raso que g. Sem
+    isso a aresta unica de uma secao encontraria as varias da vizinha na
+    emenda, e a malha abriria - o mesmo T da corda do pino.
+    """
+    hc, um = e["canal_w"] / 2, e["u_meia"]
+    wp, wf = e["w_ponta"], e["w_fora"]
+    lados = [d for d in e["niveis"] if d < g]
+    pts = [(-um, wp), (-hc, wp)]
+    if g > 0:
+        pts += [(-hc, wp + d) for d in lados] + [(-hc, wp + g), (hc, wp + g)]
+        pts += [(hc, wp + d) for d in reversed(lados)]
+    pts += [(hc, wp), (um, wp), (um, wf), (-um, wf)]
+    return pts
+
+
+def _no_lugar(e, pts, lado):
+    """(u, w) locais -> (x, y) da peca. lado = -1 espelha em y = yc."""
+    return M.antihorario([(e["x"] + u, e["yc"] + lado * w) for u, w in pts])
+
+
+def secao_coluna(e, g, lado):
+    """Secao em planta de uma coluna do berco, com canal de fundo g."""
+    return _no_lugar(e, _coluna_local(e, g), lado)
+
+
+def ranhura(e, g0, g1, lado):
+    """
+    Faixa do canal entre as profundidades g0 < g1: a face horizontal que
+    aparece onde a secao da coluna muda de um trecho para o seguinte.
+    """
+    hc, wp = e["canal_w"] / 2, e["w_ponta"]
+    meio = [d for d in e["niveis"] if g0 < d < g1]
+    pts = ([(-hc, wp + g0), (hc, wp + g0)] + [(hc, wp + d) for d in meio]
+           + [(hc, wp + g1), (-hc, wp + g1)]
+           + [(-hc, wp + d) for d in reversed(meio)])
+    return _no_lugar(e, pts, lado)
+
+
 def pinos_placa():
     """Os 4 centros dos pinos, e as alturas acumuladas do perfil."""
     p = PLACA

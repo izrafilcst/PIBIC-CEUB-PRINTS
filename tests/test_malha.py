@@ -119,3 +119,10 @@ def test_degrau_da_perna_fecha_um_solido():
             A = M.area_assinada
             esperado = abs(A(p_ext)) * h_ext + abs(A(p_int)) * h_int
             assert abs(S.conferir(esperado, tol_rel=1e-9) - esperado) < 1e-6
+
+
+def test_retangulo_e_anti_horario_e_tem_a_area_certa():
+    r = M.retangulo(10.0, 5.0, 4.0, 2.0)
+    assert abs(M.area_assinada(r) - 8.0) < 1e-12
+    assert min(p[0] for p in r) == 8.0 and max(p[0] for p in r) == 12.0
+    assert min(p[1] for p in r) == 4.0 and max(p[1] for p in r) == 6.0
