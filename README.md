@@ -16,9 +16,9 @@ Quatro mudanças, e a primeira arrasta todas as outras.
 | Insertos de latão M3 | 12 | **6** |
 | Painel | 16,00 mm, com rebaixo de capa | **8,00 mm, liso** |
 | Chave | deslizante SS12D00G4, colada | **gangorra redonda KCD1, snap-in** |
-| Perfboard | não havia | **90 × 70 presa por 4 pinos, sem parafuso** |
+| Tampa | lisa, com pinos da perfboard | **janela USB-C e berço do carregador TP4056** |
 | Material | PETG na Creality K1C | **PLA na Bambu Lab A1 mini** |
-| Sólido | 445,83 cm³ | **361,11 cm³** (−19 %) |
+| Sólido | 445,83 cm³ | **361,10 cm³** (−19 %) |
 
 ### Por que o painel ficou liso
 
@@ -69,32 +69,26 @@ escaneado que travou o berço anterior:
 > que as garras aceitam. Arbitrei 2,00 mm, que é o valor seguro da família.
 > Meça a garra antes de imprimir.
 
-### O encaixe da perfboard
+### A entrada do carregador TP4056
 
-Quatro pinos farpados na tampa prendem uma perfboard 90 × 70 **por encaixe**.
-Perfil de cada pino, medido da face de cima da chapa:
+A tampa recebe um módulo **TP4056 tipo C** em pé, na borda direita, com o
+plugue USB-C entrando **por baixo**. Em pé porque o conector USB-C é paralelo à
+placa: deitado, ele apontaria para a parede do corpo, que já está impresso e
+não muda.
 
-```
-0,00 .. 3,50   ombro Ø6,00   afastador: espaço das pernas soldadas
-3,50 .. 5,30   haste Ø2,80   placa 1,60 + 0,20 de folga
-5,30 .. 5,90   farpa Ø3,60   0,30 radial de retenção sobre o furo Ø3,00
-5,90 .. 6,20   guia  Ø3,00
-6,20 .. 6,50   guia  Ø2,40
-rasgo central 1,20, de 0 a 6,50, atravessando tudo
-```
+- **Janela** passante 13,00 × 7,20, do tamanho da capa do plugue e não do
+  conector — o plugue alcança o conector qualquer que seja o balanço real dele.
+- **Berço**: duas colunas em U com canal de 2,00 × 1,20. O módulo desce pelos
+  canais até apoiar as pontas na chapa, e uma garra no topo de cada coluna trava
+  a borda de cima. Encaixar deforma o PLA 0,78 %.
+- **A caixa carrega deitada de lado** — não há pés.
 
-O rasgo é dimensionado, não escolhido: duas pernas de 0,80 mm fletindo 0,30 mm
-num braço de 6,50 dão `ε = 3·t·y/(2·L²) = 0,85 %`, abaixo do escoamento do PLA
-impresso. Com rasgo só na haste daria 11 % e a perna quebraria na primeira
-montagem.
+> **⚠ As cotas do TP4056 são PRESUMIDAS** (placa 28,00 × 17,00 × 1,60; USB-C
+> 9,00 × 3,30). Meça o módulo antes de imprimir a tampa.
 
-> **⚠ Ø3,00 do furo da placa e recuo de 3,50 da borda são PRESUMIDOS.** Meça a
-> placa antes de imprimir a tampa — errar o recuo põe os 4 pinos no lugar
-> errado de uma vez.
-
-> **⚠ Ponto de desgaste conhecido.** Encaixar e desencaixar a placa muitas
-> vezes cansa as farpas. Se o uso previsto exigir isso, a mitigação é trocar
-> dois dos quatro pinos por pinos lisos de localização.
+> **⚠ A tampa tem lado certo.** Os 6 furos são simétricos, então ela também
+> parafusa girada 180° — e aí o módulo bate no botão vermelho. Monte com a
+> **janela do lado do botão verde**.
 
 ### Montagem — a ordem mudou
 
@@ -106,16 +100,18 @@ dar para montar os botões na bancada e depois fechar.
 2. Chave KCD1 encaixada por fora na parede de trás, até clicar
 3. Botões pelo lado de fora; porca M24 apertada por dentro
 4. Fiação: faston 4,80 na chave, fios dos microswitches
-5. Perfboard encaixada nos 4 pinos da tampa
-6. Tampa fechada com 6 × M3 × 6 ISO 7380
+5. TP4056 com os fios já soldados, encaixado no berço da tampa até as garras estalarem
+6. Tampa fechada com 6 × M3 × 6 ISO 7380, **janela do lado do botão verde**
 
 ### O que continua faltando
 
-- **Passagem de cabo.** A caixa é fechada nos quatro lados. Com a perfboard
-  dentro, o cabo do microcontrolador não tem por onde sair. Cabe na mesma
-  parede de trás, entre `x = 94` e `x = 123`.
+- **Passagem de cabo.** A caixa é fechada nos quatro lados. O cabo do
+  microcontrolador não tem por onde sair — a janela da tampa é só do
+  carregador. Cabe na mesma parede de trás, entre `x = 94` e `x = 123`.
 - **Função dos 9 furos Ø10** — pendente desde a revisão anterior.
 - **Microcontrolador** — sem decisão registrada.
+- **Fixação da perfboard** — os pinos saíram da tampa na revisão do TP4056.
+- **Posição da bateria** e passagem dos fios dela.
 
 ---
 
@@ -192,12 +188,12 @@ paramétrico manda** — ele se recusa a gerar geometria inconsistente, e
 | `LISTA-DE-MATERIAIS.md` | **BOM completa** — botões, ferragens, fiação, solda, filamento, ferramentas |
 | `gerar_modelo_3mf.py` | **Fonte única da caixa.** Parâmetros + geometria das 2 peças; grava os `.3mf` e `.stl` |
 | `malha.py` | Núcleo de malha: contornos, triangulação com furos, sólido estanque, saída 3MF/STL |
-| `validar_modelo.py` | Relê os `.3mf` gravados e confere estanqueidade, mesa, furos, parede, estação da chave e pinos |
+| `validar_modelo.py` | Relê os `.3mf` gravados e confere estanqueidade, mesa, furos, parede, estação da chave e berço do TP4056 |
 | `tests/` | pytest das primitivas de malha e das conferências de projeto |
 | `caixa-corpo.3mf` / `.stl` | **Corpo com o painel**, 178 × 130 × 63, parede 4 mm, 6 colunas |
-| `caixa-tampa.3mf` / `.stl` | Tampa de serviço, 178 × 130 × 4, com os 4 pinos da perfboard (10,50 de altura total) |
+| `caixa-tampa.3mf` / `.stl` | Tampa de serviço, 178 × 130 × 4, com a janela USB-C e o berço do TP4056 (34,20 de altura total) |
 | `desenho-caixa-corpo.svg` | PIBIC-CX-02: vistas, detalhe do alívio de boca e da coluna de inserto |
-| `desenho-caixa-tampa.svg` | PIBIC-CX-03: furos rebaixados e **detalhe do pino da perfboard** |
+| `desenho-caixa-tampa.svg` | PIBIC-CX-03: furos rebaixados, janela USB-C e **corte do berço do TP4056** |
 | `desenho-caixa-chave.svg` | PIBIC-CX-04: **estação da chave KCD1** — elevação da parede e corte no eixo |
 | `gerar_desenhos_3mf.py` | Gera as três acima **lendo a malha dos `.3mf`** — toda cota é medida, nenhuma digitada, e o resultado é conferido contra `gerar_modelo_3mf.py` |
 | `gerar_stl.py` | Gera os `.stl` dos gabaritos de tolerância (Python puro) |

@@ -6,6 +6,8 @@ Estado: IMPLEMENTADA. Os números abaixo foram conferidos contra a malha
 gerada; onde a implementação corrigiu a spec, a correção está no texto e o
 motivo no parágrafo ao lado.
 
+A §3.5 (encaixe da perfboard) e as regras dos pinos foram removidas pela spec 2026-09-24-tampa-tp4056-design.md.
+
 ---
 
 ## 1. O que muda e por quê

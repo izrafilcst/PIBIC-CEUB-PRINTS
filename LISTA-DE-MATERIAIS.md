@@ -8,6 +8,8 @@
 > O que mudou para a compra nesta revisão: **6 insertos** em vez de 12, **um**
 > comprimento de parafuso em vez de dois, **PLA** em vez de PETG, a chave
 > **KCD1** no lugar da SS12D00G4, e uma **perfboard 7 × 9**.
+>
+> **Revisão da tampa (24/09/2026):** entra o carregador **TP4056 tipo C**; saem os pinos da perfboard. **Só a tampa é reimpressa.**
 
 Legenda da coluna **Status**:
 
@@ -50,9 +52,9 @@ dentro dos 12,70 mm máximos que o botão admite e acima dos 5,00 mínimos.
 > painel liso não há rebaixo onde abrir rasgo; se o botão girar, resolva com
 > cola quente entre o flange e a face.
 
-**A coluna "desce na cavidade"** é o que decide a folga da perfboard: o botão
-verde desce 44,40 mm dos 55,00 de cavidade, e é por isso que a placa foge dele
-em x. Ver seção 5b.
+**A coluna "desce na cavidade"** é o que decide onde cabe o carregador: o botão
+verde desce 44,40 mm dos 55,00 de cavidade, e é por isso que o TP4056, em pé,
+foge dele para a borda direita. Ver seção 5b.
 
 ---
 
@@ -166,18 +168,26 @@ mais.
 
 ---
 
-### 5b. Perfboard e o encaixe dela
+### 5b. Carregador TP4056 tipo C
 
 | Qtd | Item | Status | Observação |
 |---|---|---|---|
-| 1 | **Perfboard 7 × 9 cm** genérica, furos de canto Ø3,0 | ⚠ | 4 furos de canto são requisito |
+| 1 | **Módulo TP4056 tipo C**, com proteção (DW01 + 8205A) | ⚠ | cotas presumidas — medir |
 
-Prende na tampa por **4 pinos farpados, sem parafuso**. A placa assenta no
-ombro Ø6,00 e trava sob a farpa Ø3,60.
+Encaixa **em pé** no berço da tampa, sem cola nem parafuso: desce pelos canais
+até apoiar na chapa, e as garras travam a borda de cima.
 
-> **⚠ Ø3,00 do furo e recuo de 3,50 da borda são PRESUMIDOS.** Meça a placa
-> antes de imprimir a tampa — errar o recuo põe os 4 pinos no lugar errado de
-> uma vez. Os dois valores são parâmetro no topo de `gerar_modelo_3mf.py`.
+> **⚠ Placa 28,00 × 17,00 × 1,60 e USB-C 9,00 × 3,30 são PRESUMIDOS.** Meça
+> antes de imprimir a tampa: o comprimento decide a folga sob a garra; a
+> largura, a folga do canal. Os valores são parâmetro em `CARREGADOR`, no
+> `gerar_modelo_3mf.py`.
+
+> **Nota térmica.** Carregando a 1 A, o CI chega a 70–90 °C, e o PLA amolece
+> por volta de 55–60 °C. O berço só toca as bordas da placa, mas a caixa é
+> fechada. Se esquentar demais, troque o resistor R_PROG por um de valor maior
+> — a corrente de carga cai na mesma proporção.
+
+A perfboard 7 × 9 **perdeu a fixação**: os pinos saíram da tampa.
 
 ## 6. Eletrônica de controle
 
@@ -206,14 +216,16 @@ resto do trecho reto livre — a chave ocupa até x = 82.
 
 ```
 caixa-corpo      279,13 cm3     painel + corpo fundidos
-caixa-tampa       81,98 cm3     com os 4 pinos da perfboard
+caixa-tampa       81,97 cm3     com o berço do TP4056
                  ──────────
-sólido           361,11 cm3     era 445,83   (-19 %)
+sólido           361,10 cm3     era 445,83   (-19 %)
 ```
 
 A 4 perímetros e 20 % de preenchimento giroide, a densidade efetiva fica em
 torno de 50 % → **≈ 181 cm³ ≈ 224 g** de PLA (densidade 1,24 g/cm³). Some
 refugo e uma peça refeita: **compre 1 kg**.
+
+**Reimpressão só da tampa:** ≈ 41 cm³ ≈ 51 g de PLA, pela mesma conta.
 
 A caixa saiu **muito mais leve**: a parede de 4 mm, o painel liso de 8 mm e a
 fusão das duas peças tiraram 19 % do sólido.
@@ -228,8 +240,8 @@ lado em X**. Isso tem consequência prática:
 - **Não use brim.** Não cabe. Em PLA ele não faz falta — mas conte com isso na
   hora de fatiar, e não descubra depois.
 - **Nenhuma das duas peças pede suporte**, desde que impressas na orientação
-  modelada: o corpo com a **face dos botões na mesa**, a tampa com os **pinos
-  para cima**.
+  modelada: o corpo com a **face dos botões na mesa**, a tampa com a **face
+  externa na mesa e o berço para cima**.
 - A primeira camada do corpo é a face **visível** dos botões. A textura da mesa
   transfere direto para ela.
 
@@ -253,9 +265,6 @@ lado em X**. Isso tem consequência prática:
 1. **Largura do terminal do microswitch** — 4,8 mm ou 2,8 mm. Define o faston.
 2. **Função dos 9 furos Ø10** — define se entram LEDs, suportes e resistores.
 3. **Microcontrolador** — define cabo, conector e recorte de saída na caixa.
-4. **Ø do furo e recuo da borda da perfboard** — presumidos em 3,00 e 3,50.
-   Definem a posição dos 4 pinos da tampa; errar põe os quatro errados de uma
-   vez.
 
 ~~Profundidade do furo do inserto~~ — **resolvido: M3 × 6 na tampa**, inserto de
 4,0 mm.
@@ -265,13 +274,15 @@ corpo e deixou de precisar de fixação.
 
 ~~Nº de posições do interruptor~~ — **resolvido:** a SS12D00G4 saiu do projeto.
 
+~~Ø do furo e recuo da perfboard~~ — **sem objeto:** os pinos saíram da tampa.
+
 Os itens ✅ podem ser comprados hoje sem risco de sobrar.
 
 ## Ainda por confirmar na bancada (não trava compra)
 
 - **Faixa de espessura de painel das garras da KCD1.** O desenho do fabricante
   não cota. O projeto arbitrou 2,00 mm. Meça a garra antes de imprimir o corpo.
-- **Ø e recuo do furo da perfboard.** Presumidos em 3,00 e 3,50.
+- **Dimensões do TP4056 tipo C.** Presumidas: placa 28,00 × 17,00 × 1,60, USB-C 9,00 × 3,30.
 - **Posição do pino anti-rotação do flange.** Não cotada pelo fabricante.
 
 ~~Folga do rebaixo da capa~~ — **sem objeto:** o rebaixo de capa deixou de

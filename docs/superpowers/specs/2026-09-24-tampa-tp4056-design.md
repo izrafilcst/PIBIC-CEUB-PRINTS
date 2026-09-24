@@ -2,7 +2,7 @@
 
 Autor: Rafael Alves de Sousa Costa
 Data: 24/09/2026
-Estado: APROVADA, não implementada. Parte do estado deixado pela spec
+Estado: IMPLEMENTADA. Parte do estado deixado pela spec
 `2026-08-23-caixa-pla-corpo-painel-fundidos-design.md`.
 
 ---
