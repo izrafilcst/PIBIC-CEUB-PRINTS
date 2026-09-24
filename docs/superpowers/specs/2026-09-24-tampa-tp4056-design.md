@@ -70,7 +70,7 @@ interna, que encosta no corpo).
 ### 3.1 Chapa
 
 Silhueta 178 × 130 R55, espessura 4,00, os 6 furos Ø3,40 com rebaixo
-Ø6,50 × 1,60 — **inalterados**. Os 4 pinos saem.
+Ø6,50 × 2,00 — **inalterados**. Os 4 pinos saem.
 
 ### 3.2 Módulo TP4056 tipo C — valores PRESUMIDOS
 
@@ -202,7 +202,7 @@ que `conferir_projeto()` reprove com a mensagem certa.
 | 2 | colunas × face interna da parede ≥ 1,00 (distância ao contorno real da cavidade) | encosta o berço na parede |
 | 3 | colunas × colunas de inserto ≥ 2,00 | — (sobram 29,91; fica como guarda) |
 | 4 | janela ≥ capa máxima do plugue + 0,30 por lado | encolhe a janela |
-| 5 | conector dentro da janela com ≥ 1,00 por lado | desloca o conector presumido |
+| 5 | conector dentro da janela com ≥ 1,00 por lado | alarga o conector presumido |
 | 6 | cada ponta da placa apoia ≥ 1,50 na chapa | alarga a janela |
 | 7 | deformação da coluna ≤ 1,00 % | aprofunda a garra |
 | 8 | a garra retém: cobre a placa (fundo do canal − folga > 0) | zera a interferência |
@@ -220,7 +220,7 @@ corta a malha em alturas escolhidas:
 
 | corte em z | espera |
 |---|---|
-| 2,00 (meia chapa) | um laço retangular 13,00 × 7,20 centrado em (165,55; 65,00) |
+| 3,00 (entre o fundo do rebaixo, em 2,00, e a face interna) | um laço retangular 13,00 × 7,20 centrado em (165,55; 65,00) |
 | 0,25 (alívio) | o retângulo 14,00 × 8,20 |
 | 18,10 (meio da coluna) | dois laços em U: canal de 2,00, fundos a 17,40 um do outro |
 | 32,80 (garra) | dois retângulos 4,40 × 3,20, sem canal |
@@ -235,9 +235,15 @@ pode se repetir.
 
 ## 7. Prancha CX-03
 
-- O detalhe do pino dá lugar ao **detalhe do berço**: elevação da coluna
-  (canal, garra, degraus, a placa em linha de referência) e corte em planta
-  (o U, a janela e o conector em referência).
+- O detalhe do pino dá lugar ao **corte do berço** no plano médio da placa
+  (x = 168,00): chapa, janela, alívio e as duas colunas — canal, garra e
+  degraus —, com a placa em linha de referência.
+- A planta do berço fica na **vista superior 1:1** (os dois U, a janela, o
+  alívio e o envelope do módulo em referência). Um detalhe ampliado em
+  planta não cabe na faixa livre da folha retrato. A vista é de +z, a face
+  interna como a peça sai da mesa: rebaixo e alívio saem ocultos, e passa
+  a valer para os furos de fixação também, que a prancha anterior tinha
+  invertidos.
 - A vista superior mostra a janela, o alívio e as duas colunas, e a tabela de
   coordenadas os lista.
 - Notas: valores PRESUMIDOS com aviso de medir; *"janela do lado do botão
@@ -259,7 +265,8 @@ pode se repetir.
 ## 9. Verificação
 
 1. `pytest` verde, com os testes novos de perturbação e sem os 6 dos pinos.
-2. Tampa: malha fechada e volume conferido em `tol_rel=1e-9`.
+2. Tampa: malha fechada e volume conferido em `tol_rel=1e-9` — 81,97 cm³ no
+   protótipo feito antes do plano.
 3. **O corpo não muda.** Um hash da malha do `caixa-corpo.3mf` (vértices e
    triângulos, sem metadados) tirado antes da primeira mudança tem de ser
    idêntico ao do final. "Só reimprimir a tampa" é um fato verificado, não uma
