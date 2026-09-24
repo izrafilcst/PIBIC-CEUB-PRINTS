@@ -452,7 +452,7 @@
 <text x="10.600" y="572.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">Peça única. Vista frontal, vista superior e detalhes</text>
 <rect x="8.000" y="575.000" width="59.253" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
 <text x="9.800" y="578.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">MATERIAL</text>
-<text x="9.800" y="583.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">PETG</text>
+<text x="9.800" y="583.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">PLA</text>
 <rect x="67.253" y="575.000" width="59.253" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
 <text x="69.053" y="578.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">ESCALA</text>
 <text x="69.053" y="583.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">1:1 (ver ampliações)</text>

@@ -80,7 +80,7 @@
 <text x="10.600" y="214.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">5 diâmetros de folga | espessura 8 mm</text>
 <rect x="8.000" y="217.000" width="37.253" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
 <text x="9.800" y="220.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">MATERIAL</text>
-<text x="9.800" y="225.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">PETG</text>
+<text x="9.800" y="225.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">PLA</text>
 <rect x="45.253" y="217.000" width="37.253" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
 <text x="47.053" y="220.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">ESCALA</text>
 <text x="47.053" y="225.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">1:1 (corte 3:1 na vertical)</text>
@@ -95,7 +95,7 @@
 <text x="121.560" y="216.267" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">Rafael Alves de Sousa Costa</text>
 <rect x="119.760" y="218.667" width="76.200" height="9.333" fill="none" stroke="#888" stroke-width="0.16"/>
 <text x="121.560" y="221.867" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">DATA</text>
-<text x="121.560" y="225.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">15/08/2026</text>
+<text x="121.560" y="225.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">24/09/2026</text>
 <rect x="195.960" y="200.000" width="66.040" height="10.000" fill="none" stroke="#888" stroke-width="0.16"/>
 <text x="197.760" y="203.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">DESENHO Nº</text>
 <text x="197.760" y="207.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="bold" fill="#111" text-anchor="start">PIBIC-GB-01</text>

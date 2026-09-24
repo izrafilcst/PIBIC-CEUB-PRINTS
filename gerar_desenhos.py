@@ -52,7 +52,7 @@ C_ATEN = "#c0392b"
 class Desenho:
     """Prancha SVG simples com cotas, linhas de centro e hachura."""
 
-    def __init__(self, larg, alt, titulo, subtitulo="", material="PETG",
+    def __init__(self, larg, alt, titulo, subtitulo="", material="PLA",
                  escala="1:1", codigo="", folha="1/1"):
         self.w, self.h = larg, alt
         self.el = []
