@@ -2,11 +2,16 @@
 # -*- coding: utf-8 -*-
 """
 Gerador de STL binario - PIBIC-CEUB
-Tampa com encaixe para botoes de arcade M24 x 2 e gabaritos de tolerancia.
+Gabaritos de tolerancia do furo M24 x 2.
 
 Sem dependencias externas: so a biblioteca padrao. Existe porque nao ha
-OpenSCAD/FreeCAD instalado nesta maquina. Os .scad sao a fonte parametrica
-"oficial"; este script produz a mesma geometria em malha, ja validada.
+OpenSCAD/FreeCAD instalado nesta maquina.
+
+A placa avulsa de 209,30 x 108,50 que este script gerava foi removida: quem
+faz o papel dela agora e o painel da caixa (gerar_modelo_3mf.py), que tem
+rebaixo de assento das capas e prende no corpo. Os gabaritos continuam aqui
+porque medem tolerancia de furo, nao dependem de peca nenhuma e cabem em
+qualquer mesa - tem 160 x 40 mm.
 
 Pecas geradas
 -------------
@@ -14,7 +19,6 @@ Pecas geradas
                           furo de passagem (botao preso por porca)
   gabarito-roscado.stl    5 furos com rosca ISO M24x2, folgas radiais
                           0,10 a 0,50 - testa o engate real da rosca
-  tampa-botoes.stl        tampa final 209,3 x 108,5 x 4 mm
 
 METODO DE MALHA
 ---------------
@@ -226,32 +230,6 @@ class FuroLiso:
         return parede_cilindro(self._c, 0.0, esp)
 
 
-class FuroRebaixado:
-    """
-    Furo passante com rebaixo (counterbore) na face de cima, para cabeca
-    abaulada ISO 7380 embutida.
-
-    Tres superficies: cilindro do rebaixo (topo), coroa plana que e o fundo
-    do rebaixo - onde a cabeca assenta - e cilindro do furo de passagem.
-    """
-
-    def __init__(self, cx, cy, d_passagem, d_rebaixo, prof_rebaixo):
-        self.cx, self.cy = cx, cy
-        self.d, self.D, self.h = d_passagem, d_rebaixo, prof_rebaixo
-        self._cf = circulo(cx, cy, d_passagem / 2)
-        self._cr = circulo(cx, cy, d_rebaixo / 2)
-
-    def contorno(self, z):
-        # a face de cima ve o rebaixo; a de baixo ve o furo de passagem
-        return self._cr if z > self.h else self._cf
-
-    def parede(self, esp):
-        zf = esp - self.h                      # fundo do rebaixo
-        return (parede_cilindro(self._cr, zf, esp)
-                + coroa(self._cf, self._cr, zf, para_cima=True)
-                + parede_cilindro(self._cf, 0.0, zf))
-
-
 class FuroRoscado:
     """Furo com rosca interna ISO, helice a direita."""
 
@@ -308,7 +286,7 @@ def placa(faixas, furos, esp):
     """
     faixas : lista de (poligono_anti_horario, indice_do_furo); indice None
              para uma faixa cheia, sem furo nenhum
-    furos  : lista de FuroLiso / FuroRoscado / FuroRebaixado
+    furos  : lista de FuroLiso / FuroRoscado
     esp    : espessura em mm
     """
     faixas = [(subdividir(p), idx) for p, idx in faixas]
@@ -401,15 +379,6 @@ CHANFRO      = 8.0
 DIAM_PASSANTE = [24.4, 24.6, 24.7, 24.8, 25.0]   # mm
 DELTA_ROSCA   = [0.10, 0.20, 0.30, 0.40, 0.50]   # mm de folga radial
 
-# Fixacao da tampa: 6 x parafuso M3x10 ISO 7380 em inserto de latao M3.
-# Rebaixo 6,5 x 2,0 embute a cabeca (dk 5,7 / k 1,65 max) e deixa a face
-# superior lisa. Recuo de 8,0 da borda -> 8,0 - 6,5/2 = 4,75 mm de PETG
-# macico entre o rebaixo e a lateral da placa.
-PARAF_D_PASSAGEM = 3.4    # ISO 273 media para M3
-PARAF_D_REBAIXO  = 6.5
-PARAF_H_REBAIXO  = 2.0
-PARAF_RECUO      = 8.0
-
 
 def _centros_gabarito(n):
     x0 = LARG_GAB / 2 - (n - 1) * PASSO_GAB / 2
@@ -450,69 +419,6 @@ def gabarito_roscado():
     print("   folgas radiais (chanfro = menor): " + ", ".join(f"{d:.2f}" for d in DELTA_ROSCA))
 
 
-def tampa():
-    esp         = 4.0
-    folga_m24   = 24.7     # <<< ajuste apos o gabarito passante
-    BV_cap_d    = 98.5
-    BG_cap_d    = 60.8
-    folga_borda = 40.0
-    margem      = 5.0
-
-    dist = BV_cap_d / 2 + BG_cap_d / 2 + folga_borda
-    larg = BV_cap_d / 2 + dist + BG_cap_d / 2 + 2 * margem
-    alt  = BV_cap_d + 2 * margem
-    cx_v = margem + BV_cap_d / 2
-    cx_g = cx_v + dist
-    cy   = alt / 2
-
-    xs_p = [PARAF_RECUO, larg / 2, larg - PARAF_RECUO]
-    ys_p = [PARAF_RECUO, alt - PARAF_RECUO]
-
-    rb, rm = PARAF_D_REBAIXO / 2, folga_m24 / 2
-
-    # A placa vira uma grade 5 x 3 com no maximo um furo por celula. As linhas
-    # de corte caem no meio dos vaos entre features, medidas de BORDA a BORDA
-    # (nao de centro a centro), senao uma capa de furo cruzaria o corte.
-    # Colunas alternam parafuso / botao / parafuso / botao / parafuso.
-    col = [(xs_p[0], rb), (cx_v, rm), (xs_p[1], rb), (cx_g, rm), (xs_p[2], rb)]
-    cortes_x = ([0.0]
-                + [((a + ra) + (b - rbb)) / 2
-                   for (a, ra), (b, rbb) in zip(col, col[1:])]
-                + [larg])
-    cortes_y = [0.0,
-                ((ys_p[0] + rb) + (cy - rm)) / 2,
-                ((cy + rm) + (ys_p[1] - rb)) / 2,
-                alt]
-
-    furos, faixas = [], []
-    for j in range(3):
-        ya, yb = cortes_y[j], cortes_y[j + 1]
-        for i in range(5):
-            xa, xb = cortes_x[i], cortes_x[i + 1]
-            poly = [(xa, ya), (xb, ya), (xb, yb), (xa, yb)]
-            if j == 1 and i in (1, 3):                 # faixa central: botoes
-                furos.append(FuroLiso(cx_v if i == 1 else cx_g, cy, folga_m24))
-            elif j != 1 and i % 2 == 0:                # faixas de borda: parafusos
-                furos.append(FuroRebaixado(xs_p[i // 2], ys_p[0 if j == 0 else 1],
-                                           PARAF_D_PASSAGEM, PARAF_D_REBAIXO,
-                                           PARAF_H_REBAIXO))
-            else:
-                faixas.append((poly, None))
-                continue
-            faixas.append((poly, len(furos) - 1))
-
-    tris = placa(faixas, furos, esp)
-    q = gravar_stl("tampa-botoes.stl", tris, "Tampa botoes arcade M24 - PIBIC-CEUB")
-    print(f"tampa-botoes.stl       {larg:.2f} x {alt:.2f} x {esp:.0f} mm   {q} triangulos")
-    print(f"   centro-a-centro {dist:.2f} mm | furos D{folga_m24} em "
-          f"x={cx_v:.2f} e x={cx_g:.2f}, y={cy:.2f}")
-    print(f"   6x M3: passagem D{PARAF_D_PASSAGEM} + rebaixo D{PARAF_D_REBAIXO}"
-          f"x{PARAF_H_REBAIXO} em x={xs_p[0]:.2f}/{xs_p[1]:.2f}/{xs_p[2]:.2f}, "
-          f"y={ys_p[0]:.2f}/{ys_p[1]:.2f}")
-    print(f"   material sob a cabeca: {esp - PARAF_H_REBAIXO:.2f} mm  <<< secao mais fina")
-
-
 if __name__ == "__main__":
     gabarito_passante()
     gabarito_roscado()
-    tampa()

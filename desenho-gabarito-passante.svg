@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="270.0mm" height="220.0mm" viewBox="0 0 270.0 220.0">
-<rect width="270.0" height="220.0" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="270.0mm" height="236.0mm" viewBox="0 0 270.0 236.0">
+<rect width="270.0" height="236.0" fill="#fff"/>
 <polygon points="48.000,42.000 200.000,42.000 200.000,82.000 40.000,82.000 40.000,50.000" fill="none" stroke="#111" stroke-width="0.45"/>
 <circle cx="62.000" cy="62.000" r="12.200" fill="none" stroke="#111" stroke-width="0.45"/>
 <line x1="46.800" y1="62.000" x2="77.200" y2="62.000" stroke="#c0392b" stroke-width="0.2" stroke-dasharray="4,1.2,0.6,1.2"/>
@@ -72,9 +72,41 @@
 <text x="40.000" y="169.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">Escolher o menor furo em que o botao entra com leve pressao dos dedos.</text>
 <text x="40.000" y="173.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">Profundidade 8 mm reproduz o atrito real e revela conicidade do furo.</text>
 <text x="40.000" y="176.500" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">O chanfro 8x8 identifica o canto do MENOR furo (&#216;24,40).</text>
-<line x1="8.000" y1="207.000" x2="262.000" y2="207.000" stroke="#111" stroke-width="0.3"/>
-<text x="8.000" y="213.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="4.2" font-weight="bold" fill="#111" text-anchor="start">GABARITO DE TOLERANCIA - FURO PASSANTE</text>
-<text x="8.000" y="218.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">5 diametros de folga | PETG | espessura 8 mm</text>
-<text x="262.000" y="213.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.4" font-weight="normal" fill="#555" text-anchor="end">PIBIC-CEUB</text>
-<text x="262.000" y="218.000" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="end">cotas em mm</text>
+<rect x="8.000" y="8.000" width="254.000" height="220.000" fill="none" stroke="#111" stroke-width="0.35"/>
+<rect x="8.000" y="200.000" width="254.000" height="28.000" fill="none" stroke="#111" stroke-width="0.35"/>
+<rect x="8.000" y="200.000" width="111.760" height="17.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="10.600" y="203.400" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">PEÇA</text>
+<text x="10.600" y="210.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="5.0" font-weight="bold" fill="#111" text-anchor="start">GABARITO DE TOLERÂNCIA - FURO PASSANTE</text>
+<text x="10.600" y="214.800" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.4" font-weight="normal" fill="#555" text-anchor="start">5 diâmetros de folga | espessura 8 mm</text>
+<rect x="8.000" y="217.000" width="37.253" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="9.800" y="220.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">MATERIAL</text>
+<text x="9.800" y="225.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">PLA</text>
+<rect x="45.253" y="217.000" width="37.253" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="47.053" y="220.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">ESCALA</text>
+<text x="47.053" y="225.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">1:1 (corte 3:1 na vertical)</text>
+<rect x="82.507" y="217.000" width="37.253" height="11.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="84.307" y="220.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">COTAS</text>
+<text x="84.307" y="225.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.8" font-weight="normal" fill="#111" text-anchor="start">milímetros</text>
+<rect x="119.760" y="200.000" width="76.200" height="9.333" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="121.560" y="203.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">PROJETO</text>
+<text x="121.560" y="206.933" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">PIBIC UniCEUB</text>
+<rect x="119.760" y="209.333" width="76.200" height="9.333" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="121.560" y="212.533" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">AUTOR</text>
+<text x="121.560" y="216.267" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">Rafael Alves de Sousa Costa</text>
+<rect x="119.760" y="218.667" width="76.200" height="9.333" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="121.560" y="221.867" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">DATA</text>
+<text x="121.560" y="225.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">24/09/2026</text>
+<rect x="195.960" y="200.000" width="66.040" height="10.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="197.760" y="203.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">DESENHO Nº</text>
+<text x="197.760" y="207.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="3.0" font-weight="bold" fill="#111" text-anchor="start">PIBIC-GB-01</text>
+<rect x="195.960" y="210.000" width="66.040" height="8.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="197.760" y="213.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">FOLHA</text>
+<text x="197.760" y="215.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">1/1</text>
+<rect x="195.960" y="218.000" width="66.040" height="10.000" fill="none" stroke="#888" stroke-width="0.16"/>
+<text x="197.760" y="221.200" font-family="DejaVu Sans, Arial, sans-serif" font-size="1.9" font-weight="normal" fill="#777" text-anchor="start">PROJEÇÃO</text>
+<text x="197.760" y="225.600" font-family="DejaVu Sans, Arial, sans-serif" font-size="2.7" font-weight="normal" fill="#111" text-anchor="start">1º diedro</text>
+<polygon points="237.000,222.700 243.760,221.400 243.760,226.600 237.000,225.300" fill="none" stroke="#111" stroke-width="0.2"/>
+<circle cx="250.000" cy="224.000" r="2.600" fill="none" stroke="#111" stroke-width="0.2"/>
+<circle cx="250.000" cy="224.000" r="1.300" fill="none" stroke="#111" stroke-width="0.2"/>
+<line x1="234.920" y1="224.000" x2="254.680" y2="224.000" stroke="#111" stroke-width="0.16" stroke-dasharray="4,1.2,0.6,1.2"/>
 </svg>

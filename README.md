@@ -1,28 +1,205 @@
-# Tampa com encaixe para botões de arcade — PIBIC-CEUB
+# Caixa com botões de arcade — PIBIC-CEUB
 
-Modelagem de uma tampa em PETG com encaixe para dois botões de arcade,
-derivada dos desenhos esquemáticos `botao-verde-desenho-esquematico.jpg` e
+Caixa em **PLA de duas peças** para dois botões de arcade M24, derivada dos
+desenhos esquemáticos `botao-verde-desenho-esquematico.jpg` e
 `botao-vermelho-desenho-esquematico.jpg`.
+
+---
+
+## ⚠ Revisão atual: corpo e painel fundidos, chave KCD1, PLA
+
+Quatro mudanças, e a primeira arrasta todas as outras.
+
+| | Antes | Agora |
+|---|---|---|
+| Peças | painel + corpo + tampa | **corpo (com o painel) + tampa** |
+| Insertos de latão M3 | 12 | **6** |
+| Painel | 16,00 mm, com rebaixo de capa | **8,00 mm, liso** |
+| Chave | deslizante SS12D00G4, colada | **gangorra redonda KCD1, snap-in** |
+| Tampa | lisa, com pinos da perfboard | **janela USB-C e berço do carregador TP4056** |
+| Material | PETG na Creality K1C | **PLA na Bambu Lab A1 mini** |
+| Sólido | 445,83 cm³ | **361,10 cm³** (−19 %) |
+
+### Por que o painel ficou liso
+
+Não foi escolha estética: foi consequência de fundir o painel no corpo.
+
+A peça fundida **só pode ser impressa com a face dos botões na mesa**. De boca
+para baixo, o painel teria de fazer ponte sobre 170 × 122 mm; de lado, tudo
+vira balanço. E nessa orientação **qualquer rebaixo na face dos botões é uma
+cavidade voltada para a mesa** — um teto impresso no ar.
+
+Chanfro não salva. Para um cone auto-sustentado de 45° segurar a capa de Ø98,5
+a 5 mm de profundidade, o painel precisaria de `5 + 98,5/2 − 26/2 = 41,25` mm
+de espessura.
+
+Então o rebaixo deixou de existir, e a peça inteira imprime com **zero
+suporte**. De quebra o painel caiu de 16 para 8 mm — os 16 só existiam para
+sobrar material sob o rebaixo de 8 mm do botão vermelho.
+
+### A estação da chave KCD1
+
+Parede de trás `y = 130`, `x = 69,50`, eixo em `z = 35,00`. Prancha
+**PIBIC-CX-04** (`desenho-caixa-chave.svg`).
+
+```
+y = 126,00 .. 128,00   rebaixo Ø25,00, aberto SÓ para dentro
+y = 128,00 .. 130,00   parede local de 2,00, furo Ø20,20
+y = 130,00             face externa, lisa
+```
+
+A chave é *snap-in*: trava sozinha nas garras, sem cola e sem parafuso. Para
+isso ela quer painel fino, e a parede do corpo tem 4,00 — daí o rebaixo abrir
+só para dentro e deixar 2,00 mm locais. A face externa continua lisa e o aro
+Ø23,00 cobre 1,40 mm radiais além do furo.
+
+As cotas do componente vêm de **desenho cotado do fabricante**, não do PDF
+escaneado que travou o berço anterior:
+
+| Cota | Valor |
+|---|---|
+| Corpo que atravessa o painel | Ø19,80 ± 0,20 |
+| Aro visível | Ø23,00 ± 0,20 |
+| Corpo atrás do painel | Ø19,30 |
+| Profundidade do corpo | 17,80 ± 0,30 |
+| Total atrás do painel | 25,70 ± 0,30 |
+| Terminais | 3, passo 7,00, vão 14,00, faston 4,80 × 0,80 |
+
+> **⚠ O que o desenho do fabricante NÃO cota** é a faixa de espessura de painel
+> que as garras aceitam. Arbitrei 2,00 mm, que é o valor seguro da família.
+> Meça a garra antes de imprimir.
+
+### A entrada do carregador TP4056
+
+A tampa recebe um módulo **TP4056 tipo C** em pé, na borda direita, com o
+plugue USB-C entrando **por baixo**. Em pé porque o conector USB-C é paralelo à
+placa: deitado, ele apontaria para a parede do corpo, que já está impresso e
+não muda.
+
+- **Janela** passante 13,00 × 7,20, do tamanho da capa do plugue e não do
+  conector — o plugue alcança o conector qualquer que seja o balanço real dele.
+- **Berço**: duas colunas em U com canal de 2,00 × 1,20. O módulo desce pelos
+  canais até apoiar as pontas na chapa, e uma garra no topo de cada coluna trava
+  a borda de cima. Encaixar deforma o PLA 0,78 %.
+- **A caixa carrega deitada de lado** — não há pés.
+
+> **⚠ As cotas do TP4056 são PRESUMIDAS** (placa 28,00 × 17,00 × 1,60; USB-C
+> 9,00 × 3,30). Meça o módulo antes de imprimir a tampa.
+
+> **⚠ A tampa tem lado certo.** Os 6 furos são simétricos, então ela também
+> parafusa girada 180° — e aí o módulo bate no botão vermelho. Monte com a
+> **janela do lado do botão verde**.
+
+### Montagem — a ordem mudou
+
+Com o painel fundido, **as porcas M24 dos dois botões são apertadas por
+dentro**, com a mão entrando pela boca de baixo (170 × 122 × 55). Deixou de
+dar para montar os botões na bancada e depois fechar.
+
+1. Insertos de latão M3 nas 6 colunas, por calor, pelo topo
+2. Chave KCD1 encaixada por fora na parede de trás, até clicar
+3. Botões pelo lado de fora; porca M24 apertada por dentro
+4. Fiação: faston 4,80 na chave, fios dos microswitches
+5. TP4056 com os fios já soldados, encaixado no berço da tampa até as garras estalarem
+6. Tampa fechada com 6 × M3 × 6 ISO 7380, **janela do lado do botão verde**
+
+### O que continua faltando
+
+- **Passagem de cabo.** A caixa é fechada nos quatro lados. O cabo do
+  microcontrolador não tem por onde sair — a janela da tampa é só do
+  carregador. Cabe na mesma parede de trás, entre `x = 94` e `x = 123`.
+- **Função dos 9 furos Ø10** — pendente desde a revisão anterior.
+- **Microcontrolador** — sem decisão registrada.
+- **Fixação da perfboard** — os pinos saíram da tampa na revisão do TP4056.
+- **Posição da bateria** e passagem dos fios dela.
+
+---
+
+## Revisão anterior: A1 mini + botões meio embutidos
+
+A caixa foi refeita para a **Bambu Lab A1 mini** (mesa 180 × 180) e os botões
+passaram a entrar **meio embutidos** num rebaixo. `gerar_modelo_3mf.py` é agora
+a fonte única da geometria das duas peças — os `.3mf` e os desenhos saem dele.
+
+| | Antes (K1C) | Agora (A1 mini) |
+|---|---|---|
+| Silhueta | 215 × 120 | **178 × 130** |
+| Painel | 10 mm, botão todo para fora | **16 mm**, rebaixo de 8,00 / 5,00 |
+| Parede do corpo | 10 mm | **4 mm** + 6 colunas Ø10 |
+| Fixação | 6 insertos, só a tampa | **12 insertos**, painel e tampa |
+| Altura montada | 69 mm | **75 mm** |
+| Folga entre as capas | 25,35 mm | **4,35 mm** |
+
+Para reproduzir tudo do zero:
+
+```
+python gerar_modelo_3mf.py     # parametros -> caixa-*.3mf e caixa-*.stl
+python validar_modelo.py       # confere os .3mf gravados
+python gerar_desenhos_3mf.py   # .3mf -> desenho-caixa-*.svg
+```
+
+Os três param sozinhos se a geometria ficar inconsistente. `validar_modelo.py`
+mede a estação da chave no arquivo gravado por **travessia** — onde começa e onde acaba o
+material ao longo da espessura da parede, em oito sondas — e
+`gerar_desenhos_3mf.py` recusa emitir prancha que discorde do modelo.
+
+### Placa avulsa de 209,30 × 108,50 — REMOVIDA
+
+`desenho-tampa.svg`, `tampa-botoes.scad` e `tampa-botoes.stl` eram a versão
+anterior, de antes de a caixa existir: uma chapa de 4 mm com os 2 furos M24 e
+os 6 furos de fixação. Foram **apagados**, junto com o código que só servia a
+eles (`tampa()` em `gerar_stl.py`, `desenho_tampa()` em `gerar_desenhos.py`,
+`checar_tampa()` em `validar_stl.py` e a classe `FuroRebaixado`, que ficou sem
+nenhum uso).
+
+O painel do `caixa-corpo` faz o que ela fazia e mais: espessura compatível com
+a porca M24 e furos já no lugar certo. Mantê-la seria guardar duas placas
+parecidas e incompatíveis — espaçamento de botões de 119,65 contra 84,00 entre
+centros — que é o tipo de coisa que se imprime errado.
+
+> Na revisão atual o painel deixou de ser peça: ele foi fundido dentro do
+> corpo, e o rebaixo de assento das capas que este parágrafo cita não existe
+> mais. Ver a seção do topo.
+
+Está tudo no histórico do git, caso precise.
+
+Os gabaritos (`gabarito-passante`, `gabarito-roscado`) **continuam válidos**:
+medem tolerância de furo, não dependem de peça nenhuma e têm 160 × 40 mm.
+
+**O que ficou superado neste README.** As seções abaixo descrevendo a caixa de
+**215 × 120**, a parede de 10 mm, os 6 insertos e os parâmetros de impressão da
+**Creality K1C** são da revisão anterior. Valem ainda: as cotas dos botões
+lidas dos esquemáticos, a memória de cálculo da rosca M24 × 2 e os gabaritos de
+tolerância, que independem de impressora. Em caso de conflito, **o modelo
+paramétrico manda** — ele se recusa a gerar geometria inconsistente, e
+`gerar_desenhos_3mf.py` se recusa a emitir prancha que discorde dele.
+
+---
 
 ## Arquivos
 
 | Arquivo | O que é |
 |---|---|
-| `desenho-tampa.svg` | Desenho técnico da tampa: distâncias entre botões, Ø dos furos, corte e **DETALHE B** do furo de fixação |
 | `desenho-gabarito-passante.svg` | Desenho do gabarito de furo liso |
 | `desenho-gabarito-roscado.svg` | Desenho do gabarito de rosca interna |
 | `desenho-perfil-rosca.svg` | Perfil ISO 68-1 da M24 × 2 ampliado 18:1, com a memória de cálculo |
 | `gabarito-passante.stl` | **Imprima primeiro.** 160 × 40 × 8 mm, 5 furos lisos |
 | `gabarito-roscado.stl` | **Imprima junto.** 160 × 40 × 8 mm, 5 roscas M24 × 2 reais |
-| `tampa-botoes.stl` / `.scad` | Tampa final, 209,30 × 108,50 × 4 mm, com os 2 furos M24 e os 6 furos de fixação rebaixados |
 | `LISTA-DE-MATERIAIS.md` | **BOM completa** — botões, ferragens, fiação, solda, filamento, ferramentas |
-| `desenho-caixa-painel.svg` | Painel dos botões do `.3mf` (Body1): 2 × Ø26, 9 × Ø10, círculos de furação |
-| `desenho-caixa-corpo.svg` | Corpo do `.3mf` (Body2): parede, altura, 6 furos de inserto e o detalhe da interferência |
-| `desenho-caixa-tampa.svg` | Tampa do `.3mf`: 6 furos rebaixados e detalhe 8:1 |
-| `gerar_desenhos_3mf.py` | Gera os três acima **lendo a malha dos `.3mf`** — toda cota é medida, nenhuma digitada |
-| `gerar_stl.py` | Gera os `.stl` (Python puro, sem dependências) |
-| `gerar_desenhos.py` | Gera os `.svg` a partir das **mesmas** constantes de `gerar_stl.py` |
-| `validar_stl.py` | Verifica estanqueidade, orientação, volume e perfil da rosca |
+| `gerar_modelo_3mf.py` | **Fonte única da caixa.** Parâmetros + geometria das 2 peças; grava os `.3mf` e `.stl` |
+| `malha.py` | Núcleo de malha: contornos, triangulação com furos, sólido estanque, saída 3MF/STL |
+| `validar_modelo.py` | Relê os `.3mf` gravados e confere estanqueidade, mesa, furos, parede, estação da chave e berço do TP4056 |
+| `tests/` | pytest das primitivas de malha e das conferências de projeto |
+| `caixa-corpo.3mf` / `.stl` | **Corpo com o painel**, 178 × 130 × 63, parede 4 mm, 6 colunas |
+| `caixa-tampa.3mf` / `.stl` | Tampa de serviço, 178 × 130 × 4, com a janela USB-C e o berço do TP4056 (34,20 de altura total) |
+| `desenho-caixa-corpo.svg` | PIBIC-CX-02: vistas, detalhe do alívio de boca e da coluna de inserto |
+| `desenho-caixa-tampa.svg` | PIBIC-CX-03: furos rebaixados, janela USB-C e **corte do berço do TP4056** |
+| `desenho-caixa-chave.svg` | PIBIC-CX-04: **estação da chave KCD1** — elevação da parede e corte no eixo |
+| `gerar_desenhos_3mf.py` | Gera as três acima **lendo a malha dos `.3mf`** — toda cota é medida, nenhuma digitada, e o resultado é conferido contra `gerar_modelo_3mf.py` |
+| `gerar_stl.py` | Gera os `.stl` dos gabaritos de tolerância (Python puro) |
+| `gerar_desenhos.py` | Gera os `.svg` dos gabaritos a partir das **mesmas** constantes de `gerar_stl.py` |
+| `validar_stl.py` | Verifica estanqueidade, orientação, volume e perfil da rosca dos gabaritos |
+| `Projeto PIBIC-caixa.3mf`, `tampa.3mf` | **Superados.** Exportação do Fusion da caixa de 215 × 120 |
 
 Os SVG abrem em qualquer navegador e estão em escala 1:1 em milímetros
 (1 unidade SVG = 1 mm), então podem ser impressos em papel e medidos com régua.
@@ -458,28 +635,23 @@ a profundidade do furo do inserto (`10 − (6 − 2) + 1 = 7,0 mm`).
 
 Todos os números abaixo estão nos SVG; esta seção é só o roteiro.
 
-### Tampa (`desenho-tampa.svg`)
+### Painel, corpo e tampa — não precisam mais de Fusion
 
-1. Esboço no plano XY: retângulo `209,30 × 108,50` com o canto em (0, 0).
-2. Dois círculos de **Ø24,70** (ajuste depois do gabarito) em
-   `(54,25 ; 54,25)` e `(173,90 ; 54,25)`.
-3. **Extrude 4 mm**, operação *New Body*. Os círculos como *Cut* ou já
-   deixados como ilhas no perfil.
-4. Opcional: `Chamfer 0,4 mm` na boca superior dos furos — ajuda o barril a
-   entrar e disfarça o "elephant's foot" da primeira camada.
+Esta seção descrevia como modelar à mão a placa avulsa de 209,30 × 108,50, que
+foi removida. As duas peças da caixa agora saem prontas de
+`gerar_modelo_3mf.py`, com `.3mf` e `.stl` para abrir direto no slicer — e o
+desenho é medido delas, não digitado.
 
-5. **Fixação, 6 pontos.** Use `Create ▸ Hole` com tipo *Counterbore*, em vez de
-   dois esboços — o Fusion mantém as duas medidas ligadas:
-   - Ø do furo `3,4 mm`, passante (*Through All*)
-   - Ø do rebaixo `6,5 mm`, profundidade `2,0 mm`
-   - posições `(8 ; 8)`, `(104,65 ; 8)`, `(201,30 ; 8)`, `(8 ; 100,5)`,
-     `(104,65 ; 100,5)`, `(201,30 ; 100,5)`
+Se quiser mexer na geometria, mexa nos parâmetros no topo daquele arquivo e
+rode a pipeline de três comandos da seção inicial. `conferir_projeto()` valida
+antes de gerar qualquer malha: folga entre capas, distância dos rebaixos à
+borda e aos parafusos, espessura apertada pela porca contra o máximo do botão,
+comprimento de parafuso de catálogo e coluna de inserto contra a parede. Cada
+uma dessas regras é uma coisa que, se estiver errada, só apareceria depois de
+seis horas de impressão.
 
-   O rebaixo vai na face **de cima** (a que fica à mão). Confira que restaram
-   2,0 mm de material sob cada rebaixo antes de extrudar.
-
-Não modele rosca na tampa: com 4 mm você teria 2 filetes, insuficiente. O
-botão é preso pela porca dele, com a tampa apenas como painel.
+Continua valendo: **não modele rosca no painel.** Com 8 mm apertados você teria
+4 filetes, e o botão é preso pela porca dele.
 
 ### Pilares de inserto na caixa
 
@@ -535,6 +707,16 @@ Fusion só a tampa final. Os STL já estão validados.
 
 ## Procedimento de calibração
 
+> **⚠ Esta calibração foi feita para PETG, e a caixa agora é PLA.** Os números
+> de contração e de fechamento de furo desta seção e das duas anteriores valem
+> para PETG (~0,3–0,5 % de contração). PLA encolhe menos, tipicamente
+> 0,2–0,3 %, então o furo sai **menos subdimensionado** que o previsto aqui.
+>
+> Na prática isso **não está no caminho crítico da caixa**: o furo do barril é
+> Ø26,00 pela especificação da Adafruit, não pelo resultado do gabarito. Mas
+> se você for usar os gabaritos para decidir uma cota, **reimprima-os em PLA**
+> — o resultado em PETG não transfere.
+
 1. **Imprima os dois gabaritos** (~32 e ~34 cm³) com **exatamente** os
    parâmetros que usará na tampa final — bico, altura de camada, temperatura,
    fluxo e velocidade. Trocar qualquer um invalida o teste.
@@ -556,51 +738,49 @@ Fusion só a tampa final. Os STL já estão validados.
    é necessário se você quiser depois uma peça com rosca integrada — para a
    tampa de 4 mm, o resultado que importa é o do passante.
 
-4. **Ajuste `folga_m24`** com o valor do passante:
-   - em `tampa-botoes.scad`, linha do parâmetro `folga_m24`
-   - ou em `gerar_stl.py`, função `tampa()`, e rode `python gerar_stl.py`
-   - ou direto no esboço do Fusion
+4. **Leve o valor do passante para o modelo.** Hoje o painel usa
+   `D_BARRIL = 26.0` em `gerar_modelo_3mf.py` (especificação Adafruit). Se o
+   gabarito mostrar que um furo menor serve, altere lá e rode
+   `python gerar_modelo_3mf.py && python gerar_desenhos_3mf.py` — modelo e
+   desenho saem juntos.
 
-5. **Imprima a tampa.**
+5. ~~Imprima o corpo de prova dos rebaixos~~ — **sem objeto.** Os rebaixos de
+   capa deixaram de existir quando o painel ficou liso. Não há folga de
+   assento para calibrar.
 
-### Parâmetros de impressão — PETG na Creality K1C
-
-A K1C é uma CoreXY rápida e fechada, com bico de aço endurecido e ventoinha
-auxiliar potente. Os perfis de fábrica são otimizados para **velocidade**, não
-para precisão dimensional — e este projeto depende de precisão num furo.
+### Parâmetros de impressão — PLA na Bambu Lab A1 mini
 
 | Parâmetro | Valor | Por quê |
 |---|---|---|
-| Bico / camada | 0,4 mm / 0,2 mm | padrão |
-| Temperatura bico | **245–250 °C** | o bico de aço endurecido da K1C conduz pior que latão; +5 a 10 °C |
-| Mesa | **70 °C** (não mais) | ver aviso da placa PEI abaixo |
+| Bico / linha | 0,4 mm / 0,42 mm | as paredes são múltiplos: 4,00 = 10 linhas, 2,00 = 5 |
+| Camada | 0,20 mm | |
+| Temperatura bico | 210–220 °C | |
+| Mesa | 55–60 °C | |
 | Perímetros | **4** | define diretamente a parede do furo |
-| Preenchimento | **30 % giroide** | giroide é isotrópico — a caixa recebe impacto de todas as direções |
-| **Velocidade parede externa** | **30–40 mm/s** | o padrão da K1C (>150 mm/s) distorce o furo |
-| **Aceleração** | **≤ 5000 mm/s²** | o padrão (20000) faz cantos e furos incharem |
-| **Ventoinha auxiliar** | **0–20 %** | a lateral da K1C é forte demais e delamina PETG |
-| Ventoinha do modelo | 30–50 % | PETG precisa de bem menos que PLA |
-| Suportes | não | peças planas |
+| Preenchimento | **20 % giroide** | era 30 % em PETG; PLA é mais rígido |
+| Brim | **não** | 178 numa mesa de 180 não deixa espaço |
+| Suporte | **zero nas duas peças** | sem rebaixo de capa, não sobra balanço |
 
-**Avisos específicos da K1C:**
+**Três avisos que valem mais que a tabela:**
 
-- **Placa PEI + PETG grudam quimicamente.** É o risco prático real aqui: o
-  PETG pode arrancar lascas do PEI. Passe **bastão de cola como agente de
-  soltura** (não de adesão) e **espere a placa esfriar totalmente** antes de
-  remover a peça. Manter a mesa em 70 °C em vez de 85 °C também ajuda muito.
-- **Câmara fechada:** deixe a tampa superior entreaberta. O PETG não precisa
-  de câmara quente e a K1C passa fácil de 50 °C em peças grandes.
-- **Calibre fluxo e pressure advance antes do gabarito.** Numa impressora
-  rápida, fluxo descalibrado é a maior fonte de erro no diâmetro do furo. O
-  Orca Slicer tem perfil de K1C e a suíte de calibração pronta — recomendo em
-  vez do Creality Print por isso.
-- **Use o mesmo perfil nas duas impressões.** Se o gabarito sair no modo
-  rápido e a tampa no modo padrão, o resultado do teste não vale.
+- **A primeira camada da peça fundida é a face VISÍVEL dos botões.** A textura
+  da mesa transfere direto para ela — PEI liso dá acabamento brilhante,
+  texturizado dá fosco. Não é detalhe cosmético opcional: é a face que a pessoa
+  olha.
+- **Centralize na mesa e confira antes de fatiar.** 178 numa mesa de 180 deixa
+  1,0 mm de cada lado em X. Não é margem para improvisar posição.
+- **Sumiu o problema do PETG no PEI.** PLA solta sozinho quando a mesa esfria;
+  não precisa de bastão de cola como agente de soltura.
+
+O aviso da placa PEI e os ajustes de velocidade/aceleração da Creality K1C
+saíram desta seção junto com o PETG. Ficam no histórico do git se a impressora
+voltar a ser aquela.
 
 ### Instalação dos insertos de latão
 
-Ferro de solda a **220–240 °C** (abaixo disso o PETG não flui; acima ele
-degrada e solta fumo).
+Ferro de solda a **200–220 °C** para PLA (abaixo disso o material não flui;
+acima ele degrada e solta fumo). A faixa de 220–240 °C desta seção era do PETG
+— PLA amolece bem antes, e temperatura a mais só borbulha o furo.
 
 1. Apoie o inserto reto sobre o furo de 4,2 mm, sem forçar.
 2. Encoste a ponta do ferro no latão **sem fazer pressão** — quem afunda o
@@ -608,14 +788,16 @@ degrada e solta fumo).
 3. Deixe descer até ficar rente à face do pilar, ou **0,5 mm abaixo** dela.
    Nunca acima: um inserto saliente impede a tampa de assentar.
 4. Retire o ferro e encoste uma superfície metálica plana sobre o topo
-   enquanto o PETG esfria — é isso que garante a rosca ortogonal.
+   enquanto o PLA esfria — é isso que garante a rosca ortogonal. PLA esfria
+   mais rápido que PETG: tenha a superfície à mão antes de começar.
 
 Faça um pilar de teste avulso antes dos 6 definitivos. Se o inserto girar sob
 torque depois de frio, o furo está grande: refaça com 4,0 mm.
 
-> **Mesa:** a tampa tem 209,30 × 108,50 mm. Na K1C (220 × 220) sobram ~5,3 mm
-> de cada lado em X — o suficiente para o skirt e para a sondagem do
-> nivelamento. Se quiser mais borda, aumente `margem`, mas não passe de 7.
+> **Mesa:** as duas peças têm 178 × 130 mm. Na A1 mini (180 × 180) sobra
+> **1,0 mm de cada lado em X** — centralize e confira antes de fatiar, e não
+> use brim, que não cabe. Não existe parâmetro `margem` no modelo: a silhueta
+> é `CX_L` × `CX_A` em `gerar_modelo_3mf.py`.
 
 ---
 
@@ -662,12 +844,10 @@ numa grade (θ, z) e as colunas são amostradas exatamente nas quebras do perfil
 ```
 gabarito-passante.stl   160 x 40 x 8 mm    2796 triangulos   31,784 cm3  (0,0000 % divergencia)
 gabarito-roscado.stl    160 x 40 x 8 mm   21816 triangulos   33,753 cm3  (0,0005 % divergencia)
-tampa-botoes.stl     209,30 x 108,50 x 4   7824 triangulos   86,497 cm3  (0,0000 % divergencia)
 
 arestas nao pareadas: 0    arestas mal orientadas: 0
 ISO: H 1,7321 | D1 21,8349 (tabela 21,835) | D2 22,7010 | D 24,0000 | soma axial = passo  OK
 raios e fase das cristas: OK para delta 0,10 ... 0,50
-rebaixos M3 (6x): topo D6,500 | base D3,400 | fundo z=2,000   OK
 ```
 
 Os furos rebaixados obrigaram duas extensões no gerador. A placa da tampa

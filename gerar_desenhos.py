@@ -4,13 +4,15 @@
 Desenhos tecnicos em SVG - PIBIC UniCEUB.
 Autor: Rafael Alves de Sousa Costa.
 
-Gera quatro pranchas cotadas a partir das MESMAS constantes usadas em
+Gera as pranchas dos GABARITOS a partir das MESMAS constantes usadas em
 gerar_stl.py, de modo que desenho e modelo nao possam divergir:
 
-  desenho-tampa.svg               tampa: distancias entre botoes, diametros
   desenho-gabarito-passante.svg   gabarito de furo liso
   desenho-gabarito-roscado.svg    gabarito de rosca interna
   desenho-perfil-rosca.svg        perfil ISO 68-1 da M24 x 2, ampliado 18x
+
+A prancha da placa avulsa de 209,30 x 108,50 saiu junto com a peca; as tres
+pranchas da caixa vem de gerar_desenhos_3mf.py.
 
 Unidades em milimetros; 1 unidade SVG = 1 mm. Abra em qualquer navegador.
 
@@ -50,7 +52,7 @@ C_ATEN = "#c0392b"
 class Desenho:
     """Prancha SVG simples com cotas, linhas de centro e hachura."""
 
-    def __init__(self, larg, alt, titulo, subtitulo="", material="PETG",
+    def __init__(self, larg, alt, titulo, subtitulo="", material="PLA",
                  escala="1:1", codigo="", folha="1/1"):
         self.w, self.h = larg, alt
         self.el = []
@@ -287,149 +289,6 @@ class Desenho:
 # 1. Tampa
 # =====================================================================
 
-def _detalhe_rebaixo(D, ox, oy, esp):
-    """
-    Detalhe ampliado 6:1 do furo de fixacao M3: corte pelo eixo, mostrando
-    rebaixo, furo de passagem e a cabeca ISO 7380 embutida.
-    """
-    S = 6.0
-    rr = G.PARAF_D_REBAIXO / 2 * S
-    rp = G.PARAF_D_PASSAGEM / 2 * S
-    hr = G.PARAF_H_REBAIXO * S
-    ht = esp * S
-    sob = ht - hr                      # material sob a cabeca
-    W = 62.0                           # meia largura do trecho mostrado
-
-    for sg in (-1, 1):
-        D.hachura_poli([(ox + sg * W, oy), (ox + sg * rr, oy),
-                        (ox + sg * rr, oy + hr), (ox + sg * rp, oy + hr),
-                        (ox + sg * rp, oy + ht), (ox + sg * W, oy + ht)])
-
-    # Cabeca abaulada ISO 7380 (dk 5,7 / k 1,65) alojada no rebaixo.
-    # O ponto de controle vai a oy-k para que o APICE da quadratica caia
-    # exatamente em oy: (P0 + 2C + P2)/4 = oy. Assim a cabeca fica rente a
-    # superficie, que e o objetivo do rebaixo.
-    dk, k = 5.7 * S / 2, 1.65 * S
-    D.el.append(f'<path d="M {ox-dk:.2f} {oy+k:.2f} Q {ox:.2f} {oy-k:.2f} '
-                f'{ox+dk:.2f} {oy+k:.2f} Z" fill="none" stroke="#7f8c8d" '
-                f'stroke-width="{L_TRACO}" stroke-dasharray="3,1.5"/>')
-    for sg in (-1, 1):
-        D.linha(ox + sg * 1.5 * S, oy + k, ox + sg * 1.5 * S, oy + ht + 8,
-                L_TRACO, "#7f8c8d", dash="3,1.5")
-    D.txt(ox + rr + 8, oy - 2, "M3 x 10 ISO 7380 (ref.)", FONTE_P,
-          anc="start", cor="#7f8c8d")
-    D.linha(ox + rr + 7, oy - 3, ox + dk * 0.6, oy + k * 0.45, L_FINA, "#7f8c8d")
-
-    D.cota_h(ox - rr, ox + rr, oy - 9, "&#216;6,50", oy, tam=FONTE_P)
-    D.cota_h(ox - rp, ox + rp, oy + ht + 13, "&#216;3,40", oy + ht, tam=FONTE_P)
-    D.cota_v(oy, oy + hr, ox - W - 9, "2,00", ox - W, tam=FONTE_P)
-    D.cota_v(oy + hr, oy + ht, ox - W - 9, "2,00", ox - W, tam=FONTE_P)
-    D.cota_v(oy, oy + ht, ox - W - 24, "4,00", ox - W, tam=FONTE_P)
-
-    D.txt(ox + W + 4, oy + hr + sob / 2 + 1,
-          "2,00 sob a cabeca - secao mais fina da tampa",
-          FONTE_P, anc="start", cor="#c0392b")
-    D.linha(ox + rp + 5, oy + hr + sob / 2, ox + W + 3, oy + hr + sob / 2,
-            L_FINA, "#c0392b")
-    D.seta(ox + rp + 5, oy + hr + sob / 2, math.pi, L=2.0, W=0.8)
-    D.txt(ox, oy + ht + 24, "DETALHE B - furo de fixacao (6x)   ampliacao 6:1",
-          FONTE_P, cor="#555")
-
-
-def desenho_tampa():
-    esp, d = 4.0, 24.7
-    BV, BG = 98.5, 60.8
-    folga_borda, margem = 40.0, 5.0
-    dist = BV / 2 + BG / 2 + folga_borda
-    larg = BV / 2 + dist + BG / 2 + 2 * margem
-    alt = BV + 2 * margem
-    cxv, cxg, cy = margem + BV / 2, margem + BV / 2 + dist, alt / 2
-
-    rec = G.PARAF_RECUO
-    xs_p = [rec, larg / 2, larg - rec]
-    ys_p = [rec, alt - rec]
-
-    OX, OY = 48, 52
-    D = Desenho(larg + 110, alt + 296, "TAMPA COM ENCAIXE PARA BOTÕES DE ARCADE",
-                "Vista superior, corte A-A e detalhe do rebaixo",
-                escala="1:1 (ver ampliações)", codigo="PIBIC-TP-01")
-
-    D.ret(OX, OY, larg, alt)
-
-    # --- 6 furos de fixacao M3 ---
-    for yp in ys_p:
-        for xp in xs_p:
-            D.circ(OX + xp, OY + yp, G.PARAF_D_REBAIXO / 2)
-            D.circ(OX + xp, OY + yp, G.PARAF_D_PASSAGEM / 2, L_TRACO,
-                   cor="#555", dash="2,1")
-            D.centro(OX + xp, OY + yp, G.PARAF_D_REBAIXO / 2)
-    for cx, cap, nome in ((cxv, BV, "VERMELHO"), (cxg, BG, "VERDE")):
-        D.circ(OX + cx, OY + cy, cap / 2, L_TRACO, cor="#7f8c8d", dash="5,2")
-        D.circ(OX + cx, OY + cy, d / 2)
-        # marca de centro no FURO (nao na capa), senao a linha de centro
-        # atravessa os rotulos colocados dentro do circulo da capa
-        D.centro(OX + cx, OY + cy, d / 2)
-        D.txt(OX + cx, OY + cy + cap / 2 - 8, nome, FONTE_P, cor="#7f8c8d")
-        D.txt(OX + cx, OY + cy + cap / 2 - 4,
-              f"&#216;{cap:.1f} capa (ref.)".replace(".", ","),
-              FONTE_P, cor="#7f8c8d")
-
-    # cotas horizontais, em tres niveis
-    D.cota_h(OX + cxv, OX + cxg, OY - 12, "119,65  entre centros", OY + cy)
-    D.cota_h(OX + cxv + BV / 2, OX + cxg - BG / 2, OY - 24, "40,00  folga livre",
-             OY + cy - 8)
-    D.cota_h(OX, OX + larg, OY + alt + 34, "209,30", OY + alt)
-    D.cota_h(OX, OX + cxv, OY + alt + 22, "54,25", OY + alt)
-    D.cota_h(OX, OX + cxg, OY + alt + 12, "173,90", OY + alt)
-    D.cota_v(OY, OY + cy, OX - 12, "54,25", OX)
-    D.cota_v(OY, OY + alt, OX - 24, "108,50", OX)
-
-    # cotas dos parafusos: recuo de 8,00 nos dois eixos e a coluna do meio.
-    # Ficam em niveis proprios (-36 e OX-36) para nao cruzarem as cotas dos
-    # botoes, que ocupam -12 e -24.
-    D.cota_h(OX, OX + xs_p[0], OY - 12, "8,00", OY)
-    D.cota_h(OX, OX + xs_p[1], OY - 36, "104,65", OY)
-    D.cota_v(OY, OY + ys_p[0], OX - 36, "8,00", OX)
-
-    # linhas de chamada, apontadas para fora da placa
-    D.chamada(OX + cxg, OY + cy, d / 2, "2x &#216;24,70  (furo de passagem M24)",
-              ang=35, comp=30, tam=FONTE_P)
-    # sai do parafuso superior direito para a area livre acima e a direita;
-    # do de baixo a chamada cairia em cima da cota 173,90
-    D.chamada(OX + xs_p[2], OY + ys_p[0], G.PARAF_D_REBAIXO / 2,
-              "6x &#216;3,40 + rebaixo &#216;6,50 x 2,00",
-              ang=-35, comp=22, tam=FONTE_P)
-
-    # corte lateral
-    ys = OY + alt + 52
-    D.hachura(OX, ys, larg, esp * 4)
-    for cx in (cxv, cxg):
-        D.ret(OX + cx - d / 2, ys, d, esp * 4, L_CONTORNO, fill="#fff")
-    D.cota_v(ys, ys + esp * 4, OX - 12, "4,00", OX)
-    D.txt(OX + larg / 2, ys + esp * 4 + 8,
-          "CORTE A-A pelos eixos dos botoes   (escala vertical 4:1)",
-          FONTE_P, cor="#555")
-
-    _detalhe_rebaixo(D, D.w / 2, ys + esp * 4 + 44, esp)
-
-    D.nota(OX, ys + esp * 4 + 100, [
-        "Centro-a-centro dos botoes = 98,5/2 + 60,8/2 + 40,00 = 119,65 mm",
-        "Furo &#216;24,70 = M24 nominal + 0,70 de compensacao PETG (validar no gabarito)",
-        "Botao preso por porca; a tampa nao e roscada.",
-        "",
-        "FIXACAO - 6x M3 x 10 ISO 7380 em inserto de latao M3 (&#216;ext 4,6 x 5,0):",
-        "  centros (x ; y):  (8,00 ; 8,00)   (104,65 ; 8,00)   (201,30 ; 8,00)",
-        "                    (8,00 ; 100,50) (104,65 ; 100,50) (201,30 ; 100,50)",
-        "  furo do inserto na caixa: &#216;4,20 x 9,00 de profundidade, pilar &#216;ext 10,00",
-        "  9,00 = L_parafuso 10,00 &#8722; (esp 4,00 &#8722; rebaixo 2,00) + 1,00 de folga no fundo",
-    ])
-    D.salvar("desenho-tampa.svg")
-
-
-# =====================================================================
-# 2 e 3. Gabaritos
-# =====================================================================
-
 def _desenho_gabarito(nome_arq, titulo, sub, rotulos, raios, chamada_txt, notas,
                       codigo=""):
     larg, alt, esp = G.LARG_GAB, G.ALT_GAB, G.ESP_GABARITO
@@ -596,7 +455,6 @@ def desenho_perfil_rosca():
 
 if __name__ == "__main__":
     print("desenhos gerados:")
-    desenho_tampa()
     desenho_gabarito_passante()
     desenho_gabarito_roscado()
     desenho_perfil_rosca()
