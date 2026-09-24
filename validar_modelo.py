@@ -14,6 +14,7 @@ Cada peca passa por:
   mesa             contorno dentro do envelope da A1 mini
   furos            diametro de cada furo medido na secao, contra o esperado
   parede           menor espessura de material no plano medio
+  berco            janela do plugue e colunas do TP4056, por secao
 
 Uso:  python validar_modelo.py
 """
@@ -144,6 +145,101 @@ def largura_do_vao(segs, y0, tol=1e-6):
     return b - a, (a + b) / 2
 
 
+def cruza_y(segs, y0):
+    """
+    Onde a reta horizontal y = y0 corta a secao, em x crescente. E a
+    'travessia' com os eixos trocados - e com a mesma regra semiaberta, que e
+    o que importa aqui: a sonda do meio do canal cai exatamente no ponto
+    medio das arestas do fundo dele.
+    """
+    return travessia([((ay, ax), (by, bx)) for (ax, ay), (bx, by) in segs], y0)
+
+
+def caixa_de(segs, x0, x1, y0, y1):
+    """Caixa envolvente dos pontos da secao dentro de [x0, x1] x [y0, y1]."""
+    pts = [p for s in segs for p in s if x0 <= p[0] <= x1 and y0 <= p[1] <= y1]
+    if not pts:
+        return None
+    xs, ys = [p[0] for p in pts], [p[1] for p in pts]
+    return min(xs), min(ys), max(xs), max(ys)
+
+
+def medir_berco(V, T):
+    """
+    Janela, alivio e cada trecho das colunas do berco, medidos na secao.
+
+    As alturas de corte vem do projeto; o que se mede e a malha. Cada trecho
+    do perfil e cortado no meio da sua faixa de z, com duas sondas: a
+    vertical no plano medio da placa (x = e['x']) acha o fundo do canal, ou
+    a boca fechada na garra; a horizontal no meio do canal acha as abas. Um
+    canal que sumisse, ou uma garra que nao fechasse, muda a CONTAGEM de
+    cruzamentos - a sonda nao tem como concordar por omissao.
+
+    A janela e cortada em (REB_TAMPA + TAMPA_ESP)/2 e nao a meia chapa: em
+    z = 2,00 fica o fundo do rebaixo dos parafusos, e cortar sobre um degrau
+    da malha e cortar sobre face horizontal.
+    """
+    e = P.estacao_carregador()
+    xc, yc = e["x_usb"], e["yc"]
+    r = {}
+    for nome, z, (ly, lx) in (("alivio", P.REB_ALIVIO / 2, e["alivio"]),
+                              ("janela", (P.REB_TAMPA + P.TAMPA_ESP) / 2,
+                               e["janela"])):
+        r[nome] = caixa_de(secao(V, T, z), xc - lx, xc + lx, yc - ly, yc + ly)
+    r["secoes"] = []
+    for z0, z1, g in e["perfil"]:
+        s = secao(V, T, (z0 + z1) / 2)
+        r["secoes"].append(dict(
+            z=(z0 + z1) / 2, g=g, ys=travessia(s, e["x"]),
+            xs=[cruza_y(s, yc + lado * (e["w_ponta"] + e["prof_canal"] / 2))
+                for lado in (1, -1)]))
+    r["topo"] = max(v[2] for v in V)
+    return r
+
+
+def conferir_berco(V, T):
+    """O berco do TP4056 e a janela do plugue, contra estacao_carregador()."""
+    e = P.estacao_carregador()
+    r = medir_berco(V, T)
+    print("\ncaixa-tampa.3mf - berco do TP4056")
+
+    def perto(a, b):
+        return abs(a - b) < 0.01
+
+    for nome, (ly, lx) in (("alivio", e["alivio"]), ("janela", e["janela"])):
+        c = r[nome]
+        ok(c is not None and perto(c[2] - c[0], lx) and perto(c[3] - c[1], ly)
+           and perto((c[0] + c[2]) / 2, e["x_usb"])
+           and perto((c[1] + c[3]) / 2, e["yc"]),
+           f"{nome} {ly:.2f} x {lx:.2f} em ({e['x_usb']:.2f}, {e['yc']:.2f})",
+           "nao achada" if c is None else
+           f"medida {c[3] - c[1]:.3f} x {c[2] - c[0]:.3f} em "
+           f"({(c[0] + c[2]) / 2:.3f}, {(c[1] + c[3]) / 2:.3f})")
+
+    x, yc = e["x"], e["yc"]
+    hc, um = e["canal_w"] / 2, e["u_meia"]
+    for sc in r["secoes"]:
+        w = e["w_ponta"] + sc["g"]
+        esp_ys = [yc - e["w_fora"], yc - w, yc + w, yc + e["w_fora"]]
+        rotulo = ("garra fechada" if sc["g"] == 0
+                  else f"canal de {sc['g']:.2f}")
+        ok(len(sc["ys"]) == 4
+           and all(perto(a, b) for a, b in zip(sc["ys"], esp_ys)),
+           f"z {sc['z']:.2f}: {rotulo}, boca a {w:.2f} do centro",
+           "cruzamentos em y " + ", ".join(f"{v:.3f}" for v in sc["ys"]))
+        # a reta do meio do canal so cruza as abas onde o canal passa dela
+        esp_xs = ([x - um, x - hc, x + hc, x + um]
+                  if sc["g"] > e["prof_canal"] / 2 else [x - um, x + um])
+        for lado, xs in zip((1, -1), sc["xs"]):
+            ok(len(xs) == len(esp_xs)
+               and all(perto(a, b) for a, b in zip(xs, esp_xs)),
+               f"z {sc['z']:.2f}: coluna {'de cima' if lado > 0 else 'de baixo'}"
+               f" em x {x - um:.2f}..{x + um:.2f}",
+               "cruzamentos em x " + ", ".join(f"{v:.3f}" for v in xs))
+    ok(perto(r["topo"], e["topo"]), f"topo do berco {e['topo']:.2f}",
+       f"medido {r['topo']:.3f}")
+
+
 def dist_ate_poligono(p, poly):
     melhor = float("inf")
     n = len(poly)
@@ -224,37 +320,6 @@ def conferir_chave(V, T):
        "medido y " + " e ".join(f"{v:.2f}" for v in m) if m else "nada")
 
 
-def conferir_pinos(V, T):
-    """
-    Os 4 pinos da perfboard, medidos na secao horizontal.
-
-    Duas sondas por altura, e as duas sao necessarias: 'diametro' prova que a
-    perna esta no lugar e com o raio certo, e 'travessia' no eixo prova que o
-    RASGO atravessa. Sem o rasgo as duas metades nao fletem, e a farpa nao
-    entra no furo da placa sem trincar o PLA.
-
-    Nao da para medir o rasgo com 'largura_do_vao': na altura da haste so
-    existem as 8 pernas, entao o maior vao ao longo de y = cy vai de um pino
-    ao seguinte - 80 mm - e nao de uma perna a outra do mesmo pino.
-    """
-    pl, pn = P.PLACA, P.pinos_placa()
-    print("\ncaixa-tampa.3mf - pinos da perfboard")
-    alturas = (
-        (P.TAMPA_ESP + (pn["z"][1] + pn["z"][2]) / 2, pl["haste_d"], "haste"),
-        (P.TAMPA_ESP + (pn["z"][2] + pn["z"][3]) / 2, pl["farpa_d"], "farpa"),
-    )
-    for i, (cx, cy) in enumerate(pn["centros"], 1):
-        for z, d_esp, nome in alturas:
-            segs = secao(V, T, z)
-            d = diametro(segs, cx, cy, d_esp)
-            ok(d is not None and abs(d - d_esp) < 0.02,
-               f"pino {i}: {nome} Ø{d_esp:.2f}",
-               f"medido {d:.3f}" if d else "nao achada")
-            m = travessia(segs, cx)
-            ok(m == [], f"pino {i}: rasgo atravessa na altura da {nome}",
-               "material em y " + ", ".join(f"{v:.2f}" for v in m) if m else "")
-
-
 def main():
     fix = P.pontos_fixacao()
 
@@ -307,9 +372,9 @@ def main():
           f"rebaixo da cabeca: Ø{P.D_REBAIXO:.2f}"),
          (P.TAMPA_ESP - 1.0, *fix[0], P.D_PASSAGEM,
           f"passagem M3: Ø{P.D_PASSAGEM:.2f}")]
-    pn = P.pinos_placa()
-    V, T = conferir("tampa", "caixa-tampa.3mf", P.TAMPA_ESP + pn["topo"], f)
-    conferir_pinos(V, T)
+    V, T = conferir("tampa", "caixa-tampa.3mf",
+                    P.estacao_carregador()["topo"], f)
+    conferir_berco(V, T)
 
     print()
     if falhas:
