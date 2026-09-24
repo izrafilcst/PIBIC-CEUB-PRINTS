@@ -19,7 +19,7 @@ import gerar_modelo_3mf as P
 def test_o_projeto_como_esta_passa():
     info = P.conferir_projeto()
     assert info["sw"]["x"] == 69.5
-    assert info["placa"]["centro"] == (73.0, 65.0)
+    assert info["carregador"]["x"] == 168.0
 
 
 @pytest.fixture
@@ -46,19 +46,6 @@ def test_chave_fora_do_trecho_reto_e_reprovada(restaurar):
 def test_painel_fino_demais_para_a_porca_e_reprovado(restaurar):
     restaurar("PAIN_ESP", 3.0)
     with pytest.raises(AssertionError, match="aperta"):
-        P.conferir_projeto()
-
-
-def test_placa_batendo_no_botao_verde_e_reprovada(restaurar):
-    restaurar("PLACA", dict(P.PLACA, x=120.0))
-    with pytest.raises(AssertionError, match="verde"):
-        P.conferir_projeto()
-
-
-def test_perna_curta_demais_e_reprovada(restaurar):
-    # rasgo so na haste: braco de 1,8 mm em vez de 6,5 -> deformacao ~11 %
-    restaurar("PLACA", dict(P.PLACA, rasgo_h=1.8))
-    with pytest.raises(AssertionError, match="deforma"):
         P.conferir_projeto()
 
 
@@ -104,23 +91,6 @@ def test_o_rebaixo_da_chave_tem_o_diametro_certo():
     larg, centro = V.largura_do_vao(segs, k["y_cav"])
     assert abs(larg - k["d_rebaixo"]) < 0.05, f"boca do rebaixo {larg:.3f}"
     assert abs(centro - k["x"]) < 0.01
-
-
-def test_tampa_com_pinos_fecha_e_bate_o_volume():
-    S, esperado = P.tampa()
-    vol = S.conferir(esperado, tol_rel=1e-9)
-    pn = P.pinos_placa()
-    zs = [v[2] for v in S.v]
-    assert abs(max(zs) - (P.TAMPA_ESP + pn["topo"])) < 1e-9, \
-        "o pino nao tem a altura do perfil"
-    assert abs(min(zs)) < 1e-9
-
-
-def test_a_farpa_retem_a_placa():
-    """A face de baixo da farpa tem de cair 0,20 acima da placa assentada."""
-    pl, pn = P.PLACA, P.pinos_placa()
-    topo_da_placa = pn["z"][1] + pl["esp"]
-    assert abs(pn["z"][2] - topo_da_placa - pl["folga_placa"]) < 1e-9
 
 
 # ---- estacao do carregador (TP4056) ----
@@ -172,3 +142,24 @@ def test_berco_fora_do_eixo_de_simetria_e_reprovado(restaurar):
     restaurar("CARREGADOR", dict(P.CARREGADOR, y=70.0))
     with pytest.raises(AssertionError, match="simetric"):
         P.conferir_projeto()
+
+
+def test_tampa_com_berco_fecha_e_bate_o_volume():
+    S, esperado = P.tampa()
+    vol = S.conferir(esperado, tol_rel=1e-9)
+    e = P.estacao_carregador()
+    zs = [v[2] for v in S.v]
+    assert abs(max(zs) - e["topo"]) < 1e-9
+    assert abs(min(zs)) < 1e-9
+    assert abs(vol / 1000 - 81.97) < 0.01, "o prototipo da spec deu 81,97 cm3"
+
+
+def test_a_tampa_nao_tem_mais_pinos():
+    for nome in ("PLACA", "pinos_placa", "ALT_COMPONENTE"):
+        assert not hasattr(P, nome), f"{nome} ainda existe"
+    S, _ = P.tampa()
+    x0, y0, x1, y1 = P.estacao_carregador()["envelope"]
+    fora = [v for v in S.v if v[2] > P.TAMPA_ESP + 1e-9
+            and not (x0 - 1e-9 <= v[0] <= x1 + 1e-9
+                     and y0 - 1e-9 <= v[1] <= y1 + 1e-9)]
+    assert fora == [], f"material acima da chapa fora do berco: {fora[:3]}"

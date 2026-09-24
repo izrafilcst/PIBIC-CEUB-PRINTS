@@ -7,7 +7,7 @@ Autor: Rafael Alves de Sousa Costa.
 FONTE UNICA da geometria das duas pecas. Escreve
 
   caixa-corpo.3mf    corpo, com o painel dos botoes fundido,  178 x 130 x 63
-  caixa-tampa.3mf    tampa de servico,                        178 x 130 x 4
+  caixa-tampa.3mf    tampa de servico, com o berco do TP4056, 178 x 130 x 34,2
 
 e os .stl correspondentes. Os desenhos tecnicos saem de gerar_desenhos_3mf.py,
 que LE estes arquivos e mede a malha - nenhuma cota e digitada duas vezes.
@@ -176,41 +176,6 @@ CHAVE = dict(
     x_face=(55.0, 84.0),   # trecho da parede que a face_vertical assume
 )
 
-# =====================================================================
-# Perfboard 7 x 9 - encaixe por pino farpado na tampa
-# =====================================================================
-# ATENCAO: 'furo_d' e 'furo_inset' sao PRESUMIDOS. Meca a placa com o
-# paquimetro antes de imprimir a tampa - sao 4 pinos, e errar o recuo poe
-# todos no lugar errado de uma vez.
-#
-# Centro em (73, 65) nao e estetica: e o que sobrou entre as 4 colunas de
-# canto, as 2 do meio e o flange Ø37,7 do botao verde.
-#
-# O rasgo de 6,50 e dimensionado. Duas pernas de 0,80 fletindo 0,30 (a
-# interferencia da farpa Ø3,60 sobre o furo Ø3,00) num braco de 6,50:
-#     eps = 3*t*y / (2*L^2) = 3*0,80*0,30 / (2*42,25) = 0,85 %
-# Com rasgo so na haste (1,80 de braco) daria 11 % e a perna quebraria na
-# primeira montagem.
-#
-# A guia de entrada e ESCALONADA, nao conica - mesma razao do alivio dos
-# furos do painel.
-
-PLACA = dict(
-    larg=90.0, alt=70.0, esp=1.6,
-    x=73.0, y=65.0,
-    furo_d=3.0,        # PRESUMIDO - conferir
-    furo_inset=3.5,    # PRESUMIDO - conferir
-    ombro_d=6.0, ombro_h=3.5,       # afastador: espaco das pernas soldadas
-    haste_d=2.8,                     # furo 3,00 - 0,20 de folga
-    farpa_d=3.6, farpa_h=0.6,        # 0,30 radial de retencao
-    guia=((3.0, 0.3), (2.4, 0.3)),   # degraus de entrada (diametro, altura)
-    rasgo_w=1.2,
-    rasgo_h=6.5,       # = ombro_h + haste_h + farpa_h + guias
-    folga_placa=0.2,   # entre a face de cima da placa e a farpa
-)
-
-ALT_COMPONENTE = 10.0  # altura livre minima sob a placa, para componente de pe
-
 
 def estacao_chave():
     """Cotas derivadas da estacao da chave, em coordenadas da peca."""
@@ -354,21 +319,6 @@ def ranhura(e, g0, g1, lado):
            + [(hc, wp + g1), (-hc, wp + g1)]
            + [(-hc, wp + d) for d in reversed(meio)])
     return _no_lugar(e, pts, lado)
-
-
-def pinos_placa():
-    """Os 4 centros dos pinos, e as alturas acumuladas do perfil."""
-    p = PLACA
-    dx = p["larg"] / 2 - p["furo_inset"]
-    dy = p["alt"] / 2 - p["furo_inset"]
-    centros = [(p["x"] - dx, p["y"] - dy), (p["x"] + dx, p["y"] - dy),
-               (p["x"] - dx, p["y"] + dy), (p["x"] + dx, p["y"] + dy)]
-    haste_h = p["esp"] + p["folga_placa"]
-    z = [0.0, p["ombro_h"], p["ombro_h"] + haste_h,
-         p["ombro_h"] + haste_h + p["farpa_h"]]
-    for _, h in p["guia"]:
-        z.append(z[-1] + h)
-    return dict(centros=centros, haste_h=haste_h, z=z, topo=z[-1])
 
 # =====================================================================
 # Segmentacao das curvas
@@ -527,46 +477,6 @@ def conferir_projeto():
     exigir(k["y_fundo"] > CORPO_PAR,
            f"a chave chega a y={k['y_fundo']:.2f} e bate na parede oposta")
 
-    # ---- perfboard ----
-    pl, pn = PLACA, pinos_placa()
-    x0, x1 = pl["x"] - pl["larg"] / 2, pl["x"] + pl["larg"] / 2
-    y0, y1 = pl["y"] - pl["alt"] / 2, pl["y"] + pl["alt"] / 2
-    for i, (cx, cy) in enumerate(fix, 1):
-        d = math.hypot(max(x0 - cx, 0.0, cx - x1), max(y0 - cy, 0.0, cy - y1))
-        exigir(d - COL_D / 2 >= 2.0,
-               f"placa a {d-COL_D/2:.2f} mm da coluna {i} - minimo 2,00")
-        for j, (px, py) in enumerate(pn["centros"], 1):
-            g = math.dist((px, py), (cx, cy)) - COL_D / 2 - pl["ombro_d"] / 2
-            exigir(g >= 2.0, f"pino {j} a {g:.2f} mm da coluna {i}")
-    z_placa = CORPO_H - pl["ombro_h"] - pl["esp"]     # face de cima da placa
-
-    # A placa passa POR BAIXO do botao vermelho de proposito: e o unico jeito
-    # de 90 x 70 caber entre as seis colunas. Entao a folga com cada botao
-    # pode ser NO PLANO ou NA ALTURA, e basta uma das duas. Onde ela passa por
-    # baixo, o que sobra em z tem de dar para um componente de pe - e e essa
-    # regra que segura a placa longe do botao verde, que desce muito mais.
-    for b in BOTOES:
-        d = math.hypot(max(x0 - b["x"], 0.0, b["x"] - x1),
-                       max(y0 - b["y"], 0.0, b["y"] - y1)) - b["flange"] / 2
-        if d >= 2.0:
-            continue
-        sobra = z_placa - b["abaixo"]
-        exigir(sobra >= ALT_COMPONENTE,
-               f"placa passa sob o botao {b['nome']} com {d:.2f} mm no plano "
-               f"e so {sobra:.2f} mm em z - minimo {ALT_COMPONENTE:.2f}")
-
-    exigir(pl["ombro_h"] >= 2.5,
-           f"ombro de {pl['ombro_h']:.2f} nao deixa espaco para as pernas soldadas")
-    t = (pl["haste_d"] - pl["rasgo_w"]) / 2
-    y = (pl["farpa_d"] - pl["furo_d"]) / 2
-    eps = 3 * t * y / (2 * pl["rasgo_h"] ** 2)
-    exigir(eps <= 0.010,
-           f"deformacao de flexao da perna do pino {eps*100:.2f} % - maximo 1,00")
-    exigir(abs(pl["rasgo_h"] - pn["topo"]) < 1e-9,
-           f"rasgo de {pl['rasgo_h']:.2f} nao atravessa o pino de {pn['topo']:.2f}")
-    exigir(pl["farpa_d"] > pl["furo_d"] > pl["haste_d"],
-           "a farpa nao retem: diametros fora de ordem")
-
     # ---- estacao do carregador (TP4056) ----
     e = estacao_carregador()
     ex0, ey0, ex1, ey1 = e["envelope"]
@@ -635,10 +545,7 @@ def conferir_projeto():
     if msgs:
         raise AssertionError("projeto inconsistente:\n  - " + "\n  - ".join(msgs))
 
-    return dict(folga_capas=folga, L_tampa=L, sw=k,
-                placa=dict(centro=(PLACA["x"], PLACA["y"]),
-                           z_topo=z_placa, eps=eps, pinos=pn),
-                carregador=e)
+    return dict(folga_capas=folga, L_tampa=L, sw=k, carregador=e)
 
 
 # =====================================================================
@@ -741,79 +648,64 @@ def corpo():
 
 def tampa():
     """
-    z = 0 e a face EXTERNA (rebaixo dos parafusos), que vai na mesa; os pinos
-    da perfboard crescem para cima a partir de z = TAMPA_ESP.
+    z = 0 e a face EXTERNA, que vai na mesa; o berco do TP4056 cresce para
+    cima a partir de z = TAMPA_ESP.
 
-    Imprime com os pinos PARA CIMA. O rebaixo Ø6,50 sobre o furo Ø3,40 fica
+    Imprime com o berco PARA CIMA. O rebaixo Ø6,50 sobre o furo Ø3,40 fica
     voltado para baixo, mas sao 1,55 mm radiais sobre um vao de 6,50 - nao
-    pede suporte.
+    pede suporte. A janela do plugue ganha o mesmo alivio de boca dos furos
+    do painel: ela nasce na primeira camada, e o pe de elefante estreitaria
+    justo a passagem da capa.
     """
     S = M.Solido("tampa")
     ext = silhueta()
     fix = pontos_fixacao()
-    pl, pn = PLACA, pinos_placa()
+    e = estacao_carregador()
 
     pas = [M.circulo(x, y, D_PASSAGEM / 2, SEG_PEQ) for x, y in fix]
     cbo = [M.circulo(x, y, D_REBAIXO / 2, SEG_PEQ) for x, y in fix]
-
-    # perfil do pino, de baixo para cima: (raio, z base, z topo)
-    hf = pl["rasgo_w"] / 2
-    raios = ([(pl["ombro_d"] / 2, pn["z"][0], pn["z"][1]),
-              (pl["haste_d"] / 2, pn["z"][1], pn["z"][2]),
-              (pl["farpa_d"] / 2, pn["z"][2], pn["z"][3])]
-             + [(d / 2, pn["z"][3 + i], pn["z"][4 + i])
-                for i, (d, _) in enumerate(pl["guia"])])
-
-    # A corda de TODAS as secoes cai na mesma reta. Sem estes vertices extras
-    # a secao larga teria uma aresta unica ali onde a estreita tem tres, e a
-    # malha abriria na emenda. Derivar a lista dos proprios raios mantem as
-    # duas coisas casadas se o perfil mudar.
-    ys = [math.sqrt(r * r - hf * hf) for r, _, _ in raios]
-
-    def perna_em(cx, cy, r, lado):
-        return [(x + cx, y + cy)
-                for x, y in M.perna(r, hf, SEG_PEQ, lado, ys)]
-
-    def degrau_em(cx, cy, r_int, r_ext, lado):
-        return [(x + cx, y + cy)
-                for x, y in M.degrau_da_perna(r_int, r_ext, hf, SEG_PEQ,
-                                              lado, ys)]
-
-    bases = [perna_em(cx, cy, raios[0][0], lado)
-             for cx, cy in pn["centros"] for lado in (1, -1)]
+    jan = M.retangulo(e["x_usb"], e["yc"], e["janela"][1], e["janela"][0])
+    ali = M.retangulo(e["x_usb"], e["yc"], e["alivio"][1], e["alivio"][0])
+    bases = [secao_coluna(e, e["perfil"][0][2], lado) for lado in (1, -1)]
 
     # ---- chapa ----
-    S.face(ext, cbo, 0.0, cima=False)
+    S.face(ext, cbo + [ali], 0.0, cima=False)
     for p, c in zip(pas, cbo):
         S.coroa(p, c, REB_TAMPA, cima=False)
         S.parede(c, 0.0, REB_TAMPA, fora=False)
         S.parede(p, REB_TAMPA, TAMPA_ESP, fora=False)
-    S.face(ext, pas + bases, TAMPA_ESP, cima=True)
+    S.parede(ali, 0.0, REB_ALIVIO, fora=False)
+    S.face(ali, [jan], REB_ALIVIO, cima=False)
+    S.parede(jan, REB_ALIVIO, TAMPA_ESP, fora=False)
+    S.face(ext, pas + [jan] + bases, TAMPA_ESP, cima=True)
     S.parede(ext, 0.0, TAMPA_ESP, fora=True)
 
-    # ---- pinos ----
-    for cx, cy in pn["centros"]:
-        for lado in (1, -1):
-            for i, (r, z0, z1) in enumerate(raios):
-                S.parede(perna_em(cx, cy, r, lado),
-                         TAMPA_ESP + z0, TAMPA_ESP + z1, fora=True)
-                if i + 1 < len(raios):
-                    r_prox = raios[i + 1][0]
-                    if r_prox < r:          # afina: face exposta para cima
-                        S.face(degrau_em(cx, cy, r_prox, r, lado), [],
-                               TAMPA_ESP + z1, cima=True)
-                    else:                   # engorda: face exposta para baixo
-                        S.face(degrau_em(cx, cy, r, r_prox, lado), [],
-                               TAMPA_ESP + z1, cima=False)
-            S.face(perna_em(cx, cy, raios[-1][0], lado), [],
-                   TAMPA_ESP + raios[-1][2], cima=True)
+    # ---- berco: cada trecho do perfil e um prisma; entre dois trechos, a
+    # faixa do canal que muda vira face - para cima onde o canal aprofunda,
+    # para baixo onde ele fecha (a garra) ----
+    pf = e["perfil"]
+    for lado in (1, -1):
+        for i, (z0, z1, g) in enumerate(pf):
+            S.parede(secao_coluna(e, g, lado), z0, z1, fora=True)
+            if i + 1 < len(pf):
+                g_prox = pf[i + 1][2]
+                if g_prox > g:
+                    S.face(ranhura(e, g, g_prox, lado), [], z1, cima=True)
+                else:
+                    S.face(ranhura(e, g_prox, g, lado), [], z1, cima=False)
+        S.face(secao_coluna(e, pf[-1][2], lado), [], pf[-1][1], cima=True)
 
-    A = M.area_assinada
-    v_meia = sum(abs(A(M.perna(r, hf, SEG_PEQ, 1, ys))) * (z1 - z0)
-                 for r, z0, z1 in raios)
-    esperado = ((A(ext) - 6 * A(cbo[0])) * REB_TAMPA
-                + (A(ext) - 6 * A(pas[0])) * (TAMPA_ESP - REB_TAMPA)
-                + 8 * v_meia)
+    # Volume esperado por formula fechada: retangulo e coluna em U nao passam
+    # pelos poligonos acima, so os circulos passam por area_assinada.
+    A = lambda p: abs(M.area_assinada(p))
+    um, wp, wf, cw = e["u_meia"], e["w_ponta"], e["w_fora"], e["canal_w"]
+    esperado = (A(ext) * TAMPA_ESP
+                - 6 * (A(cbo[0]) * REB_TAMPA
+                       + A(pas[0]) * (TAMPA_ESP - REB_TAMPA))
+                - e["alivio"][0] * e["alivio"][1] * REB_ALIVIO
+                - e["janela"][0] * e["janela"][1] * (TAMPA_ESP - REB_ALIVIO)
+                + 2 * sum((2 * um * (wf - wp) - cw * g) * (z1 - z0)
+                          for z0, z1, g in pf))
     return S, esperado
 
 
@@ -837,9 +729,10 @@ def main():
     print(f"  furo Ø{e['d_furo']:.2f}  rebaixo Ø{e['d_rebaixo']:.1f} "
           f"prof {e['prof_reb']:.2f}  parede local {e['parede']:.2f}  "
           f"atras {e['atras']:.1f}")
-    pl = info["placa"]
-    print(f"placa centro {pl['centro']}  topo z={pl['z_topo']:.2f}  "
-          f"deformacao da perna {pl['eps']*100:.2f} %")
+    c = info["carregador"]
+    print(f"carregador {c['modelo']}  x={c['x']:.2f}  janela "
+          f"{c['janela'][0]:.2f} x {c['janela'][1]:.2f}  topo {c['topo']:.2f}  "
+          f"deformacao {c['eps']*100:.2f} %")
     print()
 
     total = 0.0
