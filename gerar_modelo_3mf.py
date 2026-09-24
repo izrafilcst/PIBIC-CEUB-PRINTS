@@ -425,6 +425,20 @@ def leds(b):
 # Conferencias de projeto - rodam antes de qualquer malha
 # =====================================================================
 
+def _dist_poligono(p, poly):
+    """Menor distancia do ponto p ao contorno fechado poly."""
+    melhor = float("inf")
+    n = len(poly)
+    for i in range(n):
+        a, b = poly[i], poly[(i + 1) % n]
+        dx, dy = b[0] - a[0], b[1] - a[1]
+        t = max(0.0, min(1.0, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy)
+                         / (dx * dx + dy * dy)))
+        melhor = min(melhor, math.hypot(p[0] - a[0] - t * dx,
+                                        p[1] - a[1] - t * dy))
+    return melhor
+
+
 def conferir_projeto():
     """
     Cada regra aqui e uma coisa que, se estiver errada, so apareceria depois
@@ -553,12 +567,78 @@ def conferir_projeto():
     exigir(pl["farpa_d"] > pl["furo_d"] > pl["haste_d"],
            "a farpa nao retem: diametros fora de ordem")
 
+    # ---- estacao do carregador (TP4056) ----
+    e = estacao_carregador()
+    ex0, ey0, ex1, ey1 = e["envelope"]
+
+    # 1. Contra cada botao: folga no plano OU em z, como a placa fazia.
+    for b in BOTOES:
+        d = math.hypot(max(ex0 - b["x"], 0.0, b["x"] - ex1),
+                       max(ey0 - b["y"], 0.0, b["y"] - ey1)) - b["flange"] / 2
+        dz = e["z_topo_corpo"] - b["abaixo"]
+        exigir(d >= 2.0 or dz >= 2.0,
+               f"carregador a {d:.2f} mm do botao {b['nome']} no plano e "
+               f"{dz:.2f} mm em z - minimo 2,00")
+
+    # 2. Tudo dentro da cavidade, a 1,00 da parede. A cavidade e convexa,
+    #    entao basta conferir os cantos do envelope e do alivio.
+    cav = silhueta(CORPO_PAR)
+    ay_, ax_ = e["alivio"]
+    cantos = ([(ex0, ey0), (ex1, ey0), (ex1, ey1), (ex0, ey1)]
+              + [(e["x_usb"] + sx * ax_ / 2, e["yc"] + sy * ay_ / 2)
+                 for sx in (-1, 1) for sy in (-1, 1)])
+    for p in cantos:
+        g = _dist_poligono(p, cav) * (1 if M.dentro(p, cav) else -1)
+        exigir(g >= 1.0, f"berco do carregador a {g:.2f} mm da parede do "
+                         f"corpo - minimo 1,00")
+
+    # 3. Contra as colunas de inserto.
+    for i, (cx, cy) in enumerate(fix, 1):
+        d = math.hypot(max(ex0 - cx, 0.0, cx - ex1),
+                       max(ey0 - cy, 0.0, cy - ey1)) - COL_D / 2
+        exigir(d >= 2.0, f"berco do carregador a {d:.2f} mm da coluna {i} - "
+                         f"minimo 2,00")
+
+    # 4. A janela passa a capa do plugue, nao so o conector.
+    jy, jx = e["janela"]
+    cy_, cx_ = e["capa"]
+    exigir(jy >= cy_ + 0.6 and jx >= cx_ + 0.6,
+           f"janela {jy:.2f} x {jx:.2f} nao passa a capa do plugue "
+           f"{cy_:.2f} x {cx_:.2f} com 0,30 por lado")
+
+    # 5. O conector presumido tem margem dentro da janela.
+    sobra = min((jy - e["usb_l"]) / 2, (jx - e["usb_h"]) / 2)
+    exigir(sobra >= 1.0, f"conector sobra so {sobra:.2f} mm dentro da "
+                         f"janela - minimo 1,00")
+
+    # 6. As pontas da placa apoiam na chapa: e ela que leva o puxao.
+    apoio = (e["larg"] - jy) / 2
+    exigir(apoio >= 1.5, f"a placa apoia so {apoio:.2f} mm em cada ponta da "
+                         f"janela - minimo 1,50")
+
+    # 7. Deformacao da coluna ao encaixar.
+    exigir(e["eps"] <= 0.010, f"deformacao da coluna do berco "
+                              f"{e['eps']*100:.2f} % - maximo 1,00")
+
+    # 8. A garra retem, e a entrada sobe do raso para o fundo.
+    gs = [g for g, _ in e["degraus"]]
+    exigir(e["cobre"] > 0 and all(0 < g < e["prof_canal"] for g in gs)
+           and gs == sorted(set(gs)),
+           f"a garra nao retem: cobre {e['cobre']:.2f} mm da placa, "
+           f"degraus {gs}")
+
+    # 9. Simetria em y: a tampa e modelada espelhada (spec, secao 2.2).
+    exigir(abs(e["y"] - CX_A / 2) < 1e-9,
+           f"berco em y = {e['y']:.2f}: a tampa e modelada espelhada e tudo "
+           f"nela tem de ser simetrico em y = {CX_A / 2:.2f}")
+
     if msgs:
         raise AssertionError("projeto inconsistente:\n  - " + "\n  - ".join(msgs))
 
     return dict(folga_capas=folga, L_tampa=L, sw=k,
                 placa=dict(centro=(PLACA["x"], PLACA["y"]),
-                           z_topo=z_placa, eps=eps, pinos=pn))
+                           z_topo=z_placa, eps=eps, pinos=pn),
+                carregador=e)
 
 
 # =====================================================================

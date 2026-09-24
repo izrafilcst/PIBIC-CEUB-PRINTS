@@ -121,3 +121,54 @@ def test_a_farpa_retem_a_placa():
     pl, pn = P.PLACA, P.pinos_placa()
     topo_da_placa = pn["z"][1] + pl["esp"]
     assert abs(pn["z"][2] - topo_da_placa - pl["folga_placa"]) < 1e-9
+
+
+# ---- estacao do carregador (TP4056) ----
+
+def test_carregador_sobre_o_botao_verde_e_reprovado(restaurar):
+    restaurar("CARREGADOR", dict(P.CARREGADOR, x=150.0))
+    with pytest.raises(AssertionError, match="botao verde"):
+        P.conferir_projeto()
+
+
+def test_berco_encostado_na_parede_e_reprovado(restaurar):
+    restaurar("CARREGADOR", dict(P.CARREGADOR, x=172.5))
+    with pytest.raises(AssertionError, match="parede"):
+        P.conferir_projeto()
+
+
+def test_janela_que_nao_passa_a_capa_do_plugue_e_reprovada(restaurar):
+    restaurar("CARREGADOR", dict(P.CARREGADOR, janela=(12.5, 7.2)))
+    with pytest.raises(AssertionError, match="capa"):
+        P.conferir_projeto()
+
+
+def test_conector_largo_demais_para_a_janela_e_reprovado(restaurar):
+    restaurar("CARREGADOR", dict(P.CARREGADOR, usb_l=11.5))
+    with pytest.raises(AssertionError, match="conector"):
+        P.conferir_projeto()
+
+
+def test_placa_sem_apoio_na_chapa_e_reprovada(restaurar):
+    restaurar("CARREGADOR", dict(P.CARREGADOR, larg=15.0))
+    with pytest.raises(AssertionError, match="apoia"):
+        P.conferir_projeto()
+
+
+def test_garra_funda_demais_para_o_pla_e_reprovada(restaurar):
+    # canal de 2,40: deflexao dobra e a fibra se afasta -> ~2,2 %
+    restaurar("CARREGADOR", dict(P.CARREGADOR, prof_canal=2.4))
+    with pytest.raises(AssertionError, match="deforma"):
+        P.conferir_projeto()
+
+
+def test_garra_que_nao_cobre_a_placa_e_reprovada(restaurar):
+    restaurar("CARREGADOR", dict(P.CARREGADOR, folga=1.2))
+    with pytest.raises(AssertionError, match="garra"):
+        P.conferir_projeto()
+
+
+def test_berco_fora_do_eixo_de_simetria_e_reprovado(restaurar):
+    restaurar("CARREGADOR", dict(P.CARREGADOR, y=70.0))
+    with pytest.raises(AssertionError, match="simetric"):
+        P.conferir_projeto()
