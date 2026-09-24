@@ -392,7 +392,7 @@ def gabarito_passante():
     faixas = faixas_em_linha(LARG_GAB, ALT_GAB, xs, CHANFRO)
     tris = placa(faixas, furos, ESP_GABARITO)
     q = gravar_stl("gabarito-passante.stl", tris,
-                   "Gabarito furo passante M24 PETG - PIBIC-CEUB")
+                   "Gabarito furo passante M24 PLA - PIBIC-CEUB")
     print(f"gabarito-passante.stl  {LARG_GAB:.0f} x {ALT_GAB:.0f} x {ESP_GABARITO:.0f} mm"
           f"   {q} triangulos")
     print("   diametros (chanfro = menor): " + ", ".join(str(d) for d in DIAM_PASSANTE))
@@ -409,7 +409,7 @@ def gabarito_roscado():
     faixas = faixas_em_linha(LARG_GAB, ALT_GAB, xs, CHANFRO)
     tris = placa(faixas, furos, ESP_GABARITO)
     q = gravar_stl("gabarito-roscado.stl", tris,
-                   "Gabarito rosca interna M24x2 PETG - PIBIC-CEUB")
+                   "Gabarito rosca interna M24x2 PLA - PIBIC-CEUB")
     r0 = RoscaISO(24.0, 2.0, 0.0)
     print(f"gabarito-roscado.stl   {LARG_GAB:.0f} x {ALT_GAB:.0f} x {ESP_GABARITO:.0f} mm"
           f"   {q} triangulos")
