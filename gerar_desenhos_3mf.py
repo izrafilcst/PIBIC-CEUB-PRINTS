@@ -47,6 +47,7 @@ import gerar_modelo_3mf as P
 from gerar_desenhos import (Desenho, MARGEM, L_CONTORNO, L_FINA, L_TRACO,
                             D_OCULTA, D_CENTRO, D_FANTASMA,
                             FONTE, FONTE_P, C_COTA, C_REF, C_TXT, C_ATEN)
+from validar_modelo import medir_berco
 
 NS = "{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}"
 
@@ -479,7 +480,10 @@ def tabela_furos(D, x, y, grupos, titulo, por_coluna=10, larg_col=105.0):
     fim = y
     for i in range(0, len(grupos), por_coluna):
         bloco = grupos[i:i + por_coluna]
-        linhas = [(n, vg(cx), vg(cy), dm(d)) for n, cx, cy, d in bloco]
+        # o 4o campo e diametro, ou ja o texto da medida (a janela e retangulo)
+        linhas = [(n, vg(cx), vg(cy),
+                   dm(d) if isinstance(d, (int, float)) else d)
+                  for n, cx, cy, d in bloco]
         fim = max(fim, D.tabela(x + (i // por_coluna) * larg_col, y,
                                 cab, linhas, larg))
     return fim
@@ -923,14 +927,14 @@ def _detalhe_coluna(D, ox, oy, par, col, prof, dfuro, hh):
                    "DETALHE - coluna de inserto (6x)", "4:1")
 
 # =====================================================================
-# 2. Tampa de servico, com o encaixe da perfboard
+# 2. Tampa de servico, com o berco do carregador TP4056
 # =====================================================================
 
 def _esp_chapa(V, T, zs):
     """
     Espessura da chapa da tampa, medida: a ultima faixa de z em que a secao
-    ainda tem a silhueta inteira. Acima dela so existem os pinos, e o contorno
-    mais largo passa a ser uma perna.
+    ainda tem a silhueta inteira. Acima dela so existem as colunas do berco,
+    e o contorno mais largo passa a ser uma delas.
     """
     for z0, z1 in zip(zs, zs[1:]):
         c, _ = analisar(V, T, (z0 + z1) / 2)
@@ -940,56 +944,42 @@ def _esp_chapa(V, T, zs):
     return zs[-1]
 
 
-def _centros_pino(V, T, z, tol=8.0):
+def _prof_rebaixo(V, T, zs, esp):
     """
-    Centros dos pinos na altura z, agrupando os pontos da secao por
-    proximidade. Acima da chapa so existem as pernas, entao cada aglomerado e
-    um pino - as duas metades dele juntas.
+    Fundo do rebaixo dos parafusos, MEDIDO: a primeira faixa de z em que o
+    furo de fixacao muda de raio. Nao da para usar zs[1] - o alivio da janela
+    poe um nivel em 0,50 antes do fundo do rebaixo.
     """
-    pts = [p for s in secao(V, T, z) for p in s]
-    grupos = []
-    for q in pts:
-        for g in grupos:
-            if math.hypot(q[0] - g[0][0], q[1] - g[0][1]) < tol:
-                g.append(q)
-                break
-        else:
-            grupos.append([q])
-    cs = [((max(x for x, _ in g) + min(x for x, _ in g)) / 2,
-           (max(y for _, y in g) + min(y for _, y in g)) / 2) for g in grupos]
-    return sorted(cs, key=lambda c: (round(c[1], 1), c[0]))
+    r0 = None
+    for z0, z1 in zip(zs, zs[1:]):
+        if z1 > esp:
+            break
+        _, f = analisar(V, T, (z0 + z1) / 2)
+        r = max(x[2] for x in f)
+        if r0 is None:
+            r0 = r
+        elif abs(r - r0) > 0.01:
+            return z0
+    return None
 
 
-def _diam_pino(V, T, c, z, r_max=6.0):
-    """Diametro externo da perna na altura z - o maior raio em volta de 'c'."""
-    rs = [math.hypot(p[0] - c[0], p[1] - c[1])
-          for s in secao(V, T, z) for p in s
-          if math.hypot(p[0] - c[0], p[1] - c[1]) < r_max]
-    return 2 * max(rs) if rs else None
-
-
-def _fenda_pino(V, T, c, z, r_max=6.0):
-    """
-    Largura da fenda na altura z. E o dobro da menor distancia em x ate o
-    eixo: os pontos da CORDA de cada perna caem todos sobre x = cx +- w/2.
-    """
-    dx = [abs(p[0] - c[0]) for s in secao(V, T, z) for p in s
-          if math.hypot(p[0] - c[0], p[1] - c[1]) < r_max]
-    return 2 * min(dx) if dx else None
+def _caixa(lo):
+    xs, ys = [p[0] for p in lo], [p[1] for p in lo]
+    return min(xs), min(ys), max(xs), max(ys)
 
 
 def desenho_tampa():
     V, T = ler_3mf("caixa-tampa.3mf")
     zs = niveis(V)
-    pn = P.pinos_placa()
-    pl = P.PLACA
-    hreb = zs[1]
-    alt_total = zs[-1]
+    e = P.estacao_carregador()
+    r = medir_berco(V, T)
     esp = _esp_chapa(V, T, zs)
+    hreb = _prof_rebaixo(V, T, zs, esp)
+    alt_total = zs[-1]
 
     # A chapa: corte a meia espessura do rebaixo e a meia espessura da
-    # passagem. z = 0 e a face EXTERNA - a tampa inverteu quando ganhou os
-    # pinos, porque ela passou a imprimir com eles para cima.
+    # passagem. z = 0 e a face EXTERNA. No segundo corte a janela e o
+    # segundo contorno nao circular - o primeiro e a silhueta.
     c_r, f_r = analisar(V, T, hreb / 2)
     c_p, f_p = analisar(V, T, (hreb + esp) / 2)
     lo = c_r[0]
@@ -998,26 +988,16 @@ def desenho_tampa():
     R = raio_canto(lo)
     rebaixos, passantes = f_r, f_p
     dp, dr = 2 * passantes[0][2], 2 * rebaixos[0][2]
+    jx0, jy0, jx1, jy1 = _caixa(c_p[1])
+    ax0, ay0, ax1, ay1 = _caixa(analisar(V, T, P.REB_ALIVIO / 2)[0][1])
+    xj, yj = (jx0 + jx1) / 2, (jy0 + jy1) / 2
+    z_canal = (e["perfil"][0][0] + e["perfil"][0][1]) / 2
+    colunas = analisar(V, T, z_canal)[0]
+    zb = [z for z in zs if z > esp + 1e-9]          # niveis do berco
 
-    # os pinos, MEDIDOS na malha. 'analisar' nao serve aqui: a secao de uma
-    # perna e um D (arco + corda), 'eh_circulo' a rejeita e devolveria zero
-    # furos em toda altura - uma sonda que sempre concorda.
-    centros = _centros_pino(V, T, esp + (pn["z"][1] + pn["z"][2]) / 2)
-    perfil = [dict(z0=z0, z1=z1,
-                   d=_diam_pino(V, T, centros[0], esp + (z0 + z1) / 2),
-                   fenda=_fenda_pino(V, T, centros[0], esp + (z0 + z1) / 2))
-              for z0, z1 in zip(pn["z"], pn["z"][1:])]
-
+    s0, s1 = r["secoes"][0], r["secoes"][1]
+    q = lambda l, i, j: l[i] - l[j] if len(l) == 4 else None
     bate("tampa: espessura da chapa", esp, P.TAMPA_ESP)
-    bate("tampa: n de pinos", len(centros), len(pn["centros"]))
-    for i, (c, d) in enumerate(zip(centros, pn["centros"]), 1):
-        bate(f"tampa: pino {i} em x", c[0], d[0])
-        bate(f"tampa: pino {i} em y", c[1], d[1])
-    for pf, d_esp in zip(perfil, [pl["ombro_d"], pl["haste_d"], pl["farpa_d"]]
-                         + [d for d, _ in pl["guia"]]):
-        bate(f"tampa: pino Ø em z {pf['z0']:.2f}", pf["d"], d_esp)
-        bate(f"tampa: fenda em z {pf['z0']:.2f}", pf["fenda"], pl["rasgo_w"])
-    bate("tampa: altura total", alt_total, P.TAMPA_ESP + pn["topo"])
     bate("tampa: largura", larg, P.CX_L)
     bate("tampa: profundidade", alt, P.CX_A)
     bate("tampa: raio de canto", R, P.CX_R)
@@ -1025,164 +1005,184 @@ def desenho_tampa():
     bate("tampa: Ø de passagem", dp, P.D_PASSAGEM)
     bate("tampa: Ø do rebaixo", dr, P.D_REBAIXO)
     bate("tampa: n de furos", len(rebaixos), 6)
-    bate("tampa: topo do pino", alt_total - esp, pn["topo"])
+    bate("tampa: janela em y", jy1 - jy0, e["janela"][0])
+    bate("tampa: janela em x", jx1 - jx0, e["janela"][1])
+    bate("tampa: x da janela", xj, e["x_usb"])
+    bate("tampa: y da janela", yj, e["yc"])
+    bate("tampa: alivio em y", ay1 - ay0, e["alivio"][0])
+    bate("tampa: alivio em x", ax1 - ax0, e["alivio"][1])
+    bate("tampa: n de colunas do berco", len(colunas), 2)
+    bate("berco: canal", q(s0["xs"][0], 2, 1), e["canal_w"])
+    bate("berco: vao entre os fundos", q(s0["ys"], 2, 1), 2 * e["w_fundo"])
+    bate("berco: largura total", q(s0["ys"], 3, 0), 2 * e["w_fora"])
+    bate("berco: boca na garra", q(s1["ys"], 2, 1), 2 * e["w_ponta"])
+    bate("berco: face de baixo da garra", zb[0], e["z_garra"])
+    bate("berco: face de cima da garra", zb[1], e["z_garra"] + e["garra_h"])
+    bate("tampa: altura total", alt_total, e["topo"])
 
     L = esp - hreb + P.PENETRACAO
 
     D = Desenho(FOLHA_W, FOLHA_H, "CAIXA - TAMPA DE SERVIÇO",
-                "Vista superior, corte, furo de fixação e pino da perfboard",
+                "Vista superior, furo de fixação e berço do carregador TP4056",
                 escala="1:1 (ver ampliações)", codigo="PIBIC-CX-03")
     B = Blocos(D, "CX-03")
 
-    # As duas ampliacoes tem ~146 mm cada e a vista superior ~230: em retrato
-    # elas empilham na faixa livre a direita da vista, e o texto fica com a
-    # folha inteira embaixo.
+    # As duas ampliacoes empilham na faixa livre a direita da vista superior;
+    # o texto fica com a folha inteira embaixo.
     with B("detalhe do furo"):
         _detalhe_furo(D, 334, 110, esp, hreb, dp, dr, L)
-    with B("detalhe do pino"):
-        _detalhe_pino(D, 334, 330, pn, pl, esp)
+    with B("detalhe do berço"):
+        _detalhe_berco(D, 334, 360, e, esp)
 
+    # Vista de +z, a FACE INTERNA, como a peca sai da mesa: passagem, janela
+    # e berco visiveis; rebaixo e alivio da janela, que ficam na face da
+    # mesa, ocultos.
     B.abre("vista superior")
     W = Vista(46, 110, larg, alt)
-
     contorno(D, lo, W)
-    for f in rebaixos:
-        furo(D, W, f)
     for f in passantes:
+        furo(D, W, f)
+    for f in rebaixos:
         furo(D, W, f, marca=False, lw=L_TRACO, cor="#555", dash=D_OCULTA)
-
-    # a perfboard em linha fantasma, e os 4 pinos em posicao verdadeira
-    D.ret(W.px(pl["x"] - pl["larg"] / 2), W.py(pl["y"] + pl["alt"] / 2),
-          pl["larg"], pl["alt"], L_TRACO, cor=C_REF, dash=D_FANTASMA)
-    D.txt(*W.p(pl["x"], pl["y"] - pl["alt"] / 2 + 6),
-          f"perfboard {vg(pl['larg'])} x {vg(pl['alt'])} (ref.)", FONTE_P,
-          cor=C_REF)
-    for cx, cy in pn["centros"]:
-        D.circ(*W.p(cx, cy), pl["ombro_d"] / 2, L_CONTORNO)
-        D.circ(*W.p(cx, cy), pl["farpa_d"] / 2, L_FINA, cor="#555",
-               dash=D_OCULTA)
-        D.centro(*W.p(cx, cy), pl["ombro_d"] / 2 + 2)
+    contorno(D, c_p[1], W)
+    D.ret(W.px(ax0), W.py(ay1), ax1 - ax0, ay1 - ay0, L_TRACO, cor="#555",
+          dash=D_OCULTA)
+    for lo_c in colunas:
+        contorno(D, lo_c, W)
+    D.ret(W.px(e["x_mod"][0]), W.py(e["yc"] + e["larg"] / 2),
+          e["x_mod"][1] - e["x_mod"][0], e["larg"], L_TRACO, cor=C_REF,
+          dash=D_FANTASMA)
+    D.txt(W.px(e["x_mod"][0]) - 3, W.py(e["yc"] + e["larg"] / 2) - 2,
+          "TP4056 (ref.)", FONTE_P, anc="end", cor=C_REF)
 
     yb = W.py(0)
     xs = sorted({round(f[0], 3) for f in rebaixos})
     ys = sorted({round(f[1], 3) for f in rebaixos})
-    px = sorted({round(c[0], 3) for c in pn["centros"]})
-    py = sorted({round(c[1], 3) for c in pn["centros"]})
     D.cota_h(W.px(0), W.px(xs[0]), yb + 14, vg(xs[0]), yb)
-    D.cota_h(W.px(0), W.px(px[0]), yb + 26, vg(px[0]), yb)
-    D.cota_h(W.px(0), W.px(px[1]), yb + 38, vg(px[1]), yb)
-    D.cota_h(W.px(0), W.px(larg), yb + 50, vg(larg), yb)
+    D.cota_h(W.px(0), W.px(xj), yb + 26, vg(xj), yb)
+    D.cota_h(W.px(0), W.px(larg), yb + 38, vg(larg), yb)
     D.cota_v(W.py(alt), yb, W.px(0) - 14, vg(alt), W.px(0))
-    D.cota_v(W.py(py[0]), yb, W.px(larg) + 14, vg(py[0]), W.px(larg))
-    D.cota_v(W.py(py[1]), yb, W.px(larg) + 28, vg(py[1]), W.px(larg))
-
+    D.cota_v(W.py(yj), yb, W.px(larg) + 14, vg(yj), W.px(larg))
     D.bandeira(*W.p(xs[2], ys[2] + dr / 2), 1, ang=-45, comp=18)
     D.bandeira(W.px(larg - R * 0.293), W.py(alt - R * 0.293), 2, ang=-30,
                comp=18)
-    D.bandeira(*W.p(pn["centros"][0][0], pn["centros"][0][1]), 5, ang=-135,
-               comp=20)
     D.bandeira(*W.p(xs[0], ys[0] - dr / 2), 4, ang=-135, comp=18)
-    D.bandeira(W.px(R * 0.293), W.py(alt - R * 0.293), 6, ang=-150, comp=18)
-    D.rotulo_vista(W.px(larg / 2), yb + 62, "VISTA SUPERIOR", "1:1")
+    D.bandeira(*W.p(jx0, yj), 5, ang=-160, comp=22)
+    D.bandeira(*W.p(e["x"], e["yc"] + e["w_fora"]), 6, ang=-120, comp=20)
+    D.rotulo_vista(W.px(larg / 2), yb + 50,
+                   "VISTA SUPERIOR - face interna, como sai da mesa", "1:1")
     B.fecha()
 
     B.abre("notas")
     y = D.notas(COL_DIR, Y_TEXTO, [
         (1, f"{len(rebaixos)}x {dm(dp)} passante com rebaixo {dm(dr)} x "
-            f"{vg(hreb)} para a cabeça do parafuso M3 ISO 7380."),
+            f"{vg(hreb)} para a cabeça do parafuso M3 ISO 7380. O rebaixo "
+            f"fica na face da mesa - oculto nesta vista."),
         (2, f"Silhueta idêntica à do corpo: {vg(larg)} x {vg(alt)}, cantos "
             f"R{vg(R)}."),
         (3, f"Chapa {vg(esp)}; sob a cabeça do parafuso restam "
             f"{vg(esp - hreb)} mm - é a seção mais fina da peça."),
         (4, f"Fixação com {len(rebaixos)}x M3 x {L:.0f} ISO 7380 em inserto de "
             f"latão M3 no topo das colunas do corpo (ver PIBIC-CX-02)."),
-        (5, f"{len(pn['centros'])} pinos farpados prendem a perfboard "
-            f"{vg(pl['larg'])} x {vg(pl['alt'])} POR ENCAIXE, sem parafuso. "
-            f"Altura total da peça {vg(alt_total)}."),
-        (6, "Imprimir com os PINOS PARA CIMA. O rebaixo dos parafusos fica "
-            "então voltado para baixo, mas são 1,55 mm radiais sobre um vão "
-            "de 6,50 - não pede suporte."),
+        (5, f"Janela do plugue USB-C {vg(jy1 - jy0)} x {vg(jx1 - jx0)} "
+            f"passante, centro em x = {vg(xj)}, y = {vg(yj)}, com alívio de "
+            f"boca {vg(ay1 - ay0)} x {vg(ax1 - ax0)} x {vg(P.REB_ALIVIO)} na "
+            f"face da mesa."),
+        (None, "MONTE COM A JANELA DO LADO DO BOTÃO VERDE. Girada 180°, a "
+               "tampa ainda parafusa, mas o módulo bate no botão vermelho."),
+        (6, f"Berço do TP4056: 2 colunas em U, canal {vg(e['canal_w'])} x "
+            f"{vg(e['prof_canal'])}; a garra cobre {vg(e['cobre'])} da borda "
+            f"de cima da placa, com {vg(e['folga'])} de folga."),
+        (None, f"Entrada em {len(e['degraus'])} degraus retos de "
+               f"{vg(e['degraus'][0][1])}, sem rampa. Altura total da peça "
+               f"{vg(alt_total)}."),
+        (7, f"Imprimir com a face externa NA MESA e o berço para cima. O "
+            f"rebaixo dos parafusos ({vg((dr - dp) / 2)} radial sobre "
+            f"{vg(dr)}) e o alívio da janela não pedem suporte."),
     ], titulo="NOTAS DE FABRICAÇÃO", larg=LARG_TEXTO)
 
     y = D.notas(COL_DIR, y + 4, [
-        (None, f"{dm(pl['furo_d'])} do furo da placa e recuo de "
-               f"{vg(pl['furo_inset'])} da borda são PRESUMIDOS."),
-        (None, "Meça a placa com o paquímetro antes de imprimir - errar o "
-               "recuo põe os 4 pinos no lugar errado de uma vez."),
-        (None, f"A placa assenta no ombro e é retida pela face de baixo da "
-               f"farpa, com {vg(pl['folga_placa'])} mm de folga. As duas "
-               f"metades de cada pino fletem"),
-        (None, f"{vg((pl['farpa_d'] - pl['furo_d']) / 2)} mm para a farpa "
-               f"passar pelo furo - deformação de flexão de "
-               f"{100 * 3 * ((pl['haste_d'] - pl['rasgo_w']) / 2) * ((pl['farpa_d'] - pl['furo_d']) / 2) / (2 * pl['rasgo_h'] ** 2):.2f} %, "
-               f"abaixo do escoamento do PLA."),
-        (None, "Este é o ponto de desgaste da caixa: encaixar e desencaixar a "
-               "placa muitas vezes cansa as farpas."),
+        (None, f"As cotas do TP4056 são PRESUMIDAS: placa {vg(e['comp'])} x "
+               f"{vg(e['larg'])} x {vg(e['esp'])}, USB-C {vg(e['usb_l'])} x "
+               f"{vg(e['usb_h'])}. Meça antes de imprimir."),
+        (None, "O comprimento da placa decide a folga sob a garra; a largura, "
+               "a folga do canal."),
+        (None, f"Para encaixar, cada coluna flete {vg(e['prof_canal'])} mm - "
+               f"deformação de {e['eps'] * 100:.2f} %, abaixo do limite de "
+               f"1,00 % adotado para o PLA."),
+        (None, "A garra pode encostar nas ilhas de solda dos cantos da placa. "
+               "Se atrapalhar, apare com estilete - não precisa reimprimir."),
+        (None, "Com a caixa fechada os LEDs de carga não ficam visíveis. "
+               "Carregue com a caixa deitada de lado: não há pés."),
+        (None, "A tampa não fixa mais a perfboard - os 4 pinos saíram nesta "
+               "revisão."),
     ], titulo="OBSERVAÇÕES DE PROJETO", larg=LARG_TEXTO)
 
     itens = (rotulos("FIX ", rebaixos)
-             + [(f"PINO {i}", cx, cy, pl["ombro_d"])
-                for i, (cx, cy) in enumerate(pn["centros"], 1)])
+             + [("JANELA", xj, yj, f"{vg(jy1 - jy0)} x {vg(jx1 - jx0)}")])
     tabela_furos(D, COL_DIR, y + 14, itens,
                  "COORDENADAS - origem no canto inferior esquerdo",
-                 por_coluna=6)
+                 por_coluna=4)
     B.fecha()
 
     B.conferir()
     D.salvar("desenho-caixa-tampa.svg")
 
 
-def _detalhe_pino(D, ox, oy, pn, pl, esp, S=8.0):
+def _detalhe_berco(D, ox, oy, e, esp, S=4.0):
     """
-    O pino da perfboard em corte, ampliado.
+    O berco em corte, no plano medio da placa (x = e['x']), ampliado.
 
-    O perfil e escalonado e nao conico de proposito: cone nao tem area de
-    poligono, e a conferencia de volume do gerador deixaria de fechar. Dois
-    degraus de 0,30 x 0,30 sao 45 graus efetivos para a placa entrar.
+    O plano passa pelo meio do canal, entao a coluna aparece do fundo do
+    canal ate a face de fora - e na garra, da boca fechada. Chapa e coluna
+    saem num poligono so por lado: separados, uma linha de contorno
+    atravessaria material continuo.
+
+    A placa entra em linha de referencia: as cotas dela sao PRESUMIDAS, nao
+    medidas. Os degraus de 0,40 somem a 4:1 (1,6 mm de papel) e vao para a
+    nota em vez de cota.
     """
-    z = pn["z"]
-    dd = [pl["ombro_d"], pl["haste_d"], pl["farpa_d"]] + [d for d, _ in pl["guia"]]
-    hf = pl["rasgo_w"] / 2 * S
-    y0 = oy
+    wp, wf = e["w_ponta"], e["w_fora"]
+    jh, ah, ra = e["janela"][0] / 2, e["alivio"][0] / 2, P.REB_ALIVIO
+    ctx = 15.0                          # quanto de chapa aparece de cada lado
 
-    # meia secao de cada lado, com a fenda no meio
+    def X(sg, w):
+        return ox + sg * w * S
+
+    def Y(z):
+        return oy - z * S
+
     for sg in (-1, 1):
-        pts = [(ox + sg * hf, y0)]
-        for d, za, zb in zip(dd, z, z[1:]):
-            pts += [(ox + sg * d / 2 * S, y0 - za * S),
-                    (ox + sg * d / 2 * S, y0 - zb * S)]
-        pts += [(ox + sg * dd[-1] / 2 * S, y0 - z[-1] * S),
-                (ox + sg * hf, y0 - z[-1] * S)]
-        D.hachura_poli(pts)
-    # a chapa da tampa, sob o pino
-    D.hachura(ox - 40, y0, 80, esp * S)
+        pts = [(jh, esp), (wp + e["perfil"][0][2], esp)]
+        for z0, z1, g in e["perfil"]:
+            pts += [(wp + g, z0), (wp + g, z1)]
+        pts += [(wf, e["topo"]), (wf, esp), (ctx, esp), (ctx, 0.0),
+                (ah, 0.0), (ah, ra), (jh, ra)]
+        D.hachura_poli([(X(sg, w), Y(z)) for w, z in pts])
 
-    # a placa assentada, em linha de referencia
-    yp = y0 - z[1] * S
-    for sg in (-1, 1):
-        D.ret(ox + sg * pl["furo_d"] / 2 * S, yp - pl["esp"] * S,
-              sg * (40 - pl["furo_d"] / 2 * S), pl["esp"] * S,
-              L_TRACO, cor=C_REF, dash=D_FANTASMA)
-    D.txt(ox + 44, yp - pl["esp"] * S / 2,
-          f"perfboard {vg(pl['esp'])} (ref.)", FONTE_P, anc="start", cor=C_REF)
+    D.ret(ox - e["larg"] / 2 * S, Y(esp + e["comp"]), e["larg"] * S,
+          e["comp"] * S, L_TRACO, cor=C_REF, dash=D_FANTASMA)
+    D.txt(ox, Y(esp + e["comp"] / 2), "placa TP4056", FONTE_P, cor=C_REF)
+    D.txt(ox, Y(esp + e["comp"] / 2) + 4, "(ref., PRESUMIDA)", FONTE_P,
+          cor=C_REF)
 
-    D.cota_v(y0 - z[1] * S, y0, ox - 52, vg(z[1]), ox - 40, tam=FONTE_P)
-    D.cota_v(y0 - z[2] * S, y0 - z[1] * S, ox - 52, vg(z[2] - z[1]), ox - 40,
+    wg = wp + e["prof_canal"]
+    D.cota_h(X(-1, wg), X(1, wg), Y(12.0), vg(2 * wg), tam=FONTE_P)
+    D.cota_h(X(-1, wf), X(1, wf), Y(e["topo"]) - 10, vg(2 * wf),
+             Y(e["topo"]), tam=FONTE_P)
+    D.cota_h(X(-1, jh), X(1, jh), oy + 10, vg(2 * jh), oy, tam=FONTE_P)
+    D.cota_h(X(-1, ah), X(1, ah), oy + 20, vg(2 * ah), oy, tam=FONTE_P)
+    xd = X(1, wf)
+    D.cota_v(Y(e["z_garra"]), Y(esp), xd + 10, vg(e["z_garra"] - esp), xd,
              tam=FONTE_P)
-    D.cota_v(y0 - z[3] * S, y0 - z[2] * S, ox - 52, vg(z[3] - z[2]), ox - 40,
+    D.cota_v(Y(e["topo"]), Y(0.0), xd + 22, vg(e["topo"]), X(1, ctx),
              tam=FONTE_P)
-    D.cota_v(y0 - z[-1] * S, y0, ox - 68, vg(z[-1]), ox - 40, tam=FONTE_P)
-    D.cota_h(ox - dd[0] / 2 * S, ox + dd[0] / 2 * S, y0 + 12, dm(dd[0]), y0,
-             tam=FONTE_P)
-    D.cota_h(ox - dd[2] / 2 * S, ox + dd[2] / 2 * S, y0 - z[-1] * S - 22,
-             dm(dd[2]), y0 - z[3] * S, tam=FONTE_P)
-    D.cota_h(ox - hf, ox + hf, y0 - z[-1] * S - 10, vg(pl["rasgo_w"]),
-             y0 - z[-1] * S, tam=FONTE_P)
-    D.txt(ox, y0 - z[-1] * S - 30,
-          f"haste {dm(dd[1])} - furo da placa {dm(pl['furo_d'])}", FONTE_P,
-          cor=C_TXT)
-    D.rotulo_vista(ox, y0 + 26,
-                   f"DETALHE - pino da perfboard ({len(pn['centros'])}x)",
+    D.cota_v(Y(esp + e["comp"]), Y(esp), X(-1, wf) - 12, vg(e["comp"]),
+             X(-1, e["larg"] / 2), tam=FONTE_P)
+    D.bandeira(X(1, wp), Y(e["z_garra"] + e["garra_h"] / 2), 6, ang=-150,
+               comp=16)
+    D.rotulo_vista(ox, oy + 32,
+                   f"CORTE - berço no plano da placa (x = {vg(e['x'])})",
                    f"{S:.0f}:1")
 
 def _detalhe_furo(D, ox, oy, esp, hreb, dp, dr, L):
