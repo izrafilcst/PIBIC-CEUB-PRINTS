@@ -77,50 +77,6 @@ def test_face_vertical_triangula_no_plano_xz():
         assert ny > 0, "normal da face_vertical nao esta em +y"
 
 
-def test_perna_e_meia_secao_menos_a_fenda():
-    """Duas pernas + a fenda tem de reconstituir o poligono inteiro."""
-    r, hf, n = 1.4, 0.6, 64
-    inteiro = abs(M.area_assinada(M.circulo(0.0, 0.0, r, n)))
-    a = abs(M.area_assinada(M.perna(r, hf, n, lado=1)))
-    b = abs(M.area_assinada(M.perna(r, hf, n, lado=-1)))
-    # a fenda e a faixa |x| <= hf dentro do poligono; sobra = inteiro - fenda
-    assert a > 0 and abs(a - b) < 1e-9, "as duas pernas tem de ser simetricas"
-    assert a + b < inteiro, "as pernas nao podem somar mais que o circulo"
-
-
-def test_degrau_da_perna_fecha_um_solido():
-    """
-    O degrau farpa->haste e o teste real: e ali que 'face' com buraco
-    encostado na borda quebraria o ear clipping, e e ali que a corda das duas
-    secoes tem de casar vertice a vertice.
-
-    Os raios sao os do pino de verdade, e o 'ys' e a lista inteira deles. So
-    assim a corda da secao larga recebe QUATRO vertices extras - com dois
-    raios so, nenhum trecho passa de um ponto interno e a ordem relativa entre
-    pontos internos nunca e exercitada.
-    """
-    hf, n = 0.6, 64
-    h_ext, h_int = 0.6, 1.0
-    ys = [math.sqrt(r * r - hf * hf) for r in (3.0, 1.8, 1.5, 1.4, 1.2)]
-
-    for r_int, r_ext in ((1.4, 1.8), (1.4, 3.0), (1.2, 1.5)):
-        for lado in (1, -1):
-            p_ext = M.perna(r_ext, hf, n, lado, ys)
-            p_int = M.perna(r_int, hf, n, lado, ys)
-            deg = M.degrau_da_perna(r_int, r_ext, hf, n, lado, ys)
-
-            S = M.Solido(f"perna{r_ext}x{r_int}_{lado}")
-            S.face(p_ext, [], 0.0, cima=False)
-            S.parede(p_ext, 0.0, h_ext, fora=True)
-            S.face(deg, [], h_ext, cima=True)
-            S.parede(p_int, h_ext, h_ext + h_int, fora=True)
-            S.face(p_int, [], h_ext + h_int, cima=True)
-
-            A = M.area_assinada
-            esperado = abs(A(p_ext)) * h_ext + abs(A(p_int)) * h_int
-            assert abs(S.conferir(esperado, tol_rel=1e-9) - esperado) < 1e-6
-
-
 def test_retangulo_e_anti_horario_e_tem_a_area_certa():
     r = M.retangulo(10.0, 5.0, 4.0, 2.0)
     assert abs(M.area_assinada(r) - 8.0) < 1e-12
