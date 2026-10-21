@@ -1,0 +1,7 @@
+# Bytecode do Python - regenerado a cada execucao
+__pycache__/
+*.py[cod]
+
+# Saidas temporarias de slicer
+*.gcode
+*.3mf.bak

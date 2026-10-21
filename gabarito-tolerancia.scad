@@ -12,7 +12,7 @@
 //   2. Teste a rosca de cada botao em cada furo, do menor para o maior.
 //   3. O furo bom e o primeiro em que o botao entra com leve pressao
 //      dos dedos, sem folga lateral e sem forcar.
-//   4. Anote o valor e use em tampa-botoes.scad (parametro folga_m24).
+//   4. Anote o valor e use em gerar_modelo_3mf.py (parametro D_BARRIL).
 //
 // O canto chanfrado marca o furo #1 (o MENOR).
 // =====================================================================

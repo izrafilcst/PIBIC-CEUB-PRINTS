@@ -166,37 +166,7 @@ def checar_roscado():
               f" | passo/sentido {ok(dentro)}")
 
 
-def checar_tampa():
-    esp = 4.0
-    larg, alt, d = 209.30, 108.50, 24.7
-    a_pass = area_poligonal(G.PARAF_D_PASSAGEM / 2, G.SEG)
-    a_reb = area_poligonal(G.PARAF_D_REBAIXO / 2, G.SEG)
-    # placa cheia - 2 furos M24 - 6 furos de passagem - 6 coroas de rebaixo
-    vol = ((larg * alt - 2 * area_poligonal(d / 2, G.SEG) - 6 * a_pass) * esp
-           - 6 * (a_reb - a_pass) * G.PARAF_H_REBAIXO)
-    bloco("tampa-botoes.stl", ler_stl("tampa-botoes.stl"), vol)
-
-    tris = ler_stl("tampa-botoes.stl")
-    zf = esp - G.PARAF_H_REBAIXO
-    xs = [G.PARAF_RECUO, larg / 2, larg - G.PARAF_RECUO]
-    ys = [G.PARAF_RECUO, alt - G.PARAF_RECUO]
-    print("\n  rebaixos M3 medidos na malha (Z do fundo e diametros):")
-    for cy in ys:
-        for cx in xs:
-            v = {(round(t[i], 6), round(t[i + 1], 6), round(t[i + 2], 6))
-                 for t in tris for i in (0, 3, 6)
-                 if math.hypot(t[i] - cx, t[i + 1] - cy) < 5.0}
-            r_topo = max(math.hypot(x - cx, y - cy) for x, y, z in v if abs(z - esp) < 1e-6)
-            r_base = max(math.hypot(x - cx, y - cy) for x, y, z in v if abs(z) < 1e-6)
-            fundo = {z for x, y, z in v if 1e-6 < z < esp - 1e-6}
-            print(f"    ({cx:>6.2f} ; {cy:>6.2f})  topo D{2*r_topo:.3f} "
-                  f"{ok(abs(2*r_topo - G.PARAF_D_REBAIXO) < 1e-3)} | "
-                  f"base D{2*r_base:.3f} {ok(abs(2*r_base - G.PARAF_D_PASSAGEM) < 1e-3)} | "
-                  f"fundo z={min(fundo):.3f} {ok(len(fundo) == 1 and abs(min(fundo)-zf) < 1e-9)}")
-
-
 if __name__ == "__main__":
     checar_passante()
     checar_roscado()
-    checar_tampa()
     print()
